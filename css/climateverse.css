@@ -1343,6 +1343,8 @@ input:checked + .switch-slider:before {
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   padding: var(--sp-6);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, visibility 0.45s;
+  will-change: transform, opacity;
 }
 
 .sim-telemetry-dock {
@@ -1350,6 +1352,113 @@ input:checked + .switch-slider:before {
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   padding: var(--sp-6);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, visibility 0.45s;
+  will-change: transform, opacity;
+}
+
+/* Khi ẩn 2 bảng thông tin bên cạnh */
+.sim-docks-hidden .sim-control-dock {
+  transform: translateX(calc(-100% - 40px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+.sim-docks-hidden .sim-telemetry-dock {
+  transform: translateX(calc(100% + 40px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Nút Bật/Tắt đồng thời 2 bảng thông tin */
+.btn-toggle-docks {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  background: rgba(255, 255, 255, 0.94);
+  color: #0f172a;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  pointer-events: auto;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+[data-theme="dark"] .btn-toggle-docks {
+  background: rgba(16, 32, 51, 0.92);
+  color: #f8fafc;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.btn-toggle-docks:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan-glacier);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25);
+}
+
+.btn-toggle-docks.docks-are-hidden {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  border-color: #38bdf8;
+  box-shadow: 0 0 18px rgba(14, 165, 233, 0.55);
+  animation: pulseDockGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseDockGlow {
+  0%, 100% { box-shadow: 0 0 14px rgba(14, 165, 233, 0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 24px rgba(14, 165, 233, 0.85); transform: scale(1.03); }
+}
+
+/* Thanh nổi phía dưới khi ở chế độ toàn cảnh */
+.floating-zen-toggle {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 25px);
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: rgba(15, 23, 42, 0.92);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  user-select: none;
+}
+
+.floating-zen-toggle.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.floating-zen-toggle:hover {
+  transform: translate(-50%, -3px);
+  background: rgba(2, 132, 199, 0.98);
+  color: #ffffff;
+  box-shadow: 0 16px 40px rgba(14, 165, 233, 0.45);
 }
 
 .sim-status-banner {

@@ -52,13 +52,20 @@
           <span id="ice-status-text">Cảnh Báo: Băng Tuyết Suy Giảm Đang Đẩy Nhanh Tốc Độ Dâng Đại Dương</span>
         </div>
 
-        <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
-          Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
+            Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
+          </div>
+          <button id="btn-toggle-docks" class="btn-toggle-docks" onclick="toggleSimDocks()" title="Ẩn hoặc hiện đồng thời cả 2 bảng thông tin bên cạnh (Phím tắt: H)">
+            <span id="dock-btn-icon">👁️</span>
+            <span id="dock-btn-text">Ẩn 2 Bảng Thông Tin</span>
+            <span style="font-size: 0.72rem; opacity: 0.75; font-family: var(--font-mono);">(Phím H)</span>
+          </button>
         </div>
       </div>
 
       <!-- Bottom Split Control & Telemetry Docks -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+      <div class="sim-docks-row" id="sim-docks-row" style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
         
         <!-- Left Dock: Parameter Controls -->
         <div class="sim-floating-card sim-control-dock">
@@ -144,11 +151,54 @@
 
       </div>
 
+      <!-- Floating Zen Toggle pill when docks are hidden -->
+      <button id="floating-zen-btn" class="floating-zen-toggle" onclick="toggleSimDocks()" title="Bấm để bật lại 2 bảng thông tin bên cạnh (Phím H)">
+        <span>👁️</span>
+        <span>Đang xem toàn cảnh 3D • Bấm để <strong>Hiện lại 2 bảng thông tin</strong></span>
+        <span style="font-size: 0.72rem; opacity: 0.8; font-family: var(--font-mono);">(Phím H)</span>
+      </button>
+
     </div>
   </div>
 
   <!-- Three.js Ice Calving & Coastal Rise Simulation Script -->
   <script>
+    // Toggle 2 Side Docks (Ẩn / Hiện đồng thời cả 2 bảng điều khiển & thông số)
+    let areDocksHidden = false;
+    function toggleSimDocks() {
+      areDocksHidden = !areDocksHidden;
+      const docksRow = document.getElementById('sim-docks-row');
+      const toggleBtn = document.getElementById('btn-toggle-docks');
+      const btnIcon = document.getElementById('dock-btn-icon');
+      const btnText = document.getElementById('dock-btn-text');
+      const zenBtn = document.getElementById('floating-zen-btn');
+
+      if (areDocksHidden) {
+        if (docksRow) docksRow.classList.add('sim-docks-hidden');
+        if (toggleBtn) {
+          toggleBtn.classList.add('docks-are-hidden');
+          if (btnIcon) btnIcon.textContent = '📐';
+          if (btnText) btnText.textContent = 'Hiện 2 Bảng Thông Tin';
+        }
+        if (zenBtn) zenBtn.classList.add('visible');
+      } else {
+        if (docksRow) docksRow.classList.remove('sim-docks-hidden');
+        if (toggleBtn) {
+          toggleBtn.classList.remove('docks-are-hidden');
+          if (btnIcon) btnIcon.textContent = '👁️';
+          if (btnText) btnText.textContent = 'Ẩn 2 Bảng Thông Tin';
+        }
+        if (zenBtn) zenBtn.classList.remove('visible');
+      }
+    }
+
+    // Phím tắt H để bật/tắt nhanh
+    window.addEventListener('keydown', (e) => {
+      if ((e.key === 'h' || e.key === 'H') && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+        toggleSimDocks();
+      }
+    });
+
     let scene, camera, renderer, controls;
     let oceanMesh, glacierGroup, calvingBlocks = [], icebergs = [];
     let coastalLandGroup, seaDykeMesh, villageGroup;
