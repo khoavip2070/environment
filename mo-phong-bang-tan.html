@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mô Phỏng 3D Băng Tan & Nước Biển Dâng — Dự Án Môi Trường Lớp 10.3</title>
+  <meta name="description" content="Phòng mô phỏng 3D hiện tượng sụp đổ dải băng lục địa Greenland, Nam Cực và nước biển dâng toàn cầu.">
+  <link rel="stylesheet" href="css/climateverse.css">
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/OrbitControls.js"></script>
+</head>
+<body style="overflow: hidden;">
+
+  <!-- Scientific HUD Navigation Header -->
+  <header class="hud-header">
+    <div class="container hud-nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">🧊</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Băng Tan Vùng Cực & Biển Dâng Ngập Bờ Biển Việt Nam</span>
+        </div>
+      </a>
+
+      <ul class="hud-nav-links">
+        <li><a href="index.html" class="hud-link">🎬 Trang Chủ</a></li>
+        <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+        <li><a href="trung-tam-mo-phong.html" class="hud-link active">★ Trung Tâm 3D</a></li>
+        <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--cyan-glacier); color: var(--cyan-glacier);">
+          ★ Chọn phòng 3D khác ➔
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen 3D Stage -->
+  <div class="sim-stage-wrapper">
+    <!-- WebGL Canvas Container -->
+    <div id="ice-canvas-container" class="sim-3d-canvas-container"></div>
+
+    <!-- HUD Overlay Panels -->
+    <div class="sim-hud-overlay">
+      
+      <!-- Top Status Banner -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="sim-floating-card sim-status-banner" id="ice-status-banner" style="background: rgba(2, 132, 199, 0.25); border-color: var(--cyan-glacier); color: #fff;">
+          <span style="color: var(--cyan-glacier);">🧊</span>
+          <span id="ice-status-text">Cảnh Báo: Băng Tuyết Suy Giảm Đang Đẩy Nhanh Tốc Độ Dâng Đại Dương</span>
+        </div>
+
+        <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
+          Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
+        </div>
+      </div>
+
+      <!-- Bottom Split Control & Telemetry Docks -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+        
+        <!-- Left Dock: Parameter Controls -->
+        <div class="sim-floating-card sim-control-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Thực nghiệm vùng cực</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tự Chỉnh Nhiệt Độ Băng Tan</h3>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Mức ấm lên tại vùng cực</span>
+              <span class="param-val-badge mono-num" id="val-ice-temp" style="color: var(--data-heat);">+2.8 °C</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-ice-temp" min="0.5" max="6.0" value="2.8" step="0.1">
+            <div class="param-bounds"><span>+0.5 °C (Mục tiêu an toàn)</span><span>+6.0 °C (Nóng lên cực đoan)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Tốc độ tan băng Greenland</span>
+              <span class="param-val-badge mono-num" id="val-greenland" style="color: var(--cyan-glacier);">380 Tỷ tấn/năm</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-greenland" min="100" max="900" value="380" step="20">
+            <div class="param-bounds"><span>100 Tỷ tấn</span><span>900 Tỷ tấn/năm</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Nước biển ấm lên nở to ra</span>
+              <span class="param-val-badge mono-num" id="val-thermal" style="color: var(--blue-ice);">1.8 mm/năm</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-thermal" min="0.5" max="4.0" value="1.8" step="0.1">
+            <div class="param-bounds"><span>0.5 mm</span><span>4.0 mm/năm</span></div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); margin-bottom: 6px;">CÁC MỐC THỜI GIAN QUAN TRỌNG:</div>
+            <div class="preset-group" style="margin: 0;">
+              <button class="preset-pill" onclick="applyIcePreset(1.1, 200, 1.0, 'Thập niên 2000')">Năm 2000</button>
+              <button class="preset-pill active" onclick="applyIcePreset(2.8, 380, 1.8, 'Hiện tại 2026')">Hiện tại 2026</button>
+              <button class="preset-pill" onclick="applyIcePreset(4.5, 620, 2.9, 'Kịch bản năm 2070')">Năm 2070</button>
+              <button class="preset-pill" onclick="applyIcePreset(5.8, 880, 3.8, 'Kịch bản năm 2100')">Năm 2100</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Dock: Physical Telemetry Output -->
+        <div class="sim-floating-card sim-telemetry-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Đe dọa bờ biển Việt Nam</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Mực Nước Biển Dâng Toàn Cầu</h3>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Mực nước biển dâng đến năm 2100</div>
+            <div class="metric-val mono-num" id="tele-rise-cm" style="color: var(--cyan-glacier);">+48.6 cm</div>
+            <div class="metric-sub">Đe dọa ngập 30% diện tích các tỉnh ven biển miền Tây</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Băng Bắc Cực mùa hè còn lại</div>
+            <div style="font-size: 1.35rem; font-weight: 700; color: var(--data-warning);" class="mono-num" id="tele-ice-area">2.1 triệu km²</div>
+            <div class="metric-sub">Đã tan mất gần 70% so với trước thời công nghiệp</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Khả năng phản xạ ánh sáng (Albedo)</div>
+            <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-white);" class="mono-num" id="tele-albedo">26.8%</div>
+            <div class="metric-sub">Băng tan biến thành biển tối màu hút nhiệt mạnh hơn</div>
+          </div>
+
+          <div style="padding-top: 10px; border-top: 1px solid var(--space-border); margin-bottom: 8px;">
+            <div class="metric-label">Dân số ven biển chịu nguy cơ ngập lụt</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: var(--data-critical);" class="mono-num" id="tele-displaced">240 Triệu người</div>
+          </div>
+
+          <div style="margin-bottom: 12px; padding: 8px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3);" id="coastal-status-box">
+            <div class="metric-label" style="margin-bottom: 2px;">Tác động đê biển & vùng ven biển:</div>
+            <div style="font-size: 0.92rem; font-weight: 700; color: var(--data-critical);" id="tele-coastal-status">⚠️ NƯỚC BIỂN TRÀN QUA MẶT ĐÊ (Ngập đầm tôm & nhà dân)</div>
+          </div>
+
+          <!-- Student Learning Note -->
+          <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--cyan-glacier); padding: 8px 12px; border-radius: 4px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+            💡 <strong style="color: #fff;">Góc học sinh:</strong> Việt Nam có hơn 3.260 km bờ biển và là 1 trong 5 nước chịu rủi ro biển dâng lớn nhất. Nếu biển dâng 1m, nhiều khu vực tại Cà Mau, Bến Tre và TP.HCM sẽ bị chìm ngập thường xuyên trong các đợt triều!
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Three.js Ice Calving & Coastal Rise Simulation Script -->
+  <script>
+    let scene, camera, renderer, controls;
+    let oceanMesh, glacierGroup, calvingBlocks = [], icebergs = [];
+    let coastalLandGroup, seaDykeMesh, villageGroup;
+    let tideStaffGauge, tideStaffFloat;
+    let snowParticles, snowGeo, meltDripParticles, meltDripGeo;
+    let sunLight;
+
+    let iceTemp = 2.8;
+    let greenlandRate = 380;
+    let thermalRate = 1.8;
+
+    // Canvas procedural cracked glacier ice texture
+    function createGlacierIceTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Gradient băng tuyết vùng cực
+      const grad = ctx.createLinearGradient(0, 0, 512, 512);
+      grad.addColorStop(0, '#e0f2fe');
+      grad.addColorStop(0.5, '#bae6fd');
+      grad.addColorStop(1, '#38bdf8');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Các đường rãnh nứt băng sâu thẳm (Crevasses) màu xanh lam đậm
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      for (let i = 0; i < 28; i++) {
+        let x = Math.random() * 512;
+        let y = Math.random() * 512;
+        ctx.moveTo(x, y);
+        for (let s = 0; s < 4; s++) {
+          x += (Math.random() - 0.5) * 60;
+          y += 30 + Math.random() * 40;
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+
+      // Vết nứt vi mô màu trắng băng giá
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let i = 0; i < 60; i++) {
+        ctx.moveTo(Math.random() * 512, Math.random() * 512);
+        ctx.lineTo(Math.random() * 512, Math.random() * 512);
+      }
+      ctx.stroke();
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(2, 2);
+      return texture;
+    }
+
+    function initIce3D() {
+      const container = document.getElementById('ice-canvas-container');
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+
+      // 1. Scene & Polar Sky
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f172a);
+      scene.fog = new THREE.FogExp2(0x1e293b, 0.012);
+
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.5, 500);
+      camera.position.set(22, 16, 28);
+
+      // 2. Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      // 3. OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 8;
+      controls.maxDistance = 80;
+      controls.target.set(0, 1.5, 0);
+
+      // 4. Lights
+      const ambientLight = new THREE.AmbientLight(0x94a3b8, 1.8);
+      scene.add(ambientLight);
+
+      sunLight = new THREE.DirectionalLight(0xffffff, 2.4);
+      sunLight.position.set(25, 40, 15);
+      sunLight.castShadow = true;
+      scene.add(sunLight);
+
+      // 5. Build Dual Simulation: Glacier Shelf + Coastal Sea Dyke & Delta
+      buildPolarOcean();
+      buildGlacialShelfAndCalving();
+      buildCoastalDeltaAndSeaDyke();
+      buildTideStaffGauge();
+      buildFloatingIcebergs();
+      buildPolarSnowParticles();
+      buildMeltwaterDrips();
+
+      // 6. Resize
+      window.addEventListener('resize', () => {
+        const nw = container.clientWidth || window.innerWidth;
+        const nh = container.clientHeight || window.innerHeight;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+      });
+
+      animateIce();
+    }
+
+    function buildPolarOcean() {
+      // Mặt đại dương trong xanh phản chiếu
+      const geo = new THREE.PlaneGeometry(60, 60, 32, 32);
+      geo.rotateX(-Math.PI / 2);
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0x0369a1,
+        roughness: 0.12,
+        metalness: 0.65,
+        transparent: true,
+        opacity: 0.90
+      });
+
+      oceanMesh = new THREE.Mesh(geo, mat);
+      oceanMesh.position.y = 0.85;
+      scene.add(oceanMesh);
+    }
+
+    function buildGlacialShelfAndCalving() {
+      // 1. Khối vách băng lục địa khổng lồ (ở bên trái: x < -4)
+      glacierGroup = new THREE.Group();
+      const iceTex = createGlacierIceTexture();
+
+      // Thềm băng chính
+      const shelfGeo = new THREE.BoxGeometry(18, 9, 26);
+      const shelfMat = new THREE.MeshStandardMaterial({
+        color: 0xf0f9ff,
+        map: iceTex,
+        roughness: 0.3,
+        metalness: 0.15,
+        flatShading: true
+      });
+      const shelf = new THREE.Mesh(shelfGeo, shelfMat);
+      shelf.position.set(-15, 4.5, -2);
+      shelf.castShadow = true;
+      shelf.receiveShadow = true;
+      glacierGroup.add(shelf);
+
+      // Đỉnh vách băng nứt lởm chởm
+      const topGeo = new THREE.ConeGeometry(5, 4, 6);
+      for (let z = -12; z <= 10; z += 6) {
+        const peak = new THREE.Mesh(topGeo, shelfMat);
+        peak.position.set(-14 + (Math.random() - 0.5) * 3, 9.5, z);
+        peak.rotation.y = Math.random();
+        glacierGroup.add(peak);
+      }
+
+      // 2. Các tảng băng sạt lở (Dynamic Calving Ice Chunks)
+      // Những khối băng nứt vỡ từ vách và rơi thẳng xuống biển khi nhiệt độ cao
+      for (let i = 0; i < 4; i++) {
+        const sz = 1.4 + Math.random() * 1.6;
+        const cGeo = new THREE.BoxGeometry(sz, sz * 1.8, sz);
+        const cMat = new THREE.MeshStandardMaterial({
+          color: 0xbae6fd,
+          roughness: 0.25,
+          metalness: 0.2,
+          flatShading: true
+        });
+        const chunk = new THREE.Mesh(cGeo, cMat);
+        // Treo trên vách băng sát mặt nước
+        chunk.position.set(-5.5 + Math.random() * 0.8, 4.0 + i * 1.2, -6 + i * 4);
+        chunk.castShadow = true;
+        glacierGroup.add(chunk);
+
+        calvingBlocks.push({
+          mesh: chunk,
+          origY: chunk.position.y,
+          origX: chunk.position.x,
+          origZ: chunk.position.z,
+          falling: false,
+          fallProgress: 0,
+          splashTimer: 0
+        });
+      }
+
+      scene.add(glacierGroup);
+    }
+
+    function buildCoastalDeltaAndSeaDyke() {
+      // Mô hình bờ biển & Đê biển Việt Nam (ở bên phải: x > 2)
+      coastalLandGroup = new THREE.Group();
+
+      // 1. Địa hình bãi biển & Đất liền ven biển
+      const landGeo = new THREE.BoxGeometry(18, 1.2, 32);
+      const landMat = new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.85 }); // Đất phù sa xanh tốt
+      const land = new THREE.Mesh(landGeo, landMat);
+      land.position.set(15, 0.6, 0);
+      land.receiveShadow = true;
+      coastalLandGroup.add(land);
+
+      // Bãi cát thoai thoải hướng ra mép nước biển (x: 5.5 đến 7.5)
+      const beachGeo = new THREE.BoxGeometry(3.5, 0.8, 32);
+      const beachMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.9 }); // Cát vàng ven biển
+      const beach = new THREE.Mesh(beachGeo, beachMat);
+      beach.position.set(5.5, 0.4, 0);
+      coastalLandGroup.add(beach);
+
+      // 2. Tuyến Đê Biển Bê Tông Chắn Sóng (Chạy dọc từ Z = -16 đến +16 tại X = 7.5)
+      // Cao trình mặt đê: Y = 1.65 (tương đương cao hơn mực nước biển bình thường 80cm)
+      const dykeGeo = new THREE.BoxGeometry(1.6, 1.6, 32);
+      const dykeMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.7, metalness: 0.2 });
+      seaDykeMesh = new THREE.Mesh(dykeGeo, dykeMat);
+      seaDykeMesh.position.set(7.5, 1.25, 0);
+      seaDykeMesh.castShadow = true;
+      seaDykeMesh.receiveShadow = true;
+      coastalLandGroup.add(seaDykeMesh);
+
+      // Lan can đê kè chắn sóng
+      const railGeo = new THREE.BoxGeometry(0.15, 0.4, 32);
+      const railMat = new THREE.MeshStandardMaterial({ color: 0xef4444 });
+      const rail = new THREE.Mesh(railGeo, railMat);
+      rail.position.set(7.0, 2.15, 0);
+      coastalLandGroup.add(rail);
+
+      // 3. Đầm nuôi tôm sú ven biển (vùng trũng phía sau đê: x: 10 đến 14)
+      const pondGeo = new THREE.BoxGeometry(4.5, 0.3, 8.0);
+      const pondMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3, transparent: true, opacity: 0.75 });
+      const pond = new THREE.Mesh(pondGeo, pondMat);
+      pond.position.set(11.5, 1.15, -4);
+      coastalLandGroup.add(pond);
+
+      // Bờ đất bao đầm tôm
+      const pondBorderGeo = new THREE.BoxGeometry(4.8, 0.2, 8.3);
+      const pondBorderMat = new THREE.MeshStandardMaterial({ color: 0x78350f, roughness: 0.9 });
+      const pondBorder = new THREE.Mesh(pondBorderGeo, pondBorderMat);
+      pondBorder.position.set(11.5, 1.1, -4);
+      coastalLandGroup.add(pondBorder);
+
+      // 4. Làng chài ven biển với 2 Nhà Sàn đặc trưng
+      villageGroup = new THREE.Group();
+      [ {x: 12, z: 4}, {x: 15, z: 8} ].forEach(pos => {
+        const house = new THREE.Group();
+
+        // 4 Cọc sàn nâng cao nhà chống ngập
+        const stilts = [ [-1, -1], [1, -1], [-1, 1], [1, 1] ];
+        stilts.forEach(st => {
+          const stiltGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.6, 6);
+          const stiltMat = new THREE.MeshStandardMaterial({ color: 0x451a03 });
+          const stMesh = new THREE.Mesh(stiltGeo, stiltMat);
+          stMesh.position.set(st[0] * 0.9, 0.8, st[1] * 0.9);
+          house.add(stMesh);
+        });
+
+        // Thân nhà sàn gỗ
+        const bodyGeo = new THREE.BoxGeometry(2.4, 1.4, 2.4);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.8 });
+        const body = new THREE.Mesh(bodyGeo, bodyMat);
+        body.position.y = 2.2;
+        house.add(body);
+
+        // Mái nhà tôn/lá dừa
+        const roofGeo = new THREE.ConeGeometry(2.1, 1.0, 4);
+        roofGeo.rotateY(Math.PI / 4);
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.7 });
+        const roof = new THREE.Mesh(roofGeo, roofMat);
+        roof.position.y = 3.3;
+        house.add(roof);
+
+        house.position.set(pos.x, 1.1, pos.z);
+        villageGroup.add(house);
+      });
+      coastalLandGroup.add(villageGroup);
+
+      // 5. Cây Đước ngập mặn & Dừa nước chống xói lở
+      for (let i = 0; i < 14; i++) {
+        const treeZ = -14 + Math.random() * 28;
+        const treeX = (i % 2 === 0) ? 6.2 : 16.5; // Cả trước đê (đước) và sau đê (dừa)
+        const tree = new THREE.Group();
+
+        const trunkGeo = new THREE.CylinderGeometry(0.08, 0.14, 2.2, 6);
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x451a03 });
+        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+        trunk.position.y = 1.1;
+        tree.add(trunk);
+
+        const frondGeo = new THREE.ConeGeometry(1.2, 0.8, 6);
+        const frondMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.7 });
+        const frond = new THREE.Mesh(frondGeo, frondMat);
+        frond.position.y = 2.4;
+        tree.add(frond);
+
+        tree.position.set(treeX, (treeX < 7) ? 0.3 : 1.2, treeZ);
+        coastalLandGroup.add(tree);
+      }
+
+      scene.add(coastalLandGroup);
+    }
+
+    function buildTideStaffGauge() {
+      // Cột mốc đo mực nước biển dâng (Tide Gauge Staff)
+      tideStaffGauge = new THREE.Group();
+
+      const colGeo = new THREE.BoxGeometry(0.35, 5.0, 0.35);
+      const colMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4 });
+      const column = new THREE.Mesh(colGeo, colMat);
+      column.position.y = 2.5;
+      tideStaffGauge.add(column);
+
+      // Vạch đo cao độ cảnh báo triều cường và ngập đê
+      const stripes = [
+        { y: 0.85, col: 0x10b981 }, // Mức 0cm: Chuẩn mực nước biển hiện tại (Xanh lá)
+        { y: 1.25, col: 0xf59e0b }, // +40cm: Báo động 1 ngập mép cát (Vàng)
+        { y: 1.65, col: 0xf97316 }, // +80cm: Nước biển mấp mé tràn đỉnh đê kè (Cam)
+        { y: 2.15, col: 0xef4444 }, // +130cm: Biển tràn vỡ đê, ngập lụt đồng bằng (Đỏ)
+        { y: 2.80, col: 0x7f1d1d }  // +200cm: Mức thảm họa toàn cầu
+      ];
+      stripes.forEach(s => {
+        const ringGeo = new THREE.BoxGeometry(0.42, 0.15, 0.42);
+        const ringMat = new THREE.MeshBasicMaterial({ color: s.col });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.y = s.y;
+        tideStaffGauge.add(ring);
+      });
+
+      // Phao tiêu nổi dạ quang theo mực nước biển
+      const floatGeo = new THREE.TorusGeometry(0.38, 0.14, 8, 16);
+      floatGeo.rotateX(Math.PI / 2);
+      const floatMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+      tideStaffFloat = new THREE.Mesh(floatGeo, floatMat);
+      tideStaffFloat.position.y = 0.85;
+      tideStaffGauge.add(tideStaffFloat);
+
+      // Cắm cột mốc ngay trước đê biển (X: 4.8, Z: 2.5)
+      tideStaffGauge.position.set(4.8, 0, 2.5);
+      scene.add(tideStaffGauge);
+    }
+
+    function buildFloatingIcebergs() {
+      // 12 tảng băng trôi bập bềnh giữa đại dương
+      for (let i = 0; i < 12; i++) {
+        const sz = 1.2 + Math.random() * 2.8;
+        const geo = new THREE.DodecahedronGeometry(sz, 1);
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0xe0f2fe,
+          roughness: 0.25,
+          metalness: 0.15,
+          flatShading: true
+        });
+
+        const berg = new THREE.Mesh(geo, mat);
+        berg.position.set(
+          -4 + (Math.random() - 0.5) * 10,
+          0.7,
+          -12 + Math.random() * 24
+        );
+        berg.rotation.set(Math.random(), Math.random(), Math.random());
+        berg.userData = {
+          origScale: sz,
+          rotSpeed: 0.05 + Math.random() * 0.1,
+          driftSpeed: 0.15 + Math.random() * 0.25
+        };
+
+        scene.add(berg);
+        icebergs.push(berg);
+      }
+    }
+
+    function buildPolarSnowParticles() {
+      const count = 1500;
+      snowGeo = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count; i++) {
+        pos[i * 3] = (Math.random() - 0.5) * 60;
+        pos[i * 3 + 1] = Math.random() * 28;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * 60;
+      }
+      snowGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.16,
+        transparent: true,
+        opacity: 0.85
+      });
+      snowParticles = new THREE.Points(snowGeo, mat);
+      scene.add(snowParticles);
+    }
+
+    function buildMeltwaterDrips() {
+      // Giọt nước tan chảy rớt từ vách băng xuống đại dương
+      const count = 600;
+      meltDripGeo = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count; i++) {
+        pos[i * 3] = -6 + (Math.random() - 0.5) * 3;
+        pos[i * 3 + 1] = 0.8 + Math.random() * 6.0;
+        pos[i * 3 + 2] = -12 + Math.random() * 24;
+      }
+      meltDripGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.14,
+        transparent: true,
+        opacity: 0.8
+      });
+      meltDripParticles = new THREE.Points(meltDripGeo, mat);
+      scene.add(meltDripParticles);
+    }
+
+    function updateIcePhysics() {
+      // 1. Co rút và tan chảy vách băng lục địa theo nhiệt độ cực
+      const meltRatio = Math.min(1, iceTemp / 6.0);
+      const shrinkFactor = Math.max(0.45, 1 - meltRatio * 0.45);
+      if (glacierGroup) {
+        glacierGroup.scale.set(shrinkFactor, 1 - meltRatio * 0.2, shrinkFactor);
+      }
+
+      // Tảng băng trôi tan nhỏ đi khi ấm lên
+      icebergs.forEach(b => {
+        const bergScale = Math.max(0.25, 1 - meltRatio * 0.65);
+        b.scale.set(bergScale, bergScale, bergScale);
+      });
+
+      // 2. Đại dương dâng cao
+      // Mức nước biển dâng (cm) đến năm 2100
+      const totalRiseMm = (thermalRate + (greenlandRate / 361.8) * 1.5) * 74;
+      const totalRiseCm = parseFloat((totalRiseMm / 10).toFixed(1));
+
+      // Cao độ thực tế của Mesh đại dương
+      // Mức chuẩn 0cm -> Y = 0.85
+      // Mặt đê biển cao Y = 1.65 (tương đương ngập +80cm)
+      const oceanY = 0.85 + (totalRiseCm / 100) * 1.0;
+      if (oceanMesh) {
+        oceanMesh.position.y = oceanY;
+      }
+
+      // Phao cột mốc đo dâng nổi theo mặt nước
+      if (tideStaffFloat) {
+        tideStaffFloat.position.y = Math.max(0.5, oceanY);
+      }
+
+      // 3. Tác động tới Tuyến Đê Biển & Làng Chài Việt Nam
+      const coastalBox = document.getElementById('coastal-status-box');
+      const coastalText = document.getElementById('tele-coastal-status');
+
+      if (totalRiseCm >= 80) {
+        // Nước biển vượt đỉnh đê (1.65m): Nước tràn vào nội đồng
+        if (coastalBox && coastalText) {
+          coastalBox.style.background = 'rgba(239, 68, 68, 0.2)';
+          coastalBox.style.borderColor = 'var(--data-critical)';
+          coastalText.innerHTML = '🚨 NƯỚC BIỂN TRÀN QUA MẶT ĐÊ (+ ' + totalRiseCm + 'cm - Vỡ đê, ngập chìm làng chài)';
+          coastalText.style.color = 'var(--data-critical)';
+        }
+      } else if (totalRiseCm >= 45) {
+        // Mấp mé mặt đê
+        if (coastalBox && coastalText) {
+          coastalBox.style.background = 'rgba(234, 88, 12, 0.16)';
+          coastalBox.style.borderColor = 'rgba(234, 88, 12, 0.4)';
+          coastalText.innerHTML = '⚠️ NƯỚC MẶN ÁP SÁT ĐỈNH ĐÊ (+' + totalRiseCm + 'cm - Nguy cơ tràn đê giờ triều cường)';
+          coastalText.style.color = 'var(--data-warning)';
+        }
+      } else {
+        // An toàn
+        if (coastalBox && coastalText) {
+          coastalBox.style.background = 'rgba(16, 185, 129, 0.12)';
+          coastalBox.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+          coastalText.innerHTML = '✅ ĐÊ BIỂN AN TOÀN (Nước biển +' + totalRiseCm + 'cm, dưới đỉnh kè)';
+          coastalText.style.color = 'var(--data-vegetation)';
+        }
+      }
+
+      // 4. Kích hoạt hiện tượng Sạt lở băng (Ice Calving)
+      // Khi nhiệt độ >= 2.5°C, các khối băng trên vách rơi xuống biển
+      if (iceTemp >= 2.5) {
+        calvingBlocks.forEach(b => {
+          if (!b.falling && Math.random() < 0.03) {
+            b.falling = true;
+            b.fallProgress = 0;
+          }
+        });
+      }
+
+      // 5. Tính toán các chỉ số Telemetry
+      const summerIceArea = Math.max(0, 6.5 - (iceTemp * 0.95)).toFixed(1);
+      const albedo = Math.max(18, 31 - iceTemp * 1.8).toFixed(1);
+      const displacedMillions = Math.min(650, Math.max(40, totalRiseCm * 5.2)).toFixed(0);
+
+      document.getElementById('val-ice-temp').textContent = '+' + iceTemp.toFixed(1) + ' °C';
+      document.getElementById('val-greenland').textContent = greenlandRate + ' Tỷ tấn/năm';
+      document.getElementById('val-thermal').textContent = thermalRate.toFixed(1) + ' mm/năm';
+
+      document.getElementById('tele-rise-cm').textContent = '+' + totalRiseCm + ' cm';
+      document.getElementById('tele-ice-area').textContent = summerIceArea + ' triệu km²';
+      document.getElementById('tele-albedo').textContent = albedo + '%';
+      document.getElementById('tele-displaced').textContent = displacedMillions + ' Triệu người';
+
+      // Status text
+      const statusEl = document.getElementById('ice-status-text');
+      const banner = document.getElementById('ice-status-banner');
+      if (iceTemp >= 4.0 || totalRiseCm >= 75) {
+        statusEl.textContent = 'BÁO ĐỘNG ĐỎ: Băng Tan Cực Đại — Vỡ Đê Kè Biển, Đe Dọa Xóa Sổ Vùng Ven Biển';
+        banner.style.background = 'rgba(239, 68, 68, 0.3)';
+        banner.style.borderColor = 'var(--data-critical)';
+      } else if (iceTemp >= 2.0 || totalRiseCm >= 40) {
+        statusEl.textContent = 'Cảnh Báo: Băng Tuyết Suy Giảm Đang Đẩy Nhanh Tốc Độ Dâng Nước Biển Đông';
+        banner.style.background = 'rgba(234, 88, 12, 0.25)';
+        banner.style.borderColor = 'var(--data-warning)';
+      } else {
+        statusEl.textContent = 'Trạng Thái: Băng Tuyết Được Duy Trì Trong Giới Hạn An Toàn 1.5°C';
+        banner.style.background = 'rgba(16, 185, 129, 0.2)';
+        banner.style.borderColor = 'var(--data-vegetation)';
+      }
+    }
+
+    function applyIcePreset(temp, greenland, thermal, name) {
+      iceTemp = temp; greenlandRate = greenland; thermalRate = thermal;
+      document.getElementById('slider-ice-temp').value = temp;
+      document.getElementById('slider-greenland').value = greenland;
+      document.getElementById('slider-thermal').value = thermal;
+      updateIcePhysics();
+    }
+
+    document.getElementById('slider-ice-temp').addEventListener('input', e => { iceTemp = +e.target.value; updateIcePhysics(); });
+    document.getElementById('slider-greenland').addEventListener('input', e => { greenlandRate = +e.target.value; updateIcePhysics(); });
+    document.getElementById('slider-thermal').addEventListener('input', e => { thermalRate = +e.target.value; updateIcePhysics(); });
+
+    const clock = new THREE.Clock();
+    function animateIce() {
+      requestAnimationFrame(animateIce);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Sóng đại dương băng giá
+      if (oceanMesh) {
+        oceanMesh.rotation.z = Math.sin(time * 1.2) * 0.008;
+      }
+
+      // Tảng băng trôi bập bềnh
+      icebergs.forEach((b, i) => {
+        b.rotation.y += delta * b.userData.rotSpeed;
+        const currentOceanY = oceanMesh ? oceanMesh.position.y : 0.85;
+        b.position.y = currentOceanY - 0.2 + Math.sin(time * 1.6 + i) * 0.07;
+      });
+
+      // Hiệu ứng tảng băng vỡ sạt lở (Calving animation)
+      calvingBlocks.forEach(b => {
+        if (b.falling) {
+          b.fallProgress += delta * 3.5;
+          b.mesh.position.y = b.origY - Math.pow(b.fallProgress, 2) * 4.5;
+          b.mesh.rotation.x += delta * 2.5;
+
+          const currentOceanY = oceanMesh ? oceanMesh.position.y : 0.85;
+          if (b.mesh.position.y <= currentOceanY - 0.2) {
+            // Đã rớt chạm biển, biến thành tảng băng trôi nổi
+            b.falling = false;
+            b.mesh.position.y = currentOceanY - 0.2;
+            b.mesh.position.x = b.origX + (Math.random() - 0.5) * 2;
+            // Sau 6 giây tái thiết lập chu trình rơi
+            setTimeout(() => {
+              b.mesh.position.set(b.origX, b.origY, b.origZ);
+              b.mesh.rotation.set(0, 0, 0);
+            }, 6000);
+          }
+        }
+      });
+
+      // Tuyết rơi bồng bềnh
+      if (snowParticles) {
+        const spos = snowGeo.attributes.position.array;
+        for (let i = 0; i < spos.length; i += 3) {
+          spos[i + 1] -= delta * 3.2;
+          spos[i] += Math.sin(time + i) * delta * 0.6;
+          if (spos[i + 1] < 0) spos[i + 1] = 28;
+        }
+        snowGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Giọt nước tan chảy rớt liên tục từ vách băng
+      if (meltDripParticles) {
+        const dpos = meltDripGeo.attributes.position.array;
+        const dripSpeed = 8.0 + (iceTemp / 6.0) * 12.0;
+        const currentOceanY = oceanMesh ? oceanMesh.position.y : 0.85;
+
+        for (let i = 0; i < dpos.length; i += 3) {
+          dpos[i + 1] -= delta * dripSpeed;
+          if (dpos[i + 1] < currentOceanY) {
+            dpos[i + 1] = 4.0 + Math.random() * 3.5;
+            dpos[i] = -6 + (Math.random() - 0.5) * 3;
+          }
+        }
+        meltDripGeo.attributes.position.needsUpdate = true;
+      }
+
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initIce3D();
+      updateIcePhysics();
+    });
+  </script>
+</body>
+</html>

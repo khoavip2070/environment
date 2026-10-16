@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Triển Lãm 8 Poster Cổ Động Môi Trường — Lớp 10.3</title>
+  <meta name="description" content="Triển lãm tranh cổ động, đồ họa và infographic bảo vệ môi trường do các nhóm học sinh Lớp 10.3 sáng tác.">
+  <link rel="stylesheet" href="css/climateverse.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       1. THANH ĐIỀU HƯỚNG TRANG CHÍNH
+       =================================================================== -->
+  <header class="hud-header" id="main-hud">
+    <div class="container hud-nav-wrap">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="Trang chủ Dự án Màu Xanh Tương Lai">
+        <div class="brand-symbol">🌱</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation -->
+      <nav aria-label="Điều hướng chính">
+        <ul class="hud-nav-links">
+          <li><a href="index.html" class="hud-link">🎬 Video 1 Phút Xanh</a></li>
+          <li><a href="trien-lam-poster.html" class="hud-link active">🖼️ Triển Lãm Poster</a></li>
+          <li><a href="trung-tam-mo-phong.html" class="hud-link" style="color: var(--cyan-glacier); font-weight: 700;">★ 4 Mô Phỏng 3D</a></li>
+          <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+        </ul>
+      </nav>
+
+      <!-- Theme Toggle -->
+      <div style="display: flex; align-items: center; gap: var(--sp-3);">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Đổi giao diện Sáng / Tối" title="Chuyển chế độ Sáng / Tối">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Giao diện Tối</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       2. SUBPAGE HERO BANNER
+       =================================================================== -->
+  <section class="page-banner">
+    <div class="container">
+      <div class="breadcrumb-nav">
+        <a href="index.html">Trang chủ</a>
+        <span>/</span>
+        <span>Triển lãm tranh cổ động Lớp 10.3</span>
+      </div>
+
+      <div class="section-eyebrow">🎨 Góc Sáng Tạo Nghệ Thuật & Truyền Thông Xanh</div>
+      <h1 style="font-size: clamp(2rem, 3.8vw, 3.2rem); margin-bottom: 12px;">
+        Bộ Sưu Tập 8 Poster Cổ Động Khí Hậu
+      </h1>
+      <p class="section-desc">
+        Mỗi tác phẩm là tình cảm chân thành, góc nhìn mộc mạc và nhiệt huyết tuổi trẻ của các bạn học sinh Lớp 10.3. Nhấp vào bất kỳ poster nào để chiêm ngưỡng tác phẩm phóng to và lắng nghe thông điệp từ nhóm tác giả!
+      </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tab-bar">
+        <button class="filter-tab-btn active" onclick="filterGallery('all', this)">Tất cả (8)</button>
+        <button class="filter-tab-btn" onclick="filterGallery('co-dong', this)">Tranh Cổ Động (5)</button>
+        <button class="filter-tab-btn" onclick="filterGallery('do-hoa', this)">Poster Đồ Họa (2)</button>
+        <button class="filter-tab-btn" onclick="filterGallery('infographic', this)">Infographic (1)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       3. POSTER GALLERY GRID
+       =================================================================== -->
+  <section class="section" style="padding-top: var(--sp-12);">
+    <div class="container">
+      
+      <div class="student-media-row" id="poster-gallery-grid">
+        
+        <!-- Poster 1: Môi Trường Chung (Đồ họa) -->
+        <article class="student-card" data-category="do-hoa" onclick="openMediaModal('image', 'poster-moi-truong-chung.png', 'Poster: Trái Đất - Ngôi Nhà Chung', 'Nhóm 3 (Lớp 10.3)', 'Tác phẩm đồ họa truyền cảm hứng về bảo vệ màu xanh của Trái Đất, giữ gìn cân bằng sinh thái cho muôn loài.')">
+          <img src="poster-moi-truong-chung.png" alt="Poster Ngôi Nhà Chung" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER ĐỒ HỌA</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Trái Đất - Ngôi Nhà Chung</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 3 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Hình ảnh bàn tay nâng niu Trái Đất xanh tươi, kêu gọi mọi người trân trọng thiên nhiên.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 2: Nhóm 1 (Cổ động) -->
+        <article class="student-card" data-category="co-dong" onclick="openMediaModal('image', 'poster-nhom-01.jpg', 'Poster Cổ Động Khí Hậu & Hành Động', 'Nhóm 1 (Lớp 10.3)', 'Tác phẩm truyền thông về sự ấm lên toàn cầu, hiệu ứng nhà kính và sự cấp thiết phải bảo vệ môi trường sống quanh ta.')">
+          <img src="poster-nhom-01.jpg" alt="Poster Nhóm 1" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-heat);">🎨 TRANH CỔ ĐỘNG</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Cổ Động Khí Hậu & Hành Động</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 1 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Màu sắc tương phản mạnh mẽ thể hiện sự đối lập giữa khói bụi ô nhiễm và màu xanh hi vọng.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 3: Nhóm 2 (Đồ họa) -->
+        <article class="student-card" data-category="do-hoa" onclick="openMediaModal('image', 'poster-nhom-02.png', 'Poster: Giải Pháp Giảm Ô Nhiễm', 'Nhóm 2 (Lớp 10.3)', 'Khuyến khích phân loại rác thải tại nguồn và hình thành thói quen sống xanh tiết kiệm điện nước.')">
+          <img src="poster-nhom-02.png" alt="Poster Nhóm 2" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER ĐỒ HỌA</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Giải Pháp Giảm Thiểu Ô Nhiễm</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 2 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Những việc làm đơn giản mỗi ngày như tắt vòi nước khi đánh răng, phân loại rác hữu cơ.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 4: Nhóm 4 (Cổ động) -->
+        <article class="student-card" data-category="co-dong" onclick="openMediaModal('image', 'poster-nhom-04.jpg', 'Poster Năng Lượng Sạch & Tương Lai', 'Nhóm 4 (Lớp 10.3)', 'Tác phẩm nêu bật tầm quan trọng của điện gió và điện mặt trời tại vùng đất duyên hải Nam Trung Bộ Việt Nam.')">
+          <img src="poster-nhom-04.jpg" alt="Poster Nhóm 4" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-heat);">🎨 TRANH CỔ ĐỘNG</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Năng Lượng Sạch & Tương Lai</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 4 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Hình ảnh những cánh quạt điện gió vươn cao trên nền trời xanh Ninh Thuận.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 5: Nhóm 7 (Cổ động) -->
+        <article class="student-card" data-category="co-dong" onclick="openMediaModal('image', 'poster-nhom-07.jpg', 'Bảo Vệ Rừng Ngập Mặn & Đại Dương', 'Nhóm 7 (Lớp 10.3)', 'Bảo tồn rừng ngập mặn Cần Giờ, Cà Mau và nói không với rác thải nhựa đại dương đe dọa sinh vật biển.')">
+          <img src="poster-nhom-07.jpg" alt="Poster Nhóm 7" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-heat);">🎨 TRANH CỔ ĐỘNG</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Bảo Vệ Rừng Ngập Mặn & Biển</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 7 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Rừng ngập mặn là tấm lá chắn xanh chống sóng dữ và bảo vệ đàn chim nước phương Nam.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 6: Nhóm 8 (Cổ động) -->
+        <article class="student-card" data-category="co-dong" onclick="openMediaModal('image', 'poster-nhom-08.png', 'Tiêu Dùng Có Trách Nhiệm - 3R', 'Nhóm 8 (Lớp 10.3)', 'Mô hình kinh tế tuần hoàn 3R: Reduce (Tiết giảm) - Reuse (Tái sử dụng) - Recycle (Tái chế rác thải).')">
+          <img src="poster-nhom-08.png" alt="Poster Nhóm 8" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-heat);">🎨 TRANH CỔ ĐỘNG</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Tiêu Dùng Có Trách Nhiệm</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 8 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Khuyên chúng mình tái sử dụng túi vải, hộp cơm và không mua sắm lãng phí đồ nhựa.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 7: Nhóm 9 (Cổ động) -->
+        <article class="student-card" data-category="co-dong" onclick="openMediaModal('image', 'poster-nhom-09.jpg', 'Bảo Vệ Đất Đai & Cây Xanh Quê Hương', 'Nhóm 9 (Lớp 10.3)', 'Thông điệp cây xanh là lá phổi của Trái Đất, trồng thêm cây là gieo thêm mầm sống cho tương lai.')">
+          <img src="poster-nhom-09.jpg" alt="Poster Nhóm 9" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-heat);">🎨 TRANH CỔ ĐỘNG</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Bảo Vệ Đất Đai & Trồng Cây</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Bởi Nhóm 9 • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Cùng nhau trồng thêm cây bóng mát trước sân trường và chăm sóc vườn hoa lớp học.
+            </p>
+          </div>
+        </article>
+
+        <!-- Poster 8: Cứu Lấy Trái Đất (Infographic) -->
+        <article class="student-card" data-category="infographic" onclick="openMediaModal('image', 'poster-cuu-trai-dat.png', 'Infographic: Cứu Lấy Trái Đất', 'Minh họa tổng hợp Lớp 10.3', 'Sơ đồ trực quan hệ thống hóa Nguyên nhân - Hậu quả - Hành động thiết thực cho học sinh.')">
+          <img src="poster-cuu-trai-dat.png" alt="Infographic Cứu Lấy Trái Đất" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-vegetation);">📊 INFOGRAPHIC MINH HỌA</span>
+            <h4 style="font-size: 1.05rem; margin: 4px 0 2px;">Cứu Lấy Trái Đất - Hành Động Ngay</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px;">Vẽ tay sáng tạo • Lớp 10.3</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              Sơ đồ tư duy sinh động giúp ôn tập kiến thức Địa lý và rèn luyện ý thức sống xanh.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Sincere Student Artist Message -->
+      <div style="margin-top: var(--sp-12); background: var(--space-surface); border: 1px solid var(--space-border); border-radius: var(--radius-lg); padding: var(--sp-8); box-shadow: var(--card-shadow);">
+        <h3 style="font-size: 1.35rem; color: var(--text-white); margin-bottom: 8px;">Lời Nhắn Nhủ Từ Các Tác Giả Học Sinh Lớp 10.3</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin: 0;">
+          <em>"Mỗi bức tranh cổ động không chỉ là một bài tập dự án lấy điểm môn Địa lý, mà còn là tâm tư của chúng em gửi tới các bạn cùng trường. Màu vẽ có thể mộc mạc, nét cọ có thể còn vụng về, nhưng chúng em mong muốn rằng khi nhìn vào những bức tranh này, mỗi người sẽ cùng dừng lại một phút để trân trọng bầu không khí trong lành, dòng sông sạch mát và màu xanh của đất nước mình."</em>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================================================================
+       4. LIGHTBOX MODAL
+       =================================================================== -->
+  <div class="climate-modal" id="climate-modal" onclick="closeMediaModal(event)">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeMediaModal()">✕</button>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       5. FOOTER
+       =================================================================== -->
+  <footer class="climate-footer">
+    <div class="container">
+      <div class="footer-columns">
+        
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: var(--sp-4);">
+            <div class="brand-symbol">🌱</div>
+            <div class="brand-text-wrap">
+              <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+              <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; max-width: 360px;">
+            Bộ sưu tập tranh cổ động và infographic do các nhóm học sinh Lớp 10.3 tự tay sáng tác trong đợt học tập dự án ngoại khóa.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nội Dung Trang Dự Án</h4>
+          <ul>
+            <li><a href="index.html">🎬 Video Clip 1 Phút Xanh</a></li>
+            <li><a href="trien-lam-poster.html">🖼️ 8 Poster Cổ Động Lớp 10.3</a></li>
+            <li><a href="trung-tam-mo-phong.html">★ 4 Mô Hình 3D Thiên Tai</a></li>
+            <li><a href="so-tay-song-xanh.html">🌱 Sổ tay 6 việc làm xanh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Các Phòng Mô Phỏng 3D</h4>
+          <ul>
+            <li><a href="mo-phong-han-han.html">☀️ 3D Hạn mặn Miền Tây</a></li>
+            <li><a href="mo-phong-bao-lu.html">🌀 3D Bão lũ Miền Trung - Bắc</a></li>
+            <li><a href="mo-phong-bang-tan.html">🧊 3D Băng tan & Biển dâng</a></li>
+            <li><a href="mo-phong-chay-rung.html">🔥 3D Nắng nóng & Cháy rừng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Lời Tri Ân Thầy Cô</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.6;">
+            Tập thể Lớp 10.3 xin chân thành gửi lời cảm ơn đến Thầy Cô bộ môn Địa lý, Giáo dục Kinh tế & Pháp luật và Tin học đã hướng dẫn chúng em hoàn thành dự án học tập ý nghĩa này.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 Dự Án Học Tập Lớp 10.3 • Năm học 2025 - 2026</div>
+        <div>Chung tay vì một tương lai Việt Nam Xanh - Sạch - Bền Vững</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       6. JAVASCRIPT SCRIPTS
+       =================================================================== -->
+  <script>
+    // Filter Gallery Function
+    function filterGallery(category, btn) {
+      document.querySelectorAll('.filter-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('#poster-gallery-grid .student-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Modal Display for Student Media (Posters & Videos)
+    function openMediaModal(type, src, title, author, desc) {
+      const modal = document.getElementById('climate-modal');
+      const body = document.getElementById('modal-body-content');
+      
+      body.innerHTML = `
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier); text-transform: uppercase;">ẤN PHẨM HỌC SINH LỚP 10.3</div>
+        <h2 style="font-size: 1.6rem; margin: 6px 0 2px; color: var(--text-white);">${title}</h2>
+        <div style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 16px;">Tác giả: <strong>${author}</strong></div>
+        <div style="text-align: center; background: #000; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+          <img src="${src}" alt="${title}" style="max-width: 100%; max-height: 65vh; object-fit: contain; border-radius: 4px;">
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+          ${desc}
+        </p>
+        <button class="btn-climate btn-ghost" onclick="closeMediaModal()">Đóng cửa sổ</button>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeMediaModal(e) {
+      if (e && e.target && e.target.closest('.modal-inner')) return;
+      const modal = document.getElementById('climate-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    function applyAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('climateverse_theme', theme);
+      } catch (err) {}
+
+      if (theme === 'dark') {
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = 'Giao diện Sáng';
+      } else {
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = 'Giao diện Tối';
+      }
+    }
+
+    let initialTheme = 'light';
+    try {
+      initialTheme = localStorage.getItem('climateverse_theme') || 'light';
+    } catch (e) {}
+    applyAppTheme(initialTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        applyAppTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    }
+  </script>
+</body>
+</html>

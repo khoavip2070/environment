@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mô Phỏng 3D Hạn Hán & Xâm Nhập Mặn — Dự Án Môi Trường Lớp 10.3</title>
+  <meta name="description" content="Mô phỏng 3D hiện tượng hạn hán, bốc thoát hơi nước đất và xâm nhập mặn vùng châu thổ theo nhiệt độ và lượng mưa.">
+  <link rel="stylesheet" href="css/climateverse.css">
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/OrbitControls.js"></script>
+</head>
+<body style="overflow: hidden;">
+
+  <!-- Scientific HUD Navigation Header -->
+  <header class="hud-header">
+    <div class="container hud-nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">☀️</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Hạn Hán & Xâm Nhập Mặn Miền Tây</span>
+        </div>
+      </a>
+
+      <ul class="hud-nav-links">
+        <li><a href="index.html" class="hud-link">🎬 Trang Chủ</a></li>
+        <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+        <li><a href="trung-tam-mo-phong.html" class="hud-link active">★ Trung Tâm 3D</a></li>
+        <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--cyan-glacier); color: var(--cyan-glacier);">
+          ★ Chọn phòng 3D khác ➔
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen 3D Stage -->
+  <div class="sim-stage-wrapper">
+    <!-- WebGL Canvas Viewport -->
+    <div id="drought-canvas-container" class="sim-3d-canvas-container"></div>
+
+    <!-- Heat Haze Visual Distortion Layer -->
+    <div id="heat-haze" class="heat-haze-overlay"></div>
+
+    <!-- HUD Overlay Panels -->
+    <div class="sim-hud-overlay">
+      
+      <!-- Top Status Banner -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="sim-floating-card sim-status-banner" id="status-banner" style="background: rgba(234, 88, 12, 0.2); border-color: var(--data-warning); color: #fff;">
+          <span style="color: var(--data-warning);">⚠️</span>
+          <span id="status-text">Cảnh Báo: Hạn Hán & Xâm Nhập Mặn Cấp Độ 2</span>
+        </div>
+
+        <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
+          Dùng chuột: Xoay 3D • Cuộn chuột: Phóng to/thu nhỏ • Giữ chuột phải: Dời góc nhìn
+        </div>
+      </div>
+
+      <!-- Bottom Split Control & Telemetry Docks -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+        
+        <!-- Left Dock: Parameter Controls -->
+        <div class="sim-floating-card sim-control-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Thực hành thí nghiệm</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tự Chỉnh Thời Tiết & Nước Sông</h3>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Lượng mưa mùa khô</span>
+              <span class="param-val-badge mono-num" id="val-rain">35 mm</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-rain" min="0" max="200" value="35" step="5">
+            <div class="param-bounds"><span>0 mm (Khô kiệt hoàn toàn)</span><span>200 mm (Mưa dồi dào)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Nhiệt độ nắng nóng</span>
+              <span class="param-val-badge mono-num" id="val-temp" style="color: var(--data-heat);">38.5 °C</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-temp" min="25" max="45" value="38.5" step="0.5">
+            <div class="param-bounds"><span>25 °C (Mát mẻ dễ chịu)</span><span>45 °C (Nắng cháy gay gắt)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Độ mặn của nước sông</span>
+              <span class="param-val-badge mono-num" id="val-salinity" style="color: var(--data-warning);">12.5 g/lít</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-salinity" min="0" max="35" value="12.5" step="0.5">
+            <div class="param-bounds"><span>0 g/l (Nước ngọt tưới cây)</span><span>35 g/l (Mặn như nước biển)</span></div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); margin-bottom: 6px;">CHỌN NHANH TÌNH HUỐNG THỰC TẾ:</div>
+            <div class="preset-group" style="margin: 0;">
+              <button class="preset-pill" onclick="applyPreset(150, 28, 0, 'Bình thường')">Mùa mưa đủ nước</button>
+              <button class="preset-pill" onclick="applyPreset(40, 35, 4, 'Hạn nhẹ')">Hạn nhẹ đầu mùa</button>
+              <button class="preset-pill active" onclick="applyPreset(10, 39, 14, 'Đại hạn ĐBSCL 2020')">Đại hạn 2020</button>
+              <button class="preset-pill" onclick="applyPreset(0, 44, 28, 'Khô kiệt kỷ lục')">Khô kiệt kỷ lục</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Dock: Physical Telemetry Output -->
+        <div class="sim-floating-card sim-telemetry-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Hậu quả đối với Việt Nam</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tác Động Lên Ruộng Lúa & Vườn Cây</h3>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Độ thiếu hụt nước của đất trồng</div>
+            <div class="metric-val mono-num" id="tele-deficit" style="color: var(--data-heat);">-46.5%</div>
+            <div class="metric-sub">Đất ruộng nứt nẻ chân chim, cây cối héo úa</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Ranh mặn 4‰ ăn sâu vào sông ngòi</div>
+            <div style="font-size: 1.35rem; font-weight: 700; color: var(--data-warning);" class="mono-num" id="tele-distance">72.0 km</div>
+            <div class="metric-sub">Xâm nhập sâu vào Bến Tre, Tiền Giang, Sóc Trăng</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Tốc độ bốc hơi nước của cây & sông</div>
+            <div style="font-size: 1.1rem; font-weight: 600; color: var(--cyan-glacier);" class="mono-num" id="tele-pet">8.2 mm/ngày</div>
+          </div>
+
+          <div style="padding-top: 10px; border-top: 1px solid var(--space-border); margin-bottom: 8px;">
+            <div class="metric-label">Ước tính thiệt hại lúa & Cây ăn trái</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: var(--data-critical);" class="mono-num" id="tele-damage">38.5% sản lượng</div>
+          </div>
+
+          <div style="margin-bottom: 12px; padding: 8px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3);" id="sluice-status-box">
+            <div class="metric-label" style="margin-bottom: 2px;">Cửa cống ngăn mặn thủy lợi:</div>
+            <div style="font-size: 0.92rem; font-weight: 700; color: var(--data-critical);" id="tele-sluice">⚠️ ĐÃ ĐÓNG CHẶT (Ngăn mặn >4‰)</div>
+          </div>
+
+          <!-- Student Learning Note -->
+          <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--cyan-glacier); padding: 8px 12px; border-radius: 4px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+            💡 <strong style="color: #fff;">Góc học sinh:</strong> Khi hạn hán kéo dài, lưu lượng sông Mekong sụt giảm, triều cường biển Đông đẩy nước mặn vào sâu hơn 70km. Độ mặn trên 4‰ làm teo rễ cây ăn trái và mất trắng các trà lúa!
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Three.js 3D Simulation Logic -->
+  <script>
+    let scene, camera, renderer, controls;
+    let terrainMesh, riverMesh, riverBedMesh, sunLight, sunMesh;
+    let rainParticles, rainGeo, dustParticles, dustGeo;
+    let treesGroup = [], ricePaddiesGroup = [];
+    let salinityGroup, waterGaugeStaff, waterGaugeFloat, strandedBoat;
+    let saltCrustMesh;
+    let sluiceGroup, sluiceDoorMesh, sluiceBeaconLight;
+
+    let rainVal = 35;
+    let tempVal = 38.5;
+    let salVal = 12.5;
+
+    // Canvas procedural cracked mud texture
+    function createCrackedEarthTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Base soil tone
+      ctx.fillStyle = '#a16207';
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Deep geometric fissures / Voronoi cracks
+      ctx.strokeStyle = '#271202';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      const nodes = [];
+      for (let i = 0; i < 48; i++) {
+        nodes.push({ x: Math.random() * 512, y: Math.random() * 512 });
+      }
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 90) {
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+          }
+        }
+      }
+      ctx.stroke();
+
+      // Fine secondary crack lines
+      ctx.strokeStyle = '#451a03';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (let i = 0; i < 70; i++) {
+        const sx = Math.random() * 512;
+        const sy = Math.random() * 512;
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + (Math.random() - 0.5) * 45, sy + (Math.random() - 0.5) * 45);
+      }
+      ctx.stroke();
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(6, 6);
+      return texture;
+    }
+
+    // Canvas procedural white salt crystal texture
+    function createSaltTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'rgba(255, 255, 255, 0)';
+      ctx.fillRect(0, 0, 256, 256);
+
+      // White crystalline patches
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      for (let i = 0; i < 400; i++) {
+        const x = Math.random() * 256;
+        const y = Math.random() * 256;
+        const r = Math.random() * 3.5 + 1;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(8, 8);
+      return texture;
+    }
+
+    function init3D() {
+      const container = document.getElementById('drought-canvas-container');
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+
+      // 1. Scene & Warm Sunny Fog
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xfef3c7);
+      scene.fog = new THREE.FogExp2(0xfde68a, 0.009);
+
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.5, 500);
+      camera.position.set(22, 16, 28);
+
+      // 2. Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      // 3. OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 8;
+      controls.maxDistance = 80;
+      controls.target.set(0, 0, 0);
+
+      // 4. Lights
+      const ambientLight = new THREE.AmbientLight(0xffedd5, 1.8);
+      scene.add(ambientLight);
+
+      sunLight = new THREE.DirectionalLight(0xfffbeb, 2.6);
+      sunLight.position.set(35, 48, 18);
+      sunLight.castShadow = true;
+      sunLight.shadow.mapSize.width = 2048;
+      sunLight.shadow.mapSize.height = 2048;
+      scene.add(sunLight);
+
+      // 5. Build Environment & Physics Meshes
+      buildRiverBedAndTerrain();
+      buildRiverWater();
+      buildSaltCrustLayer();
+      buildWaterGaugeStaff();
+      buildStrandedCanoe();
+      buildRicePaddiesAndTrees();
+      buildSalinityBoundary();
+      buildSluiceGate();
+      buildBlazingSun();
+      buildRainParticles();
+      buildDustParticles();
+
+      // 6. Resize handler
+      window.addEventListener('resize', () => {
+        const nw = container.clientWidth || window.innerWidth;
+        const nh = container.clientHeight || window.innerHeight;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+      });
+
+      animate();
+    }
+
+    function buildRiverBedAndTerrain() {
+      const size = 52;
+      const segments = 90;
+      const geo = new THREE.PlaneGeometry(size, size, segments, segments);
+      geo.rotateX(-Math.PI / 2);
+
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i);
+        const z = pos.getZ(i);
+
+        // Lòng sông uốn lượn hình sin đặc trưng miền Tây Nam Bộ
+        const riverCenter = Math.sin(z * 0.14) * 6;
+        const distFromRiver = Math.abs(x - riverCenter);
+
+        // Lòng sông trũng sâu, bãi bồi ven sông, đồi thoai thoải
+        let y = 0;
+        if (distFromRiver < 4.2) {
+          // Lòng sông trũng xuống
+          y = -0.3 + Math.pow(distFromRiver / 4.2, 2) * 0.7;
+        } else {
+          // Bờ sông và ruộng vườn
+          y = 0.4 + Math.pow((distFromRiver - 4.2) / 10, 1.6) * 2.8;
+          y += Math.sin(x * 0.35) * Math.cos(z * 0.35) * 0.5;
+        }
+        pos.setY(i, y);
+      }
+      geo.computeVertexNormals();
+
+      const crackTexture = createCrackedEarthTexture();
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0x22c55e,
+        map: crackTexture,
+        roughness: 0.9,
+        metalness: 0.05,
+        flatShading: true
+      });
+
+      terrainMesh = new THREE.Mesh(geo, mat);
+      terrainMesh.receiveShadow = true;
+      scene.add(terrainMesh);
+    }
+
+    function buildRiverWater() {
+      const geo = new THREE.PlaneGeometry(50, 50, 32, 32);
+      geo.rotateX(-Math.PI / 2);
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0x0284c7,
+        roughness: 0.12,
+        metalness: 0.5,
+        transparent: true,
+        opacity: 0.88
+      });
+
+      riverMesh = new THREE.Mesh(geo, mat);
+      riverMesh.position.y = 0.75;
+      scene.add(riverMesh);
+    }
+
+    function buildSaltCrustLayer() {
+      // Lớp vệt muối trắng kết tinh ven đôi bờ sông
+      const geo = new THREE.PlaneGeometry(50, 50, 32, 32);
+      geo.rotateX(-Math.PI / 2);
+
+      const saltTex = createSaltTexture();
+      const mat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        map: saltTex,
+        transparent: true,
+        opacity: 0.0 // Tăng lên khi độ mặn cao
+      });
+
+      saltCrustMesh = new THREE.Mesh(geo, mat);
+      saltCrustMesh.position.y = 0.45;
+      scene.add(saltCrustMesh);
+    }
+
+    function buildWaterGaugeStaff() {
+      // Cột thủy chí đo mực nước sông
+      waterGaugeStaff = new THREE.Group();
+
+      const poleGeo = new THREE.BoxGeometry(0.35, 4.0, 0.15);
+      const poleMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
+      const pole = new THREE.Mesh(poleGeo, poleMat);
+      pole.position.y = 2.0;
+      waterGaugeStaff.add(pole);
+
+      // Các vạch đo đỏ / đen xen kẽ rõ ràng từng 50cm
+      for (let i = 0; i < 8; i++) {
+        const stripeGeo = new THREE.BoxGeometry(0.38, 0.22, 0.18);
+        const stripeMat = new THREE.MeshBasicMaterial({ color: (i % 2 === 0) ? 0xdc2626 : 0x0f172a });
+        const stripe = new THREE.Mesh(stripeGeo, stripeMat);
+        stripe.position.y = 0.4 + i * 0.45;
+        waterGaugeStaff.add(stripe);
+      }
+
+      // Vòng phao tiêu trôi theo mực nước
+      const floatGeo = new THREE.TorusGeometry(0.35, 0.12, 8, 16);
+      floatGeo.rotateX(Math.PI / 2);
+      const floatMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b });
+      waterGaugeFloat = new THREE.Mesh(floatGeo, floatMat);
+      waterGaugeFloat.position.y = 1.0;
+      waterGaugeStaff.add(waterGaugeFloat);
+
+      // Cắm cột thủy chí ngay mép bến sông (x: 2.2, z: 2.0)
+      waterGaugeStaff.position.set(2.2, 0, 2.0);
+      scene.add(waterGaugeStaff);
+    }
+
+    function buildStrandedCanoe() {
+      // Chiếc xuồng ba lá miền Tây mắc cạn khi sông kiệt nước
+      strandedBoat = new THREE.Group();
+
+      // Thân xuồng
+      const hullGeo = new THREE.CylinderGeometry(0.55, 0.35, 3.8, 8);
+      hullGeo.rotateZ(Math.PI / 2);
+      hullGeo.scale(1, 0.45, 1);
+      const hullMat = new THREE.MeshStandardMaterial({ color: 0x78350f, roughness: 0.8 });
+      const hull = new THREE.Mesh(hullGeo, hullMat);
+      strandedBoat.add(hull);
+
+      // Mái chèo
+      const oarGeo = new THREE.CylinderGeometry(0.04, 0.04, 2.2, 6);
+      oarGeo.rotateZ(Math.PI / 3);
+      const oarMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
+      const oar = new THREE.Mesh(oarGeo, oarMat);
+      oar.position.set(0.4, 0.2, 0);
+      strandedBoat.add(oar);
+
+      strandedBoat.position.set(3.2, 0.35, -2.5);
+      strandedBoat.rotation.set(0.1, 0.4, 0.05);
+      scene.add(strandedBoat);
+    }
+
+    function buildRicePaddiesAndTrees() {
+      // 1. Thửa ruộng lúa miền Tây
+      for (let z = -16; z <= 16; z += 5) {
+        for (let side of [-1, 1]) {
+          const rx = (side === 1) ? 8 + Math.random() * 6 : -14 + Math.random() * 5;
+          const paddyGroup = new THREE.Group();
+
+          // Khóm lúa
+          for (let p = 0; p < 8; p++) {
+            const stalkGeo = new THREE.ConeGeometry(0.35, 1.1, 5);
+            const stalkMat = new THREE.MeshStandardMaterial({
+              color: 0x22c55e,
+              roughness: 0.7,
+              flatShading: true
+            });
+            const stalk = new THREE.Mesh(stalkGeo, stalkMat);
+            stalk.position.set((Math.random() - 0.5) * 2.2, 0.55, (Math.random() - 0.5) * 2.2);
+            paddyGroup.add(stalk);
+            ricePaddiesGroup.push(stalk);
+          }
+          paddyGroup.position.set(rx, 1.2, z);
+          scene.add(paddyGroup);
+        }
+      }
+
+      // 2. Vườn cây ăn trái ven sông (Sầu riêng, dừa nước)
+      for (let i = 0; i < 40; i++) {
+        const z = (Math.random() - 0.5) * 38;
+        const riverCenter = Math.sin(z * 0.14) * 6;
+        const side = Math.random() > 0.5 ? 1 : -1;
+        const dist = 4.8 + Math.random() * 12;
+        const x = riverCenter + side * dist;
+        const y = 0.5 + Math.pow((dist - 4.2) / 10, 1.6) * 2.8;
+
+        const treeGroup = new THREE.Group();
+        const trunkGeo = new THREE.CylinderGeometry(0.12, 0.2, 1.6, 6);
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.9 });
+        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+        trunk.position.y = 0.8;
+        treeGroup.add(trunk);
+
+        const foliageGeo = new THREE.DodecahedronGeometry(0.95, 1);
+        const foliageMat = new THREE.MeshStandardMaterial({
+          color: 0x15803d,
+          roughness: 0.65,
+          flatShading: true
+        });
+        const foliage = new THREE.Mesh(foliageGeo, foliageMat);
+        foliage.position.y = 1.9;
+        treeGroup.add(foliage);
+
+        treeGroup.position.set(x, y, z);
+        scene.add(treeGroup);
+        treesGroup.push({ group: treeGroup, foliage: foliage, trunk: trunk, origScale: 0.8 + Math.random() * 0.4 });
+      }
+    }
+
+    function buildSalinityBoundary() {
+      salinityGroup = new THREE.Group();
+
+      // Dãy phao cảnh báo ranh mặn 4‰ vắt ngang dòng sông với màu cờ báo động
+      for (let i = -3.2; i <= 3.2; i += 1.3) {
+        const buoyGeo = new THREE.CylinderGeometry(0.28, 0.32, 0.65, 8);
+        const buoyMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.3 });
+        const buoy = new THREE.Mesh(buoyGeo, buoyMat);
+        buoy.position.set(i, 0.35, 0);
+        salinityGroup.add(buoy);
+
+        // Cột cờ đỏ cảnh báo mặn
+        const flagGeo = new THREE.BoxGeometry(0.04, 0.8, 0.04);
+        const flagMat = new THREE.MeshBasicMaterial({ color: 0xdc2626 });
+        const flag = new THREE.Mesh(flagGeo, flagMat);
+        flag.position.set(i, 0.8, 0);
+        salinityGroup.add(flag);
+      }
+
+      // Dây cáp cảnh báo vắt ngang
+      const cableGeo = new THREE.CylinderGeometry(0.05, 0.05, 7.5, 8);
+      cableGeo.rotateZ(Math.PI / 2);
+      const cableMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+      const cable = new THREE.Mesh(cableGeo, cableMat);
+      cable.position.set(0, 0.55, 0);
+      salinityGroup.add(cable);
+
+      scene.add(salinityGroup);
+    }
+
+    function buildSluiceGate() {
+      // Cống thủy lợi ngăn mặn (Mô phỏng hệ thống cống Cái Lớn - Cái Bé, Bến Tre)
+      sluiceGroup = new THREE.Group();
+
+      // Hai trụ bê tông hai bên bờ kênh
+      const pillarGeo = new THREE.BoxGeometry(0.8, 3.8, 1.2);
+      const pillarMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.8 });
+
+      const pillarLeft = new THREE.Mesh(pillarGeo, pillarMat);
+      pillarLeft.position.set(-1.8, 1.9, 0);
+      sluiceGroup.add(pillarLeft);
+
+      const pillarRight = new THREE.Mesh(pillarGeo, pillarMat);
+      pillarRight.position.set(1.8, 1.9, 0);
+      sluiceGroup.add(pillarRight);
+
+      // Cầu công tác / dàn dầm giằng phía trên
+      const bridgeGeo = new THREE.BoxGeometry(4.8, 0.45, 1.3);
+      const bridgeMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.7 });
+      const bridge = new THREE.Mesh(bridgeGeo, bridgeMat);
+      bridge.position.set(0, 3.8, 0);
+      sluiceGroup.add(bridge);
+
+      // Cửa van thép nâng hạ (Vertical Sluice Gate)
+      const doorGeo = new THREE.BoxGeometry(2.8, 2.2, 0.22);
+      const doorMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4, metalness: 0.5 });
+      sluiceDoorMesh = new THREE.Mesh(doorGeo, doorMat);
+      sluiceDoorMesh.position.set(0, 0.35, 0);
+      sluiceGroup.add(sluiceDoorMesh);
+
+      // Đèn tín hiệu cảnh báo trên đỉnh cống
+      const beaconGeo = new THREE.SphereGeometry(0.22, 16, 16);
+      const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+      sluiceBeaconLight = new THREE.Mesh(beaconGeo, beaconMat);
+      sluiceBeaconLight.position.set(0, 4.25, 0);
+      sluiceGroup.add(sluiceBeaconLight);
+
+      // Đặt cống ngăn mặn ở cửa rạch tưới tiêu (x: 5.8, z: 4.5)
+      sluiceGroup.position.set(5.8, 0, 4.5);
+      sluiceGroup.rotation.y = -Math.PI / 6;
+      scene.add(sluiceGroup);
+    }
+
+    function buildBlazingSun() {
+      const sunGeo = new THREE.SphereGeometry(3.6, 32, 32);
+      const sunMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
+      sunMesh = new THREE.Mesh(sunGeo, sunMat);
+      sunMesh.position.set(35, 48, 18);
+      scene.add(sunMesh);
+
+      // Vầng hào quang lửa
+      const ringGeo = new THREE.RingGeometry(4.2, 8.5, 32);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xf97316,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.45
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.position.copy(sunMesh.position);
+      ring.lookAt(0, 0, 0);
+      scene.add(ring);
+    }
+
+    function buildRainParticles() {
+      const count = 1200;
+      rainGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+
+      for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 1] = Math.random() * 28;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+      }
+      rainGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const rainMat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.22,
+        transparent: true,
+        opacity: 0.75
+      });
+
+      rainParticles = new THREE.Points(rainGeo, rainMat);
+      scene.add(rainParticles);
+    }
+
+    function buildDustParticles() {
+      const count = 500;
+      dustGeo = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count; i++) {
+        pos[i * 3] = (Math.random() - 0.5) * 50;
+        pos[i * 3 + 1] = 0.5 + Math.random() * 12;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * 50;
+      }
+      dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0xd97706,
+        size: 0.26,
+        transparent: true,
+        opacity: 0.45
+      });
+      dustParticles = new THREE.Points(dustGeo, mat);
+      scene.add(dustParticles);
+    }
+
+    function updatePhysics() {
+      // 1. Hệ số hạn hán & nứt đất
+      const droughtFactor = Math.min(1, Math.max(0, (tempVal - 26) / 18 + (110 - rainVal) / 140));
+
+      // Chuyển màu đất: Xanh tươi -> Đất vàng khô -> Đất nứt nẻ sạm cháy
+      const greenColor = new THREE.Color(0x22c55e);
+      const dryColor = new THREE.Color(0xb45309);
+      const scorchedColor = new THREE.Color(0x451a03);
+
+      let targetColor;
+      if (droughtFactor < 0.45) {
+        targetColor = greenColor.clone().lerp(dryColor, droughtFactor / 0.45);
+      } else {
+        targetColor = dryColor.clone().lerp(scorchedColor, (droughtFactor - 0.45) / 0.55);
+      }
+
+      if (terrainMesh) {
+        terrainMesh.material.color.copy(targetColor);
+        // Tăng độ nứt nẻ và nhám của đất khi khô
+        terrainMesh.material.roughness = 0.5 + droughtFactor * 0.5;
+      }
+
+      // 2. Vệt muối kết tinh xâm nhập mặn (Salt Crust)
+      if (saltCrustMesh) {
+        const saltIntensity = Math.min(0.9, (salVal / 35) * (0.4 + droughtFactor * 0.6));
+        saltCrustMesh.material.opacity = saltIntensity;
+      }
+
+      // 3. Mực nước sông & Cột thủy chí
+      const waterHeight = Math.max(0.08, 0.15 + (rainVal / 200) * 0.95 - (tempVal - 25) * 0.02);
+      if (riverMesh) {
+        riverMesh.position.y = waterHeight;
+        riverMesh.scale.x = Math.max(0.35, 0.4 + (rainVal / 200) * 0.6);
+
+        // Nước ngọt xanh biếc -> Nước mặn chuyển sang xanh đen đục
+        const freshWater = new THREE.Color(0x0284c7);
+        const salineWater = new THREE.Color(0x064e3b);
+        riverMesh.material.color.copy(freshWater.lerp(salineWater, Math.min(1, salVal / 25)));
+      }
+
+      // Phao cột thủy chí nổi theo mặt nước
+      if (waterGaugeFloat) {
+        waterGaugeFloat.position.y = Math.max(0.3, waterHeight);
+      }
+
+      // Xuồng ba lá nổi hay mắc cạn
+      if (strandedBoat) {
+        if (waterHeight > 0.42) {
+          strandedBoat.position.y = waterHeight + 0.1;
+          strandedBoat.rotation.z = 0; // Nổi thăng bằng
+        } else {
+          strandedBoat.position.y = 0.28; // Mắc cạn trên bãi bùn
+          strandedBoat.rotation.z = 0.22; // Nghiêng lật trên bùn
+        }
+      }
+
+      // 4. Ruộng lúa & Vườn cây ăn trái héo rũ
+      treesGroup.forEach(t => {
+        const foliageScale = Math.max(0.2, t.origScale * (1 - droughtFactor * 0.7));
+        t.foliage.scale.set(foliageScale, foliageScale, foliageScale);
+        
+        const leafGreen = new THREE.Color(0x15803d);
+        const leafWilted = new THREE.Color(0xb45309);
+        const leafDead = new THREE.Color(0x451a03);
+        const leafCol = droughtFactor < 0.45 
+          ? leafGreen.clone().lerp(leafWilted, droughtFactor / 0.45) 
+          : leafWilted.clone().lerp(leafDead, (droughtFactor - 0.45) / 0.55);
+        t.foliage.material.color.copy(leafCol);
+      });
+
+      // Ruộng lúa ngả vàng rạp xuống khi mặn và hạn
+      ricePaddiesGroup.forEach(stalk => {
+        const stalkGreen = new THREE.Color(0x22c55e);
+        const stalkDead = new THREE.Color(0x78350f);
+        stalk.material.color.copy(stalkGreen.lerp(stalkDead, Math.min(1, droughtFactor * 1.3)));
+        stalk.rotation.z = droughtFactor * 0.35; // Lúa đổ rạp
+      });
+
+      // 5. Ranh mặn 4‰ ăn sâu vào nội đồng
+      if (salinityGroup) {
+        // Hướng mặn lấn sâu từ cửa biển (Z dương) vào nội đồng (Z âm)
+        const saltZ = 12 - (salVal / 35) * 26;
+        const riverCenter = Math.sin(saltZ * 0.14) * 6;
+        salinityGroup.position.set(riverCenter, Math.max(0.2, waterHeight), saltZ);
+      }
+
+      // 6. Cập nhật cửa cống ngăn mặn thủy lợi
+      if (sluiceDoorMesh && sluiceBeaconLight) {
+        const sluiceBox = document.getElementById('sluice-status-box');
+        const sluiceText = document.getElementById('tele-sluice');
+
+        if (salVal >= 4.0) {
+          // Độ mặn >= 4‰: Đóng sập cửa cống để cứu lúa
+          sluiceDoorMesh.position.y = 0.35;
+          sluiceDoorMesh.material.color.setHex(0xdc2626); // Đỏ rực cảnh báo
+          sluiceBeaconLight.material.color.setHex(0xef4444);
+          if (sluiceBox && sluiceText) {
+            sluiceBox.style.background = 'rgba(239, 68, 68, 0.16)';
+            sluiceBox.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+            sluiceText.innerHTML = '⚠️ ĐÃ ĐÓNG CHẶT (Ngăn mặn >4‰)';
+            sluiceText.style.color = 'var(--data-critical)';
+          }
+        } else {
+          // Độ mặn < 4‰: Nâng cửa cống đón nước ngọt
+          sluiceDoorMesh.position.y = 2.4;
+          sluiceDoorMesh.material.color.setHex(0x10b981); // Xanh an toàn
+          sluiceBeaconLight.material.color.setHex(0x10b981);
+          if (sluiceBox && sluiceText) {
+            sluiceBox.style.background = 'rgba(16, 185, 129, 0.14)';
+            sluiceBox.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+            sluiceText.innerHTML = '✅ ĐANG MỞ (Đón nước ngọt tưới tiêu)';
+            sluiceText.style.color = 'var(--data-vegetation)';
+          }
+        }
+      }
+
+      // 6. Mặt trời & sương khói ảo ảnh nhiệt
+      if (sunMesh && sunLight) {
+        sunLight.intensity = 1.8 + (tempVal - 25) * 0.12;
+      }
+
+      const heatHaze = document.getElementById('heat-haze');
+      if (heatHaze) {
+        heatHaze.style.display = tempVal >= 36 ? 'block' : 'none';
+        heatHaze.style.opacity = Math.min(1, (tempVal - 35) / 9);
+      }
+
+      if (dustParticles) dustParticles.visible = droughtFactor > 0.4;
+      if (rainParticles) rainParticles.visible = rainVal > 50;
+
+      // 7. Cập nhật số liệu Telemetry khoa học
+      const pet = (tempVal * 0.22).toFixed(1);
+      const soilDeficit = Math.min(95, Math.max(5, (tempVal * 1.8 - rainVal * 0.35))).toFixed(1);
+      const saltDistance = Math.min(95, Math.max(10, salVal * 2.8 + (100 - rainVal) * 0.4)).toFixed(1);
+      const cropDamage = Math.min(95, Math.max(0, soilDeficit * 0.65 + salVal * 1.1)).toFixed(1);
+
+      document.getElementById('val-rain').textContent = rainVal + ' mm';
+      document.getElementById('val-temp').textContent = tempVal + ' °C';
+      document.getElementById('val-salinity').textContent = salVal + ' g/l';
+
+      document.getElementById('tele-deficit').textContent = '-' + soilDeficit + '%';
+      document.getElementById('tele-distance').textContent = saltDistance + ' km';
+      document.getElementById('tele-pet').textContent = pet + ' mm/ngày';
+      document.getElementById('tele-damage').textContent = cropDamage + '% sản lượng';
+
+      // Status text
+      const statusEl = document.getElementById('status-text');
+      const banner = document.getElementById('status-banner');
+      if (soilDeficit > 60 || salVal > 20) {
+        statusEl.textContent = 'BÁO ĐỘNG ĐỎ: Đại Hạn Mặn Lịch Sử — Lúa Chết Cháy, Dân Mua Nước Ngọt';
+        banner.style.background = 'rgba(239, 68, 68, 0.3)';
+        banner.style.borderColor = 'var(--data-critical)';
+      } else if (soilDeficit > 30 || salVal > 6) {
+        statusEl.textContent = 'Cảnh Báo: Hạn Hán & Xâm Nhập Mặn Cấp Độ 2 (Ranh mặn > 50km)';
+        banner.style.background = 'rgba(234, 88, 12, 0.3)';
+        banner.style.borderColor = 'var(--data-warning)';
+      } else {
+        statusEl.textContent = 'Trạng Thái: Nước Ngọt Dồi Dào, Sinh Thái Vườn Cây Xanh Tốt';
+        banner.style.background = 'rgba(16, 185, 129, 0.25)';
+        banner.style.borderColor = 'var(--data-vegetation)';
+      }
+    }
+
+    function applyPreset(rain, temp, sal, name) {
+      rainVal = rain; tempVal = temp; salVal = sal;
+      document.getElementById('slider-rain').value = rain;
+      document.getElementById('slider-temp').value = temp;
+      document.getElementById('slider-salinity').value = sal;
+      updatePhysics();
+    }
+
+    // Sliders event listener
+    document.getElementById('slider-rain').addEventListener('input', e => { rainVal = +e.target.value; updatePhysics(); });
+    document.getElementById('slider-temp').addEventListener('input', e => { tempVal = +e.target.value; updatePhysics(); });
+    document.getElementById('slider-salinity').addEventListener('input', e => { salVal = +e.target.value; updatePhysics(); });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Rơi hạt mưa nếu đang mưa
+      if (rainParticles && rainParticles.visible) {
+        const pos = rainGeo.attributes.position.array;
+        for (let i = 0; i < pos.length; i += 3) {
+          pos[i + 1] -= delta * 38;
+          if (pos[i + 1] < 0) pos[i + 1] = 26;
+        }
+        rainGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Bụi khô bay lơ lửng trong gió nóng
+      if (dustParticles && dustParticles.visible) {
+        const dpos = dustGeo.attributes.position.array;
+        for (let i = 0; i < dpos.length; i += 3) {
+          dpos[i] += Math.sin(time + i) * delta * 1.6;
+          dpos[i + 1] += Math.cos(time * 0.8 + i) * delta * 0.8;
+          if (dpos[i + 1] > 14) dpos[i + 1] = 0.5;
+        }
+        dustGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Xuồng bồng bềnh nhẹ khi nổi trên nước
+      if (strandedBoat && riverMesh && riverMesh.position.y > 0.42) {
+        strandedBoat.position.y = riverMesh.position.y + 0.1 + Math.sin(time * 2) * 0.03;
+        strandedBoat.rotation.x = Math.sin(time * 1.5) * 0.04;
+      }
+
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      init3D();
+      updatePhysics();
+    });
+  </script>   pos[i + 1] -= delta * 35;
+          if (pos[i + 1] < 0) pos[i + 1] = 25;
+        }
+        rainGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Bụi khô bay lơ lửng trong gió nóng
+      if (dustParticles && dustParticles.visible) {
+        const dpos = dustGeo.attributes.position.array;
+        for (let i = 0; i < dpos.length; i += 3) {
+          dpos[i] += Math.sin(time + i) * delta * 1.5;
+          dpos[i + 1] += Math.cos(time * 0.8 + i) * delta * 0.8;
+          if (dpos[i + 1] > 14) dpos[i + 1] = 0.5;
+        }
+        dustGeo.attributes.position.needsUpdate = true;
+      }
+
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      init3D();
+      updatePhysics();
+    });
+  </script>
+</body>
+</html>

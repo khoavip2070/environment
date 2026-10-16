@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mô Phỏng 3D Sóng Nhiệt & Cháy Rừng — Dự Án Môi Trường Lớp 10.3</title>
+  <meta name="description" content="Phòng mô phỏng 3D hiện tượng sóng nhiệt cực đoan, chỉ số nguy cơ cháy rừng FWI và phát tán tro bụi carbon.">
+  <link rel="stylesheet" href="css/climateverse.css">
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/OrbitControls.js"></script>
+</head>
+<body style="overflow: hidden;">
+
+  <!-- Scientific HUD Navigation Header -->
+  <header class="hud-header">
+    <div class="container hud-nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">🔥</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Sóng Nhiệt & Cháy Rừng Phòng Hộ Việt Nam</span>
+        </div>
+      </a>
+
+      <ul class="hud-nav-links">
+        <li><a href="index.html" class="hud-link">🎬 Trang Chủ</a></li>
+        <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+        <li><a href="trung-tam-mo-phong.html" class="hud-link active">★ Trung Tâm 3D</a></li>
+        <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--cyan-glacier); color: var(--cyan-glacier);">
+          ★ Chọn phòng 3D khác ➔
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen 3D Stage -->
+  <div class="sim-stage-wrapper">
+    <!-- WebGL Canvas Viewport -->
+    <div id="fire-canvas-container" class="sim-3d-canvas-container"></div>
+
+    <!-- HUD Overlay Panels -->
+    <div class="sim-hud-overlay">
+      
+      <!-- Top Status Banner -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="sim-floating-card sim-status-banner" id="fire-status-banner" style="background: rgba(239, 68, 68, 0.25); border-color: var(--data-critical); color: #fff;">
+          <span style="color: var(--data-critical);">🔥</span>
+          <span id="fire-status-text">BÁO ĐỘNG ĐỎ: Chỉ Số Cháy Rừng Cực Kỳ Nguy Cấp (FWI > 50)</span>
+        </div>
+
+        <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
+          Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
+        </div>
+      </div>
+
+      <!-- Bottom Split Control & Telemetry Docks -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+        
+        <!-- Left Dock: Parameter Controls -->
+        <div class="sim-floating-card sim-control-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Thực nghiệm thời tiết</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tự Chỉnh Nắng Nóng & Gió Thổi</h3>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Nhiệt độ nắng nóng</span>
+              <span class="param-val-badge mono-num" id="val-fire-temp" style="color: var(--data-heat);">42.5 °C</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-fire-temp" min="30" max="48" value="42.5" step="0.5">
+            <div class="param-bounds"><span>30 °C (Nắng ấm nhẹ)</span><span>48 °C (Nắng gắt đổ lửa)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Độ ẩm không khí</span>
+              <span class="param-val-badge mono-num" id="val-fire-humidity" style="color: var(--data-warning);">18%</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-fire-humidity" min="10" max="90" value="18" step="2">
+            <div class="param-bounds"><span>10% (Cực khô - Cỏ dễ bén lửa)</span><span>90% (Ẩm ướt an toàn)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Tốc độ gió thổi tàn lửa</span>
+              <span class="param-val-badge mono-num" id="val-fire-wind" style="color: var(--cyan-glacier);">45 km/h</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-fire-wind" min="0" max="75" value="45" step="2">
+            <div class="param-bounds"><span>0 km/h (Lặng gió)</span><span>75 km/h (Gió to bạt lửa cháy lan)</span></div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); margin-bottom: 6px;">TÌNH HUỐNG CHÁY RỪNG THỰC TẾ:</div>
+            <div class="preset-group" style="margin: 0;">
+              <button class="preset-pill" onclick="applyFirePreset(32, 65, 12, 'Ôn hòa')">Mùa hè mát mẻ</button>
+              <button class="preset-pill" onclick="applyFirePreset(38, 30, 28, 'Mùa khô Tây Nguyên')">Khô nóng Tây Nguyên</button>
+              <button class="preset-pill active" onclick="applyFirePreset(43, 16, 48, 'Gió Lào Miền Trung')">Gió Lào Miền Trung</button>
+              <button class="preset-pill" onclick="applyFirePreset(47, 11, 65, 'Đại hỏa hoạn')">Hỏa hoạn cực đại</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Dock: Physical Telemetry Output -->
+        <div class="sim-floating-card sim-telemetry-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Nguy cơ cháy rừng ở nước ta</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tốc Độ Lửa Lan & Khói Bụi</h3>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Chỉ số nguy cơ hỏa hoạn rừng (FWI)</div>
+            <div class="metric-val mono-num" id="tele-fwi" style="color: var(--data-critical);">64.2 (Cực kỳ nguy cấp)</div>
+            <div class="metric-sub">Rất khó kiểm soát, vượt tầm cứu hộ thủ công</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Tốc độ ngọn lửa lan truyền</div>
+            <div style="font-size: 1.35rem; font-weight: 700; color: var(--data-heat);" class="mono-num" id="tele-spread">32.5 mét/phút</div>
+            <div class="metric-sub">Gió thổi bạt tàn than tạo thêm các ổ cháy mới</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Lượng khói bụi & CO₂ thải ra</div>
+            <div style="font-size: 1.1rem; font-weight: 600; color: var(--data-warning);" class="mono-num" id="tele-co2-release">840 Tấn/giờ</div>
+          </div>
+
+          <div style="padding-top: 10px; border-top: 1px solid var(--space-border); margin-bottom: 10px;">
+            <div class="metric-label">Độ ô nhiễm khói bụi mịn PM2.5</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: var(--data-critical);" class="mono-num" id="tele-pm25">345 µg/m³ (Rất độc hại)</div>
+          </div>
+
+          <!-- Student Learning Note -->
+          <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--cyan-glacier); padding: 8px 12px; border-radius: 4px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+            💡 <strong style="color: #fff;">Góc học sinh:</strong> Ở miền Trung nước ta, "Gió Lào" khô nóng thổi vượt dãy Trường Sơn làm nhiệt độ vượt 40°C và độ ẩm rớt xuống dưới 20%. Thảm cỏ khô như rơm rạ, chỉ một mẩu tàn thuốc hay đốt rác bất cẩn cũng có thể gây đại hỏa hoạn thiêu rụi cả cánh rừng phòng hộ!
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Three.js Wildfire Simulation Script -->
+  <script>
+    let scene, camera, renderer, controls;
+    let forestTerrain, treesGroup, forestTrees = [];
+    let fireParticles, fireGeo;
+    let smokeParticles, smokeGeo;
+    let fireLight;
+
+    let fireTemp = 42.5;
+    let fireHumidity = 18;
+    let fireWind = 45;
+
+    function initFire3D() {
+      const container = document.getElementById('fire-canvas-container');
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+
+      // 1. Scene & Warm Fiery Sunset Sky
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x7c2d12);
+      scene.fog = new THREE.FogExp2(0x9a3412, 0.014);
+
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.5, 500);
+      camera.position.set(22, 16, 28);
+
+      // 2. Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // 3. OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 10;
+      controls.maxDistance = 75;
+      controls.target.set(0, 0, 0);
+
+      // 4. Lights
+      const ambientLight = new THREE.AmbientLight(0xfef3c7, 1.8);
+      scene.add(ambientLight);
+
+      const sunLight = new THREE.DirectionalLight(0xfbbf24, 2.2);
+      sunLight.position.set(30, 40, 20);
+      scene.add(sunLight);
+
+      fireLight = new THREE.PointLight(0xff5722, 5.0, 90);
+      fireLight.position.set(0, 5, 0);
+      scene.add(fireLight);
+
+      // 5. Build Forest Terrain & Trees
+      buildForestTerrain();
+      buildForestTrees();
+      buildFireAndSmokeParticles();
+
+      // 6. Resize
+      window.addEventListener('resize', () => {
+        const nw = container.clientWidth || window.innerWidth;
+        const nh = container.clientHeight || window.innerHeight;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+      });
+
+      animateFire();
+    }
+
+    function buildForestTerrain() {
+      const geo = new THREE.PlaneGeometry(50, 50, 36, 36);
+      geo.rotateX(-Math.PI / 2);
+
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i);
+        const z = pos.getZ(i);
+        let y = Math.sin(x * 0.25) * Math.cos(z * 0.25) * 2.2;
+        pos.setY(i, y);
+      }
+      geo.computeVertexNormals();
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0x3d2010, // Đất đồi rừng hanh khô
+        roughness: 0.9,
+        flatShading: true
+      });
+
+      forestTerrain = new THREE.Mesh(geo, mat);
+      scene.add(forestTerrain);
+    }
+
+    function buildForestTrees() {
+      treesGroup = new THREE.Group();
+      forestTrees = [];
+
+      for (let i = 0; i < 90; i++) {
+        const x = (Math.random() - 0.5) * 38;
+        const z = (Math.random() - 0.5) * 38;
+        const y = Math.sin(x * 0.25) * Math.cos(z * 0.25) * 2.2;
+        const distFromCenter = Math.sqrt(x * x + z * z);
+
+        // Thân cây
+        const trunkGeo = new THREE.CylinderGeometry(0.18, 0.25, 2.2, 6);
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x221105 });
+        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+        trunk.position.set(x, y + 1.1, z);
+
+        // Tán cây hình nón
+        const leavesGeo = new THREE.ConeGeometry(1.2, 2.8, 6);
+        const leavesMat = new THREE.MeshStandardMaterial({
+          color: 0x663300,
+          roughness: 0.8
+        });
+        const leaves = new THREE.Mesh(leavesGeo, leavesMat);
+        leaves.position.set(x, y + 2.8, z);
+
+        treesGroup.add(trunk);
+        treesGroup.add(leaves);
+
+        forestTrees.push({
+          trunk: trunk,
+          leaves: leaves,
+          x: x, z: z,
+          dist: distFromCenter,
+          origLeavesScale: 1.0
+        });
+      }
+
+      scene.add(treesGroup);
+    }
+
+    function buildFireAndSmokeParticles() {
+      // Hạt lửa phát sáng (Embers)
+      const fireCount = 1800;
+      fireGeo = new THREE.BufferGeometry();
+      const firePos = new Float32Array(fireCount * 3);
+
+      for (let i = 0; i < fireCount; i++) {
+        firePos[i * 3] = (Math.random() - 0.5) * 24;
+        firePos[i * 3 + 1] = Math.random() * 8;
+        firePos[i * 3 + 2] = (Math.random() - 0.5) * 24;
+      }
+      fireGeo.setAttribute('position', new THREE.BufferAttribute(firePos, 3));
+
+      const fireMat = new THREE.PointsMaterial({
+        color: 0xff5500,
+        size: 0.28,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+      });
+      fireParticles = new THREE.Points(fireGeo, fireMat);
+      scene.add(fireParticles);
+
+      // Hạt khói đen (Smoke plume)
+      const smokeCount = 800;
+      smokeGeo = new THREE.BufferGeometry();
+      const smokePos = new Float32Array(smokeCount * 3);
+
+      for (let i = 0; i < smokeCount; i++) {
+        smokePos[i * 3] = (Math.random() - 0.5) * 32;
+        smokePos[i * 3 + 1] = 4 + Math.random() * 16;
+        smokePos[i * 3 + 2] = (Math.random() - 0.5) * 32;
+      }
+      smokeGeo.setAttribute('position', new THREE.BufferAttribute(smokePos, 3));
+
+      const smokeMat = new THREE.PointsMaterial({
+        color: 0x331a10,
+        size: 1.2,
+        transparent: true,
+        opacity: 0.35
+      });
+      smokeParticles = new THREE.Points(smokeGeo, smokeMat);
+      scene.add(smokeParticles);
+    }
+
+    function updateFirePhysics() {
+      // Chỉ số FWI: Nhiệt độ cao, Độ ẩm thấp, Gió lớn -> Nguy cơ cực đoan
+      const fwi = Math.min(100, Math.max(5, (fireTemp * 1.6 - fireHumidity * 0.6 + fireWind * 0.8))).toFixed(1);
+      const spreadSpeed = Math.min(65, Math.max(1, (parseFloat(fwi) * 0.45 + fireWind * 0.25))).toFixed(1);
+      const co2Tons = Math.min(2500, Math.max(50, parseFloat(fwi) * 14.5)).toFixed(0);
+      const pm25 = Math.min(600, Math.max(30, parseFloat(fwi) * 5.2)).toFixed(0);
+
+      document.getElementById('val-fire-temp').textContent = fireTemp + ' °C';
+      document.getElementById('val-fire-humidity').textContent = fireHumidity + '%';
+      document.getElementById('val-fire-wind').textContent = fireWind + ' km/h';
+
+      document.getElementById('tele-fwi').textContent = fwi + ' (Chỉ số FWI)';
+      document.getElementById('tele-spread').textContent = spreadSpeed + ' m/phút';
+      document.getElementById('tele-co2-release').textContent = co2Tons + ' Tấn/giờ';
+      document.getElementById('tele-pm25').textContent = pm25 + ' µg/m³ (Ô nhiễm khói)';
+
+      // Bán kính vùng cháy lan theo FWI
+      const fireRadius = (parseFloat(fwi) / 100) * 22;
+
+      // Cập nhật tình trạng cây cối bị cháy & than hóa
+      forestTrees.forEach(t => {
+        if (t.dist < fireRadius) {
+          // Cây trong vùng lửa cháy: than củi đen xì, tán cây rụng lụi
+          t.leaves.material.color.setHex(0x1c1008);
+          t.leaves.scale.set(0.35, 0.35, 0.35);
+          t.trunk.material.color.setHex(0x0f0804);
+        } else if (t.dist < fireRadius + 5) {
+          // Cây ở mép lửa: lá ngả màu cam rực cháy
+          t.leaves.material.color.setHex(0xd97706);
+          t.leaves.scale.set(0.75, 0.75, 0.75);
+        } else {
+          // Cây chưa bắt lửa: màu lá hanh khô
+          t.leaves.material.color.setHex(0x2d4a22);
+          t.leaves.scale.set(1.0, 1.0, 1.0);
+        }
+      });
+
+      // Cập nhật màu mặt đất bị thiêu rụi
+      if (forestTerrain) {
+        const charredColor = new THREE.Color(0x180d07);
+        const dryColor = new THREE.Color(0x452912);
+        forestTerrain.material.color.copy(dryColor.lerp(charredColor, Math.min(1, parseFloat(fwi) / 60)));
+      }
+
+      // Cập nhật cường độ sáng của đốm lửa
+      if (fireLight) {
+        fireLight.intensity = (parseFloat(fwi) / 60) * 5.5;
+        fireLight.distance = 40 + (parseFloat(fwi) / 100) * 45;
+      }
+
+      const statusEl = document.getElementById('fire-status-text');
+      const banner = document.getElementById('fire-status-banner');
+      if (fwi >= 50) {
+        statusEl.textContent = 'BÁO ĐỘNG ĐỎ: Cháy Rừng Cực Kỳ Nguy Cấp Lan Rộng';
+        banner.style.background = 'rgba(239, 68, 68, 0.35)';
+        banner.style.borderColor = 'var(--data-critical)';
+      } else if (fwi >= 25) {
+        statusEl.textContent = 'Cảnh Báo Cấp 3: Sóng Nhiệt Khô Hạn, Nguy Cơ Cháy Cao';
+        banner.style.background = 'rgba(234, 88, 12, 0.3)';
+        banner.style.borderColor = 'var(--data-warning)';
+      } else {
+        statusEl.textContent = 'Trạng Thái: Thời Tiết Ẩm Ướt, Ít Nguy Cơ Hỏa Hoạn';
+        banner.style.background = 'rgba(16, 185, 129, 0.2)';
+        banner.style.borderColor = 'var(--data-vegetation)';
+      }
+    }
+
+    function applyFirePreset(temp, humidity, wind, name) {
+      fireTemp = temp; fireHumidity = humidity; fireWind = wind;
+      document.getElementById('slider-fire-temp').value = temp;
+      document.getElementById('slider-fire-humidity').value = humidity;
+      document.getElementById('slider-fire-wind').value = wind;
+      updateFirePhysics();
+    }
+
+    document.getElementById('slider-fire-temp').addEventListener('input', e => { fireTemp = +e.target.value; updateFirePhysics(); });
+    document.getElementById('slider-fire-humidity').addEventListener('input', e => { fireHumidity = +e.target.value; updateFirePhysics(); });
+    document.getElementById('slider-fire-wind').addEventListener('input', e => { fireWind = +e.target.value; updateFirePhysics(); });
+
+    const clock = new THREE.Clock();
+    function animateFire() {
+      requestAnimationFrame(animateFire);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Hạt than hồng (Fire Embers) bốc lên và tạt theo hướng gió
+      if (fireParticles) {
+        const pos = fireGeo.attributes.position.array;
+        const windDrift = (fireWind / 75) * 8;
+
+        for (let i = 0; i < pos.length; i += 3) {
+          pos[i] += windDrift * delta;
+          pos[i + 1] += delta * (4 + Math.random() * 4);
+          if (pos[i + 1] > 12) {
+            pos[i + 1] = 0.5;
+            pos[i] = (Math.random() - 0.5) * 20;
+          }
+        }
+        fireGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Khói bốc lên cao
+      if (smokeParticles) {
+        const pos = smokeGeo.attributes.position.array;
+        const windDrift = (fireWind / 75) * 12;
+
+        for (let i = 0; i < pos.length; i += 3) {
+          pos[i] += windDrift * delta;
+          pos[i + 1] += delta * 2.5;
+          if (pos[i + 1] > 22) {
+            pos[i + 1] = 4;
+            pos[i] = (Math.random() - 0.5) * 24;
+          }
+        }
+        smokeGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Đốm lửa chập chờn
+      if (fireLight) {
+        fireLight.intensity += Math.sin(time * 18) * 0.4;
+      }
+
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initFire3D();
+      updateFirePhysics();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Màu Xanh Tương Lai — Dự Án Môi Trường Lớp 10.3</title>
+  <meta name="description" content="Dự án học tập khí hậu và môi trường của học sinh Lớp 10.3. Video tuyên truyền 1 Phút Xanh, 8 poster cổ động và 4 mô hình 3D trực quan thiên tai Việt Nam.">
+  
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="css/climateverse.css">
+
+  <!-- Local / Vendor Three.js (Offline resilient) -->
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/OrbitControls.js"></script>
+</head>
+<body>
+
+  <!-- ===================================================================
+       1. THANH ĐIỀU HƯỚNG TRANG DỰ ÁN HỌC TẬP
+       =================================================================== -->
+  <header class="hud-header" id="main-hud">
+    <div class="container hud-nav-wrap">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="brand-logo" aria-label="Trang chủ Dự án Màu Xanh Tương Lai">
+        <div class="brand-symbol">🌱</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation -->
+      <nav aria-label="Điều hướng chính">
+        <ul class="hud-nav-links">
+          <li><a href="index.html" class="hud-link active">🎬 Video 1 Phút Xanh</a></li>
+          <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+          <li><a href="trung-tam-mo-phong.html" class="hud-link" style="color: var(--cyan-glacier); font-weight: 700;">★ 4 Mô Phỏng 3D</a></li>
+          <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+        </ul>
+      </nav>
+
+      <!-- Theme Toggle -->
+      <div style="display: flex; align-items: center; gap: var(--sp-3);">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Đổi giao diện Sáng / Tối" title="Chuyển chế độ Sáng / Tối">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Giao diện Tối</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       2. HERO SECTION — VIDEO TUYÊN TRUYỀN & THÔNG ĐIỆP HỌC SINH 10.3
+       =================================================================== -->
+  <section class="hero-stage" id="hero">
+    <div class="container hero-overlay">
+      <div class="hero-split-grid">
+        
+        <!-- Left Column: Story, Inspiring Message & Quick Links -->
+        <div class="hero-content-box">
+          <div class="section-eyebrow" style="margin-bottom: 10px;">🌿 DỰ ÁN NGOẠI KHÓA ĐỊA LÝ & GDCD • LỚP 10.3</div>
+          <h1 class="hero-title" style="font-size: clamp(2.2rem, 4.2vw, 3.5rem); margin-bottom: 14px;">
+            HÀNH TINH & KHÍ HẬU VIỆT NAM
+          </h1>
+          <p class="hero-desc" style="font-size: 1.05rem; line-height: 1.7; margin-bottom: var(--sp-6);">
+            Biến đổi khí hậu không còn là câu chuyện xa vời trên sách vở mà đang hiện diện mỗi ngày ngay tại quê hương chúng mình: từ <strong>ruộng đồng nứt nẻ và xâm nhập mặn ở Miền Tây</strong>, <strong>siêu bão lũ quét sạt lở ở Miền Bắc</strong>, đến <strong>triều cường ngập phố tại TP.HCM</strong>. Tập thể Lớp 10.3 thực hiện website này với video clip <em>"1 Phút Xanh"</em>, triển lãm 8 poster cổ động và 4 mô hình 3D trực quan — cùng nhau lan tỏa lối sống xanh và hành động vì môi trường!
+          </p>
+
+          <div class="hero-cta-group" style="margin-bottom: var(--sp-6);">
+            <a href="#hero-main-video" class="btn-climate btn-primary" onclick="const v = document.getElementById('hero-main-video'); if(v) { v.play(); v.scrollIntoView({behavior: 'smooth', block: 'center'}); }">
+              <span>▶ Xem Video 1 Phút Xanh</span>
+            </a>
+            <a href="trien-lam-poster.html" class="btn-climate btn-ghost" style="color: var(--cyan-glacier) !important;">
+              <span>🖼️ Triển Lãm 8 Poster</span>
+              <span>➔</span>
+            </a>
+            <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost">
+              <span>🌪️ 4 Mô Phỏng Thực Tế 3D</span>
+              <span>➔</span>
+            </a>
+          </div>
+
+          <!-- Quick Highlights Row -->
+          <div style="display: flex; gap: var(--sp-3); flex-wrap: wrap;">
+            <div style="background: var(--space-surface); border: 1px solid var(--space-border); padding: 8px 14px; border-radius: var(--radius-sm); box-shadow: var(--card-shadow); font-size: 0.82rem;">
+              <span style="color: var(--data-vegetation); font-weight: 700;">🌱 Thông điệp:</span> Lối sống xanh học đường
+            </div>
+            <div style="background: var(--space-surface); border: 1px solid var(--space-border); padding: 8px 14px; border-radius: var(--radius-sm); box-shadow: var(--card-shadow); font-size: 0.82rem;">
+              <span style="color: var(--cyan-glacier); font-weight: 700;">👥 Thực hiện:</span> Tập thể học sinh Lớp 10.3
+            </div>
+            <div style="background: var(--space-surface); border: 1px solid var(--space-border); padding: 8px 14px; border-radius: var(--radius-sm); box-shadow: var(--card-shadow); font-size: 0.82rem;">
+              <span style="color: var(--data-heat); font-weight: 700;">🇻🇳 Trọng tâm:</span> Khí hậu thực tế Việt Nam
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Video Player Showcase Card -->
+        <div class="hero-video-showcase-box">
+          <div class="hero-video-header-bar">
+            <div class="hero-video-tag">
+              <span style="color: #ef4444; font-size: 0.85rem;">🔴</span>
+              <span>VIDEO TUYÊN TRUYỀN • NHÓM 3 (10.3)</span>
+            </div>
+            <div style="color: var(--text-dim); display: flex; align-items: center; gap: 8px;">
+              <span>⏱️ Thời lượng: 1 Phút</span>
+              <span style="border-left: 1px solid var(--space-border); padding-left: 8px; color: var(--cyan-glacier); font-weight: 700;">Âm thanh sống động</span>
+            </div>
+          </div>
+
+          <div class="hero-video-player-wrap">
+            <video id="hero-main-video" class="hero-video-element" controls preload="metadata" poster="poster-moi-truong-chung.png">
+              <source src="video-nhom-03.mp4" type="video/mp4">
+              Trình duyệt của bạn không hỗ trợ thẻ phát video HTML5.
+            </video>
+          </div>
+
+          <div class="hero-video-caption-bar">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <h3 style="font-size: 1.05rem; margin: 0; color: var(--text-white);">Thử Thách Video: "1 Phút Xanh"</h3>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--data-vegetation); font-weight: 700;">BỞI NHÓM 3 (10.3)</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
+              Tác phẩm clip ngắn kêu gọi học sinh tiết kiệm điện quạt, đèn lớp học, từ chối ly nhựa dùng một lần tại căng-tin và chung tay trồng thêm bồn hoa cây xanh trong trường.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero 4 Quick Metrics Bar -->
+      <div class="hero-metrics-bar" style="margin-top: var(--sp-8);">
+        <div class="metric-col">
+          <div class="metric-label">Trái Đất ấm dần lên</div>
+          <div class="metric-val mono-num">+1.18 °C</div>
+          <div class="metric-sub">Thời tiết cực đoan thất thường hơn</div>
+        </div>
+        <div class="metric-col">
+          <div class="metric-label">Xâm nhập mặn ĐBSCL</div>
+          <div class="metric-val mono-num">> 70 km</div>
+          <div class="metric-sub">Sâu vào Bến Tre, Tiền Giang, Cà Mau</div>
+        </div>
+        <div class="metric-col">
+          <div class="metric-label">Triển lãm sáng tạo</div>
+          <div class="metric-val mono-num" style="color: var(--cyan-glacier);">8 Poster</div>
+          <div class="metric-sub">Vẽ tay & thiết kế bởi Lớp 10.3</div>
+        </div>
+        <div class="metric-col">
+          <div class="metric-label">Cam kết học đường</div>
+          <div class="metric-val mono-num" style="color: var(--data-vegetation);">1 Phút Xanh</div>
+          <div class="metric-sub">Bắt đầu từ những việc làm giản dị</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+
+  <!-- ===================================================================
+       3. TRIỂN LÃM POSTER CỦA HỌC SINH LỚP 10.3
+       =================================================================== -->
+  <section class="section" id="hoc-sinh">
+    <div class="container">
+      <div class="section-eyebrow">🎨 Triển lãm sáng tạo học đường • Lớp 10.3</div>
+      <h2>Bộ Sưu Tập 8 Poster Cổ Động Môi Trường</h2>
+      <p class="section-desc">
+        Mỗi tác phẩm là góc nhìn mộc mạc, sáng tạo và đầy nhiệt huyết của các nhóm học sinh Lớp 10.3 về bảo vệ tài nguyên, rừng ngập mặn, năng lượng sạch và giảm rác thải nhựa. Nhấp vào từng poster để xem tranh phóng to và thông điệp của nhóm tác giả!
+      </p>
+
+      <div class="student-media-row">
+        
+        <!-- Poster Môi Trường Chung -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-moi-truong-chung.png', 'Poster Trái Đất - Ngôi Nhà Chung', 'Nhóm 3 (Lớp 10.3)', 'Tác phẩm mỹ thuật truyền cảm hứng về bảo vệ màu xanh của Trái Đất và hệ sinh thái.')">
+          <img src="poster-moi-truong-chung.png" alt="Poster Ngôi Nhà Chung" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER ĐỒ HỌA</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Trái Đất - Ngôi Nhà Chung</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 3 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 1 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-01.jpg', 'Poster Cổ Động Khí Hậu & Hành Động', 'Nhóm 1 (Lớp 10.3)', 'Tác phẩm truyền thông về hiệu ứng nhà kính và bảo vệ môi trường sống.')">
+          <img src="poster-nhom-01.jpg" alt="Poster Nhóm 1" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER CỔ ĐỘNG</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Cổ Động Khí Hậu & Hành Động</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 1 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 2 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-02.png', 'Poster Giải Pháp Giảm Ô Nhiễm', 'Nhóm 2 (Lớp 10.3)', 'Khuyến khích phân loại rác tại nguồn và lối sống tiết kiệm năng lượng.')">
+          <img src="poster-nhom-02.png" alt="Poster Nhóm 2" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER ĐỒ HỌA</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Giải Pháp Giảm Thiểu Ô Nhiễm</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 2 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 4 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-04.jpg', 'Poster Năng Lượng Sạch', 'Nhóm 4 (Lớp 10.3)', 'Nêu bật tầm quan trọng của điện gió và điện mặt trời.')">
+          <img src="poster-nhom-04.jpg" alt="Poster Nhóm 4" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER CỔ ĐỘNG</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Năng Lượng Sạch & Tương Lai</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 4 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 7 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-07.jpg', 'Poster Bảo Vệ Hệ Sinh Thái', 'Nhóm 7 (Lớp 10.3)', 'Bảo tồn rừng ngập mặn và giảm rác thải nhựa đại dương.')">
+          <img src="poster-nhom-07.jpg" alt="Poster Nhóm 7" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER CỔ ĐỘNG</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Bảo Vệ Rừng Ngập Mặn & Biển</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 7 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 8 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-08.png', 'Poster Tiêu Dùng Có Trách Nhiệm', 'Nhóm 8 (Lớp 10.3)', 'Mô hình kinh tế tuần hoàn 3R: Reduce - Reuse - Recycle.')">
+          <img src="poster-nhom-08.png" alt="Poster Nhóm 8" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER ĐỒ HỌA</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Tiêu Dùng Có Trách Nhiệm</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 8 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Nhóm 9 -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-nhom-09.jpg', 'Poster Bảo Vệ Đất Đai & Cây Xanh', 'Nhóm 9 (Lớp 10.3)', 'Thông điệp cây xanh là lá phổi của Trái Đất.')">
+          <img src="poster-nhom-09.jpg" alt="Poster Nhóm 9" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan-glacier);">🖼️ POSTER CỔ ĐỘNG</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Bảo Vệ Đất Đai & Trồng Cây</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Bởi Nhóm 9 • Lớp 10.3</div>
+          </div>
+        </article>
+
+        <!-- Poster Cứu Lấy Trái Đất Infographic -->
+        <article class="student-card" onclick="openMediaModal('image', 'poster-cuu-trai-dat.png', 'Infographic: Cứu Lấy Trái Đất', 'Minh họa tổng hợp Lớp 10.3', 'Sơ đồ Nguyên nhân - Hậu quả - Hành động cụ thể.')">
+          <img src="poster-cuu-trai-dat.png" alt="Infographic Cứu Lấy Trái Đất" class="student-card-thumb">
+          <div class="student-card-body">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--data-vegetation);">📊 INFOGRAPHIC MINH HỌA</span>
+            <h4 style="font-size: 1rem; margin: 4px 0 2px;">Cứu Lấy Trái Đất - Hành Động Ngay</h4>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Vẽ tay sáng tạo • Lớp 10.3</div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="text-align: center; margin-top: var(--sp-8);">
+        <a href="trien-lam-poster.html" class="btn-climate btn-primary" style="padding: 12px 28px; font-size: 0.95rem;">
+          <span>🖼️ Xem Toàn Bộ 8 Poster & Chia Sẻ Nghệ Thuật</span>
+          <span>➔</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================================================================
+       4. TRUNG TÂM MÔ PHỎNG 3D THIÊN TAI & KHÍ HẬU
+       =================================================================== -->
+  <section class="section" id="trung-tam-mo-phong-3d">
+    <div class="container">
+      <div class="section-eyebrow">🔬 Mô hình học tập trực quan 3D • Môn Địa lý & Vật lý</div>
+      <h2>Khám Phá Cơ Chế 4 Hiện Tượng Thời Tiết Cực Đoan</h2>
+      <p class="section-desc">
+        Để những bài học biến đổi khí hậu trong sách giáo khoa trở nên sống động, các mô hình 3D tương tác giúp chúng mình tự do xoay góc nhìn, điều chỉnh các thông số thời tiết và quan sát ảnh hưởng thực tế của thiên tai đến đời sống người dân Việt Nam.
+      </p>
+
+      <div class="sim-hub-grid">
+        
+        <!-- Simulation Card 1: Hạn hán & Xâm nhập mặn -->
+        <a href="mo-phong-han-han.html" class="sim-hub-card" style="--card-accent: #f59e0b; --card-glow: rgba(245, 158, 11, 0.25); --card-btn-bg: rgba(245, 158, 11, 0.15);">
+          <div class="sim-hub-badge-row">
+            <span class="sim-hub-badge" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.4);">
+              <span>☀️</span> HẠN MẶN MIỀN TÂY NAM BỘ
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">TỆP: mo-phong-han-han.html</span>
+          </div>
+          <h3 class="sim-hub-title">Mô Phỏng 3D Hạn Hán & Xâm Nhập Mặn</h3>
+          <p class="sim-hub-desc">
+            Trực tiếp chỉnh lượng mưa và độ mặn để quan sát ruộng đất nứt nẻ, vườn sầu riêng héo rũ và nước mặn từ biển tràn sâu hơn 70 km vào sông Tiền, sông Hậu tại Bến Tre, Tiền Giang.
+          </p>
+          <div class="sim-hub-metrics-preview">
+            <div class="sim-hub-metric-item">
+              <div class="sub">TỐC ĐỘ BỐC HƠI NƯỚC</div>
+              <div class="val" style="color: #f59e0b;">8.2 mm/ngày</div>
+            </div>
+            <div class="sim-hub-metric-item">
+              <div class="sub">RANH MẶN 4‰ TIẾN SÂU</div>
+              <div class="val" style="color: var(--data-heat);">72.0 km nội đồng</div>
+            </div>
+          </div>
+          <div class="sim-hub-cta-btn">
+            <span>Vào Phòng 3D Hạn Mặn Miền Tây</span>
+            <span>➔</span>
+          </div>
+        </a>
+
+        <!-- Simulation Card 2: Bão lũ & Ngập lụt -->
+        <a href="mo-phong-bao-lu.html" class="sim-hub-card" style="--card-accent: #38bdf8; --card-glow: rgba(56, 189, 248, 0.25); --card-btn-bg: rgba(56, 189, 248, 0.15);">
+          <div class="sim-hub-badge-row">
+            <span class="sim-hub-badge" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">
+              <span>🌀</span> SIÊU BÃO YAGI & LŨ LỤT ĐÔ THỊ
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">TỆP: mo-phong-bao-lu.html</span>
+          </div>
+          <h3 class="sim-hub-title">Mô Phỏng 3D Siêu Bão & Ngập Lụt Đô Thị</h3>
+          <p class="sim-hub-desc">
+            Kiểm tra sức tàn phá của bão cấp 6 đến cấp 17, mưa giật xiên theo gió lớn, hàng cây dừa quằn quại, sấm chớp giông lốc và nước triều dâng ngập đường phố như đợt bão Yagi 2024.
+          </p>
+          <div class="sim-hub-metrics-preview">
+            <div class="sim-hub-metric-item">
+              <div class="sub">CẤP GIÓ BÃO GIẬT</div>
+              <div class="val" style="color: #38bdf8;">Cấp 14 (155 km/h)</div>
+            </div>
+            <div class="sim-hub-metric-item">
+              <div class="sub">ĐỘ SÂU ĐƯỜNG PHỐ NGẬP</div>
+              <div class="val" style="color: var(--data-critical);">68.5 cm (Ngập nặng)</div>
+            </div>
+          </div>
+          <div class="sim-hub-cta-btn">
+            <span>Vào Phòng 3D Siêu Bão & Ngập Lụt</span>
+            <span>➔</span>
+          </div>
+        </a>
+
+        <!-- Simulation Card 3: Băng tan & Nước biển dâng -->
+        <a href="mo-phong-bang-tan.html" class="sim-hub-card" style="--card-accent: #0284c7; --card-glow: rgba(2, 132, 199, 0.25); --card-btn-bg: rgba(2, 132, 199, 0.15);">
+          <div class="sim-hub-badge-row">
+            <span class="sim-hub-badge" style="color: #7dd3fc; border-color: rgba(125, 211, 252, 0.4);">
+              <span>🧊</span> BĂNG TAN & BIỂN DÂNG VEN BIỂN
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">TỆP: mo-phong-bang-tan.html</span>
+          </div>
+          <h3 class="sim-hub-title">Mô Phỏng 3D Băng Tan & Nước Biển Dâng</h3>
+          <p class="sim-hub-desc">
+            Quan sát dải băng cực co rút, tảng băng trôi dập dềnh và tháp đo mực nước biển dâng. Tìm hiểu lý do băng tan ở cực lại đe dọa ngập 30% diện tích ven biển nước ta đến năm 2100.
+          </p>
+          <div class="sim-hub-metrics-preview">
+            <div class="sim-hub-metric-item">
+              <div class="sub">TAN BĂNG LỤC ĐỊA</div>
+              <div class="val" style="color: #7dd3fc;">380 Tỷ tấn/năm</div>
+            </div>
+            <div class="sim-hub-metric-item">
+              <div class="sub">MỰC NƯỚC BIỂN DÂNG 2100</div>
+              <div class="val" style="color: var(--cyan-glacier);">+48.6 cm tích lũy</div>
+            </div>
+          </div>
+          <div class="sim-hub-cta-btn">
+            <span>Vào Phòng 3D Băng Tan & Biển Dâng</span>
+            <span>➔</span>
+          </div>
+        </a>
+
+        <!-- Simulation Card 4: Sóng nhiệt & Cháy rừng -->
+        <a href="mo-phong-chay-rung.html" class="sim-hub-card" style="--card-accent: #ef4444; --card-glow: rgba(239, 68, 68, 0.25); --card-btn-bg: rgba(239, 68, 68, 0.15);">
+          <div class="sim-hub-badge-row">
+            <span class="sim-hub-badge" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);">
+              <span>🔥</span> GIÓ LÀO & CHÁY RỪNG MIỀN TRUNG
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">TỆP: mo-phong-chay-rung.html</span>
+          </div>
+          <h3 class="sim-hub-title">Mô Phỏng 3D Sóng Nhiệt & Cháy Rừng</h3>
+          <p class="sim-hub-desc">
+            Mô phỏng đợt nắng nóng gay gắt trên 42°C kèm gió Lào khô khốc khiến thảm cỏ bắt lửa, tàn than bay tạt theo gió thiêu rụi cây cối và khói bụi mịn PM2.5 ô nhiễm nghiêm trọng.
+          </p>
+          <div class="sim-hub-metrics-preview">
+            <div class="sim-hub-metric-item">
+              <div class="sub">CHỈ SỐ NGUY CƠ CHÁY FWI</div>
+              <div class="val" style="color: #ef4444;">64.2 (Cực kỳ nguy cấp)</div>
+            </div>
+            <div class="sim-hub-metric-item">
+              <div class="sub">TỐC ĐỘ LỬA CHÁY LAN</div>
+              <div class="val" style="color: var(--data-heat);">32.5 mét/phút</div>
+            </div>
+          </div>
+          <div class="sim-hub-cta-btn">
+            <span>Vào Phòng 3D Nắng Nóng & Cháy Rừng</span>
+            <span>➔</span>
+          </div>
+        </a>
+
+      </div>
+
+      <div style="text-align: center; margin-top: var(--sp-8);">
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-primary" style="padding: 12px 28px; font-size: 0.95rem;">
+          <span>★ Vào Trang Trung Tâm Mô Phỏng 3D Đầy Đủ</span>
+          <span>➔</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================================================================
+       5. SỔ TAY HÀNH ĐỘNG XANH • CAM KẾT CỦA HỌC SINH LỚP 10.3
+       =================================================================== -->
+  <section class="section" id="giai-phap">
+    <div class="container">
+      <div class="section-eyebrow">🌱 Lời Kêu Gọi Hành Động Học Đường • Tập Thể Lớp 10.3</div>
+      <h2>Lời Kêu Gọi Chung Tay: 6 Thói Quen Xanh Cùng Làm Mỗi Ngày!</h2>
+      <p class="section-desc">
+        Bảo vệ môi trường <strong>không phải là việc chọn làm điều này rồi bỏ qua điều kia</strong>. Mái trường và hành tinh của chúng ta cần sự đồng lòng của tất cả mọi người trong <strong>cả 6 thói quen xanh</strong> mỗi ngày!
+      </p>
+
+      <!-- Community Call to Action Card -->
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(2, 132, 199, 0.12)); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: var(--radius-lg); padding: var(--sp-8); margin-top: var(--sp-6); box-shadow: 0 16px 36px rgba(16, 185, 129, 0.12);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--sp-6);">
+          
+          <div style="max-width: 640px;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.2); color: var(--data-vegetation); padding: 4px 12px; border-radius: var(--radius-full); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; margin-bottom: 12px;">
+              📢 CHIẾN DỊCH HỌC ĐƯỜNG: 2.000 CHỮ KÝ XANH ĐỒNG HÀNH
+            </div>
+            <h3 style="font-size: clamp(1.3rem, 2.2vw, 1.7rem); color: var(--text-white); margin-bottom: 10px; line-height: 1.3;">
+              Lời Kêu Gọi Toàn Thể Học Sinh & Thầy Cô Cùng Chung Tay Hành Động!
+            </h3>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; margin-bottom: var(--sp-6);">
+              Mỗi hành động nhỏ khi được hàng nghìn học sinh cùng nhau thực hiện sẽ tạo nên sức mạnh to lớn. Lớp 10.3 tha thiết kêu gọi tất cả các bạn học sinh, thầy cô và quý phụ huynh hãy cùng ký tên đồng hành và thực hiện trọn vẹn 6 thói quen xanh này mỗi ngày!
+            </p>
+            
+            <div style="display: flex; align-items: center; gap: var(--sp-4); flex-wrap: wrap;">
+              <button id="btn-sign-pledge" class="btn-climate btn-primary" onclick="signGreenPledge()" style="padding: 12px 24px; font-size: 0.95rem; font-weight: 700;">
+                <span>✍️ Ký Tên Hưởng Ứng Lời Kêu Gọi Ngay</span>
+                <span>🌱</span>
+              </button>
+              <a href="so-tay-song-xanh.html" class="btn-climate btn-secondary" style="padding: 12px 20px; font-size: 0.9rem;">
+                <span>📖 Xem Toàn Bộ Sổ Tay & Thử Thách 7 Ngày</span>
+              </a>
+            </div>
+            
+            <div id="sign-feedback" style="display: none; margin-top: 14px; padding: 12px 16px; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--data-vegetation); border-radius: var(--radius-sm); font-size: 0.92rem; color: var(--text-white); line-height: 1.5;">
+              🎉 <strong>Cảm ơn bạn rất nhiều!</strong> Bạn vừa là người thứ <span id="user-pledge-rank" class="mono-num" style="font-weight: 800; color: #10b981;">1.483</span> ký tên đồng hành cùng chiến dịch Màu Xanh Tương Lai của Lớp 10.3!
+            </div>
+          </div>
+
+          <!-- Live Community Counter Dock -->
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-md); padding: var(--sp-6); min-width: 260px; text-align: center; box-shadow: var(--card-shadow); flex-grow: 1; max-width: 320px;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase;">SỐ LƯỢT ĐỒNG HÀNH</div>
+            <div style="font-size: 2.8rem; font-weight: 900; color: var(--data-vegetation); margin: 6px 0;" class="mono-num" id="pledge-counter">1.482</div>
+            <div style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">Học sinh, thầy cô & phụ huynh đã ký tên</div>
+
+            <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--space-border); text-align: left;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px;">
+                <span>Tiến độ chiến dịch:</span>
+                <span class="mono-num" style="color: var(--cyan-glacier); font-weight: 700;">74.1%</span>
+              </div>
+              <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 74.1%; height: 100%; background: linear-gradient(90deg, #10b981, #0284c7);"></div>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 6px; text-align: center;">Mục tiêu: 2.000 chữ ký toàn trường</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 6 Practical Student Action Cards -->
+      <div class="solutions-matrix-grid" style="margin-top: var(--sp-8);">
+        
+        <!-- Action 1 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 1</span>
+            <span style="font-size: 1.8rem;">🚲</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Đi Xe Đạp & Đi Bộ Đến Trường</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình tha thiết kêu gọi các bạn hạn chế tối đa việc nhờ bố mẹ đưa đón bằng xe máy chạy xăng trên các quãng đường gần. Hãy cùng rủ bạn cùng bàn đi xe đạp hoặc đi bộ đến trường mỗi sáng để rèn luyện thể lực dẻo dai.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Nếu 1.000 học sinh trường mình cùng đi xe đạp hoặc đi bộ 2 ngày/tuần, chúng ta sẽ giảm hơn <strong>2.4 tấn CO₂</strong> mỗi tháng và giải tỏa hoàn toàn ùn tắc trước cổng trường!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 2 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 2</span>
+            <span style="font-size: 1.8rem;">💡</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Tắt Quạt, Tắt Đèn Khi Rời Lớp Học</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi ban cán sự lớp, tổ trực nhật và từng thành viên luôn chủ động kiểm tra tắt toàn bộ quạt trần, đèn neon và máy chiếu trước giờ ra chơi, giờ học thể dục ngoài sân và lúc tan học về nhà.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> 30 phòng học chỉ cần tắt quạt và đèn trong 30 phút giờ ra chơi mỗi ngày sẽ tiết kiệm hơn <strong>1.800 kWh điện</strong> mỗi tháng — tương đương lượng điện thắp sáng cho 15 hộ gia đình!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 3 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 3</span>
+            <span style="font-size: 1.8rem;">🧃</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Dùng Bình Nước Riêng, Bỏ Đồ Nhựa 1 Lần</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi các bạn kiên quyết từ chối ly trà sữa nhựa, ống hút nhựa và hộp xốp dùng một lần tại căng-tin. Hãy luôn chuẩn bị một bình nước cá nhân để lấy nước sạch tại cây lọc nước của trường và dùng hộp cơm tái sử dụng.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Mỗi ngày một bạn không dùng 1 ly nhựa đồng nghĩa trường ta giảm được hơn <strong>30.000 món rác thải nhựa</strong> khó phân hủy thải ra môi trường mỗi tháng học!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 4 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 4</span>
+            <span style="font-size: 1.8rem;">🗑️</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Phân Loại Rác & Làm "Kế Hoạch Nhỏ"</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi lớp học bố trí 2 ngăn rác riêng biệt: một ngăn chứa giấy vụn, sách vở cũ, chai nhựa và một ngăn rác hữu cơ. Tích cực thu gom giấy vụn tham gia phong trào "Kế hoạch nhỏ" để rác thải được tái sinh vòng đời mới.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Toàn trường có thể thu gom hơn <strong>800 kg giấy và vỏ lon</strong> tái chế mỗi học kỳ, vừa bảo vệ môi trường vừa gây quỹ học bổng giúp đỡ các bạn học sinh có hoàn cảnh khó khăn!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 5 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 5</span>
+            <span style="font-size: 1.8rem;">🌿</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Chăm Sóc Cây Xanh & Bồn Hoa Lớp</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi bạn dành ra 3 phút đầu giờ sáng để tưới nước, nhặt cỏ cho các chậu cây hành lang và bồn hoa trước cửa lớp. Cây xanh không chỉ tạo bóng mát mà còn hấp thụ bụi mịn, lọc sạch bầu không khí học đường.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Hành lang rợp bóng cây xanh giúp hạ nhiệt độ lớp học từ <strong>1 - 2°C</strong> tự nhiên trong những ngày hè oi bức, tạo môi trường học tập xanh mát và thư thái!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 6 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 6</span>
+            <span style="font-size: 1.8rem;">📢</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Lan Tỏa Lời Kêu Gọi & Video "1 Phút Xanh"</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi bạn trở thành một "Đại sứ Môi trường". Hãy chia sẻ video clip ngắn của Nhóm 3, các bức tranh cổ động và trang web này đến bạn bè các lớp khác, thầy cô và gia đình để thông điệp sống xanh lan xa.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Khi 1.000 học sinh cùng lan tỏa, thông điệp bảo vệ khí hậu sẽ chạm tới hơn <strong>10.000 người dân</strong> trong cộng đồng, tạo nên sự chuyển biến mạnh mẽ trong nhận thức và hành động thực tế!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Real-World Vietnam Climate Highlights (Connected with Geography lessons) -->
+      <div style="margin-top: var(--sp-12); background: var(--space-surface); border: 1px solid var(--space-border); border-radius: var(--radius-lg); padding: var(--sp-8); box-shadow: var(--card-shadow);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="font-size: 1.4rem;">🇻🇳</span>
+          <span class="section-eyebrow" style="margin: 0; color: var(--cyan-glacier);">Góc kiến thức Địa lý thực tế</span>
+        </div>
+        <h3 style="font-size: 1.4rem; color: var(--text-white); margin-bottom: 8px;">3 Điểm Sáng Hành Động Khí Hậu Tại Việt Nam</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 760px; margin-bottom: var(--sp-6); line-height: 1.6;">
+          Nước ta đang tích cực thực hiện cam kết giảm phát thải tại hội nghị COP26 với những dự án thực tế mà học sinh chúng mình có thể quan sát ngay quanh mình:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-4);">
+          
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">⚡</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Cánh Đồng Điện Gió & Mặt Trời Nam Trung Bộ</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Ninh Thuận và Bình Thuận đã trở thành "thủ phủ" năng lượng sạch của cả nước với hàng trăm trụ điện gió khổng lồ đón gió biển, thay thế dần các nhà máy nhiệt điện than gây khói bụi.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">🌲</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Lá Chắn Rừng Ngập Mặn Cần Giờ & Cà Mau</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Khu dự trữ sinh quyển rừng ngập mặn Cần Giờ được ví như "lá phổi xanh" của TP.HCM. Rừng đước, mắm bám rễ sâu giữ đất phù sa, chống sóng biển xâm thực và hấp thụ carbon cực tốt.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">🚌</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Giao Thông Công Cộng Xanh: VinBus & Metro</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Tuyến Metro số 1 Bến Thành - Suối Tiên cùng hàng trăm xe buýt điện thông minh VinBus đang dần thay thế xe máy chạy xăng tại TP.HCM và Hà Nội, mang lại bầu không khí trong lành hơn.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: var(--sp-8);">
+        <a href="so-tay-song-xanh.html" class="btn-climate btn-primary" style="padding: 12px 28px; font-size: 0.95rem;">
+          <span>🌱 Mở Toàn Bộ Sổ Tay Sống Xanh & Thử Thách 7 Ngày</span>
+          <span>➔</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================================================================
+       6. LIGHTBOX MEDIA & OBSERVATION MODAL
+       =================================================================== -->
+  <div class="climate-modal" id="climate-modal" onclick="closeMediaModal(event)">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeMediaModal()">✕</button>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       7. FOOTER — DỰ ÁN HỌC TẬP LỚP 10.3
+       =================================================================== -->
+  <footer class="climate-footer">
+    <div class="container">
+      <div class="footer-columns">
+        
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: var(--sp-4);">
+            <div class="brand-symbol">🌱</div>
+            <div class="brand-text-wrap">
+              <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+              <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; max-width: 360px;">
+            Website học tập và truyền thông xanh được thực hiện bởi tập thể học sinh Lớp 10.3, nhằm lan tỏa tình yêu thiên nhiên, lối sống xanh học đường và sự thấu hiểu về biến đổi khí hậu tại quê hương Việt Nam.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nội Dung Trang Dự Án</h4>
+          <ul>
+            <li><a href="index.html">🎬 Video Clip 1 Phút Xanh (Nhóm 3)</a></li>
+            <li><a href="trien-lam-poster.html">🖼️ Triển Lãm 8 Poster Lớp 10.3</a></li>
+            <li><a href="trung-tam-mo-phong.html">★ 4 Mô Hình 3D Thiên Tai</a></li>
+            <li><a href="so-tay-song-xanh.html">🌱 Sổ tay 6 việc làm xanh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nguồn Tư Liệu Khí Hậu Học Tập</h4>
+          <ul>
+            <li><a href="https://nchmf.gov.vn/" target="_blank" rel="noopener">Trung tâm Dự báo Khí tượng Thủy văn Quốc gia</a></li>
+            <li><a href="https://monre.gov.vn/" target="_blank" rel="noopener">Bộ Tài nguyên & Môi trường Việt Nam</a></li>
+            <li><a href="https://vtv.vn/" target="_blank" rel="noopener">Đài Truyền hình Việt Nam (Chương trình Vì Tầm Vóc Việt)</a></li>
+            <li><a href="https://www.ipcc.ch/" target="_blank" rel="noopener">Ban Liên chính phủ về BĐKH (IPCC)</a></li>
+            <li><a href="https://climate.nasa.gov/" target="_blank" rel="noopener">Cơ quan Hàng không Vũ trụ NASA Earth</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Lời Tri Ân Thầy Cô</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.6;">
+            Tập thể Lớp 10.3 xin chân thành gửi lời cảm ơn đến Thầy Cô bộ môn Địa lý, Giáo dục Kinh tế & Pháp luật, và Thầy Cô Tin học đã tận tình hướng dẫn, truyền cảm hứng để chúng em hoàn thành dự án học tập ý nghĩa này.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 Dự Án Học Tập Lớp 10.3 • Năm học 2025 - 2026</div>
+        <div>Chung tay vì một tương lai Việt Nam Xanh - Sạch - Bền Vững</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       JAVASCRIPT SCRIPTS
+       =================================================================== -->
+  <script>
+
+    // Lời kêu gọi hành động sống xanh của tập thể Lớp 10.3
+    let supporterCount = 1482;
+    let hasSigned = false;
+
+    try {
+      const storedCount = localStorage.getItem('climateverse_supporters');
+      if (storedCount) supporterCount = parseInt(storedCount, 10);
+      hasSigned = localStorage.getItem('climateverse_has_signed') === 'true';
+    } catch (e) {}
+
+    function updateSupporterDisplay() {
+      const counterEl = document.getElementById('pledge-counter');
+      const btnSign = document.getElementById('btn-sign-pledge');
+      const feedbackEl = document.getElementById('sign-feedback');
+      const rankEl = document.getElementById('user-pledge-rank');
+
+      if (counterEl) counterEl.textContent = supporterCount.toLocaleString('vi-VN');
+
+      if (hasSigned) {
+        if (btnSign) {
+          btnSign.innerHTML = '<span>✅ Bạn Đã Ký Tên Hưởng Ứng Lời Kêu Gọi</span>';
+          btnSign.style.background = 'var(--data-vegetation)';
+          btnSign.style.cursor = 'default';
+        }
+        if (feedbackEl) {
+          feedbackEl.style.display = 'block';
+          if (rankEl) rankEl.textContent = supporterCount.toLocaleString('vi-VN');
+        }
+      }
+    }
+
+    function signGreenPledge() {
+      if (hasSigned) {
+        alert('🎉 Cảm ơn bạn! Bạn đã ký tên hưởng ứng lời kêu gọi của Lớp 10.3 trước đó rồi. Hãy cùng nhau rủ bạn bè lớp mình tham gia nhé!');
+        return;
+      }
+      hasSigned = true;
+      supporterCount++;
+      try {
+        localStorage.setItem('climateverse_supporters', supporterCount);
+        localStorage.setItem('climateverse_has_signed', 'true');
+      } catch (e) {}
+      updateSupporterDisplay();
+
+      const feedbackEl = document.getElementById('sign-feedback');
+      if (feedbackEl) {
+        feedbackEl.style.display = 'block';
+        feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Modal Display for Student Media (Posters & Videos)
+    function openMediaModal(type, src, title, author, desc) {
+      const modal = document.getElementById('climate-modal');
+      const body = document.getElementById('modal-body-content');
+      
+      let mediaHtml = '';
+      if (type === 'video') {
+        mediaHtml = `
+          <video controls autoplay style="width: 100%; border-radius: 8px; max-height: 480px; background: #000; margin-bottom: 16px;">
+            <source src="${src}" type="video/mp4">
+          </video>
+        `;
+      } else {
+        mediaHtml = `
+          <div style="text-align: center; background: #000; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+            <img src="${src}" alt="${title}" style="max-width: 100%; max-height: 65vh; object-fit: contain; border-radius: 4px;">
+          </div>
+        `;
+      }
+
+      body.innerHTML = `
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier); text-transform: uppercase;">ẤN PHẨM HỌC SINH LỚP 10.3</div>
+        <h2 style="font-size: 1.6rem; margin: 6px 0 2px; color: var(--text-white);">${title}</h2>
+        <div style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 16px;">Tác giả: <strong>${author}</strong></div>
+        ${mediaHtml}
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+          ${desc}
+        </p>
+        <button class="btn-climate btn-ghost" onclick="closeMediaModal()">Đóng cửa sổ</button>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeMediaModal(e) {
+      if (e && e.target && e.target.closest('.modal-inner')) return;
+      const modal = document.getElementById('climate-modal');
+      if (modal) modal.classList.remove('open');
+      const video = modal ? modal.querySelector('video') : null;
+      if (video) video.pause();
+    }
+
+    // ===================================================================
+    // QUẢN LÝ CHẾ ĐỘ SÁNG / TỐI (LIGHT / DARK THEME TOGGLE)
+    // ===================================================================
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    function applyAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('climateverse_theme', theme);
+      } catch (err) {}
+
+      if (theme === 'dark') {
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = 'Giao diện Sáng';
+      } else {
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = 'Giao diện Tối';
+      }
+    }
+
+    // Mặc định khởi tạo giao diện sáng tươi vui, thu hút
+    let initialTheme = 'light';
+    try {
+      initialTheme = localStorage.getItem('climateverse_theme') || 'light';
+    } catch (e) {}
+    applyAppTheme(initialTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        applyAppTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    // Khởi tạo trạng thái kêu gọi
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSupporterDisplay();
+    });
+  </script>
+</body>
+</html>

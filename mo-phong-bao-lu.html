@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mô Phỏng 3D Siêu Bão, Mưa Lớn & Ngập Lụt — Dự Án Môi Trường Lớp 10.3</title>
+  <meta name="description" content="Phòng mô phỏng 3D siêu bão nhiệt đới, hoàn lưu mưa lớn và ngập lụt đô thị ven biển thời gian thực.">
+  <link rel="stylesheet" href="css/climateverse.css">
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/OrbitControls.js"></script>
+</head>
+<body style="overflow: hidden;">
+
+  <!-- Scientific HUD Navigation Header -->
+  <header class="hud-header">
+    <div class="container hud-nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">🌀</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Siêu Bão & Ngập Lụt Đô Thị Việt Nam</span>
+        </div>
+      </a>
+
+      <ul class="hud-nav-links">
+        <li><a href="index.html" class="hud-link">🎬 Trang Chủ</a></li>
+        <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+        <li><a href="trung-tam-mo-phong.html" class="hud-link active">★ Trung Tâm 3D</a></li>
+        <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--cyan-glacier); color: var(--cyan-glacier);">
+          ★ Chọn phòng 3D khác ➔
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen 3D Stage -->
+  <div class="sim-stage-wrapper">
+    <!-- WebGL Canvas Container -->
+    <div id="storm-canvas-container" class="sim-3d-canvas-container"></div>
+
+    <!-- Lightning Flash Layer -->
+    <div id="lightning-layer" class="lightning-flash-layer"></div>
+
+    <!-- HUD Overlay Panels -->
+    <div class="sim-hud-overlay">
+      
+      <!-- Top Status Banner -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="sim-floating-card sim-status-banner" id="storm-status-banner" style="background: rgba(239, 68, 68, 0.25); border-color: var(--data-critical); color: #fff;">
+          <span style="color: var(--data-critical);">🌀</span>
+          <span id="storm-status-text">CẢNH BÁO KHẨN CẤP: Siêu Bão Đổ Bộ Kèm Mưa Lớn & Triều Cường</span>
+        </div>
+
+        <div class="sim-floating-card" style="padding: 6px 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-glacier);">
+          Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
+        </div>
+      </div>
+
+      <!-- Bottom Split Control & Telemetry Docks -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+        
+        <!-- Left Dock: Parameter Controls -->
+        <div class="sim-floating-card sim-control-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Thực nghiệm bão lũ</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tự Chỉnh Gió Bão & Lượng Mưa</h3>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Cấp gió bão (Thang Beaufort)</span>
+              <span class="param-val-badge mono-num" id="val-wind" style="color: var(--data-critical);">Cấp 14 (155 km/h)</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-wind" min="6" max="17" value="14" step="1">
+            <div class="param-bounds"><span>Cấp 6 (Gió giật cành cây)</span><span>Cấp 17 (Siêu bão hủy diệt)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Lượng mưa trút xuống</span>
+              <span class="param-val-badge mono-num" id="val-rainrate" style="color: var(--cyan-glacier);">110 mm/giờ</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-rainrate" min="10" max="250" value="110" step="5">
+            <div class="param-bounds"><span>10 mm/h (Mưa rào nhẹ)</span><span>250 mm/h (Mưa xối xả ngập lụt)</span></div>
+          </div>
+
+          <div class="sim-param-box">
+            <div class="param-header">
+              <span class="param-name">Nước biển & Triều dâng</span>
+              <span class="param-val-badge mono-num" id="val-surge" style="color: var(--data-warning);">+2.2 mét</span>
+            </div>
+            <input type="range" class="scientific-slider" id="slider-surge" min="0.5" max="4.0" value="2.2" step="0.1">
+            <div class="param-bounds"><span>+0.5 m (Triều bình thường)</span><span>+4.0 m (Triều dâng kỷ lục)</span></div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); margin-bottom: 6px;">CÁC CƠN BÃO ĐIỂN HÌNH TẠI VIỆT NAM:</div>
+            <div class="preset-group" style="margin: 0;">
+              <button class="preset-pill" onclick="applyStormPreset(8, 30, 0.8, 'Áp thấp nhiệt đới')">Mưa dông ven biển</button>
+              <button class="preset-pill" onclick="applyStormPreset(11, 75, 1.5, 'Bão cấp 11 Miền Trung')">Bão Miền Trung</button>
+              <button class="preset-pill active" onclick="applyStormPreset(16, 180, 2.8, 'Siêu bão Yagi 2024')">Siêu bão Yagi 2024</button>
+              <button class="preset-pill" onclick="applyStormPreset(17, 240, 3.8, 'Thảm họa kịch trần')">Bão cực đại</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Dock: Physical Telemetry Output -->
+        <div class="sim-floating-card sim-telemetry-dock">
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Hậu quả đối với thành phố</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Mức Độ Ngập Đô Thị & Nguy Hiểm</h3>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Độ sâu nước ngập trên đường phố</div>
+            <div class="metric-val mono-num" id="tele-flood-depth" style="color: var(--data-critical);">68.5 cm</div>
+            <div class="metric-sub">Xe máy, ô tô chết máy; giao thông bị tê liệt</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Lưu lượng nước mưa tràn mặt đường</div>
+            <div style="font-size: 1.35rem; font-weight: 700; color: var(--cyan-glacier);" class="mono-num" id="tele-runoff">185 m³/giây</div>
+            <div class="metric-sub">Vượt gấp gần 3 lần sức tải của cống thoát nước</div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="metric-label">Tốc độ gió giật nguy hiểm nhất</div>
+            <div style="font-size: 1.1rem; font-weight: 600; color: var(--data-warning);" class="mono-num" id="tele-wind-speed">175 km/h</div>
+            <div class="metric-sub">Có thể thổi bay biển quảng cáo, làm đổ cây xanh</div>
+          </div>
+
+          <div style="padding-top: 10px; border-top: 1px solid var(--space-border); margin-bottom: 8px;">
+            <div class="metric-label">Độ ẩm mây tăng do Trái Đất ấm lên</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: var(--blue-ice);" class="mono-num" id="tele-clausius">+14.2% lượng mưa</div>
+          </div>
+
+          <div style="margin-bottom: 12px; padding: 8px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3);" id="vehicle-status-box">
+            <div class="metric-label" style="margin-bottom: 2px;">Tình trạng đường phố & phương tiện:</div>
+            <div style="font-size: 0.92rem; font-weight: 700; color: var(--data-critical);" id="tele-vehicle-status">⚠️ Ô TÔ CHẾT MÁY (Ngập lút nắp capo)</div>
+          </div>
+
+          <!-- Student Learning Note -->
+          <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--cyan-glacier); padding: 8px 12px; border-radius: 4px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+            💡 <strong style="color: #fff;">Góc học sinh:</strong> Cứ nóng thêm <strong>1°C</strong>, bầu trời giữ thêm <strong>7%</strong> lượng hơi nước. Khi bão hút hơi nước trên biển Đông ấm lên, mưa sẽ trút xuống dữ dội hơn, gây lũ quét kinh hoàng như đợt bão Yagi vừa qua!
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Three.js Storm Simulation Script -->
+  <script>
+    let scene, camera, renderer, controls;
+    let rainParticles, rainGeo;
+    let waterMesh, roadMesh, buildingsGroup, palmTrees = [], streetPoles = [];
+    let cycloneMesh, debrisGroup;
+    let stormLight, ambientLight, lightningTimer = 0;
+    let floodedCar, carBlinkers = [], floodedMotorbikes = [];
+    let floodStaffGauge, floodStaffFloat;
+    let flyingRoofSheet;
+
+    let windLevel = 14;
+    let rainRate = 110;
+    let surgeHeight = 2.2;
+
+    // Canvas procedural asphalt road texture with lane lines & zebra crossing
+    function createAsphaltRoadTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Asphalt dark gray
+      ctx.fillStyle = '#262626';
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Noise grain for asphalt
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
+      for (let i = 0; i < 3000; i++) {
+        ctx.fillRect(Math.random() * 512, Math.random() * 512, 2, 2);
+      }
+
+      // Yellow continuous curb line (top and bottom)
+      ctx.strokeStyle = '#eab308';
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(0, 24); ctx.lineTo(512, 24);
+      ctx.moveTo(0, 488); ctx.lineTo(512, 488);
+      ctx.stroke();
+
+      // White dashed center line
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 8;
+      ctx.setLineDash([36, 24]);
+      ctx.beginPath();
+      ctx.moveTo(0, 256); ctx.lineTo(512, 256);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Zebra crossing stripes across right section
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      for (let y = 40; y < 480; y += 40) {
+        ctx.fillRect(400, y, 60, 22);
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.ClampToEdgeWrapping;
+      texture.repeat.set(4, 1);
+      return texture;
+    }
+
+    function initStorm3D() {
+      const container = document.getElementById('storm-canvas-container');
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+
+      // 1. Scene & Atmospheric Stormy Sky
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f172a);
+      scene.fog = new THREE.FogExp2(0x1e293b, 0.015);
+
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.5, 500);
+      camera.position.set(18, 14, 24);
+
+      // 2. Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      // 3. OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 8;
+      controls.maxDistance = 75;
+      controls.target.set(0, 1.5, 0);
+
+      // 4. Lights
+      ambientLight = new THREE.AmbientLight(0x64748b, 1.6);
+      scene.add(ambientLight);
+
+      stormLight = new THREE.DirectionalLight(0x94a3b8, 2.2);
+      stormLight.position.set(25, 45, -15);
+      stormLight.castShadow = true;
+      scene.add(stormLight);
+
+      // 5. Build Vietnamese Urban Flood Scene
+      buildUrbanBoulevardAndSidewalks();
+      buildStreetLightPoles();
+      buildVietnameseShopHouses();
+      buildFloodedVehicles();
+      buildFloodStaffGauge();
+      buildFlyingRoofSheet();
+      buildCoastalPalmTrees();
+      buildFloodWater();
+      buildFloatingDebris();
+      buildTyphoonCloudSpiral();
+      buildHeavyRainParticles();
+
+      // 6. Resize
+      window.addEventListener('resize', () => {
+        const nw = container.clientWidth || window.innerWidth;
+        const nh = container.clientHeight || window.innerHeight;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+      });
+
+      animateStorm();
+    }
+
+    function buildUrbanBoulevardAndSidewalks() {
+      // 1. Mặt đường nhựa Asphalt đô thị (chạy dài theo trục X)
+      const roadGeo = new THREE.PlaneGeometry(54, 11);
+      roadGeo.rotateX(-Math.PI / 2);
+      const roadTex = createAsphaltRoadTexture();
+      const roadMat = new THREE.MeshStandardMaterial({
+        map: roadTex,
+        roughness: 0.6,
+        metalness: 0.1
+      });
+      roadMesh = new THREE.Mesh(roadGeo, roadMat);
+      roadMesh.position.set(0, 0.05, 0);
+      roadMesh.receiveShadow = true;
+      scene.add(roadMesh);
+
+      // 2. Vỉa hè phía Bắc (Dãy nhà phố, z: 5.5 đến 11.5)
+      const walkNorthGeo = new THREE.BoxGeometry(54, 0.35, 6);
+      const walkMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.8 });
+      const walkNorth = new THREE.Mesh(walkNorthGeo, walkMat);
+      walkNorth.position.set(0, 0.22, 8.5);
+      walkNorth.receiveShadow = true;
+      scene.add(walkNorth);
+
+      // Gờ bó vỉa hè
+      const curbNorthGeo = new THREE.BoxGeometry(54, 0.45, 0.3);
+      const curbMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.6 });
+      const curbNorth = new THREE.Mesh(curbNorthGeo, curbMat);
+      curbNorth.position.set(0, 0.25, 5.5);
+      scene.add(curbNorth);
+
+      // 3. Vỉa hè phía Nam & Bờ kè biển (z: -5.5 đến -10.5)
+      const walkSouthGeo = new THREE.BoxGeometry(54, 0.35, 5);
+      const walkSouth = new THREE.Mesh(walkSouthGeo, walkMat);
+      walkSouth.position.set(0, 0.22, -8);
+      walkSouth.receiveShadow = true;
+      scene.add(walkSouth);
+
+      // Tường kè chắn sóng biển vững chắc
+      const seawallGeo = new THREE.BoxGeometry(54, 1.4, 0.8);
+      const seawallMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
+      const seawall = new THREE.Mesh(seawallGeo, seawallMat);
+      seawall.position.set(0, 0.7, -10.8);
+      scene.add(seawall);
+    }
+
+    function buildStreetLightPoles() {
+      // 3 cột đèn chiếu sáng đô thị cao vút dọc vỉa hè
+      [-14, 0, 14].forEach(x => {
+        const poleGroup = new THREE.Group();
+
+        // Thân cột thép
+        const mastGeo = new THREE.CylinderGeometry(0.09, 0.15, 5.2, 8);
+        const mastMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8, roughness: 0.3 });
+        const mast = new THREE.Mesh(mastGeo, mastMat);
+        mast.position.y = 2.6;
+        poleGroup.add(mast);
+
+        // Cần đèn vươn ra đường
+        const armGeo = new THREE.CylinderGeometry(0.06, 0.06, 1.8, 6);
+        armGeo.rotateZ(Math.PI / 3);
+        const arm = new THREE.Mesh(armGeo, mastMat);
+        arm.position.set(0.6, 5.0, 0);
+        poleGroup.add(arm);
+
+        // Chóa đèn phát sáng vàng nhạt
+        const lampGeo = new THREE.ConeGeometry(0.25, 0.3, 8);
+        const lampMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+        const lamp = new THREE.Mesh(lampGeo, lampMat);
+        lamp.position.set(1.3, 4.8, 0);
+        poleGroup.add(lamp);
+
+        poleGroup.position.set(x, 0.35, 5.8);
+        scene.add(poleGroup);
+        streetPoles.push(poleGroup);
+      });
+    }
+
+    function buildVietnameseShopHouses() {
+      buildingsGroup = new THREE.Group();
+
+      // Dãy nhà ống đô thị đặc trưng Việt Nam (mặt tiền kinh doanh)
+      const colors = [0x1e293b, 0x334155, 0x0f172a, 0x1e3a5f, 0x27272a];
+      let bIdx = 0;
+
+      for (let x = -22; x <= 22; x += 4.8) {
+        const bW = 4.4;
+        const bD = 5.0;
+        const floors = 2 + Math.floor(Math.random() * 3);
+        const bH = floors * 2.8;
+
+        const houseGeo = new THREE.BoxGeometry(bW, bH, bD);
+        const houseMat = new THREE.MeshStandardMaterial({
+          color: colors[bIdx % colors.length],
+          roughness: 0.7,
+          metalness: 0.2
+        });
+        const house = new THREE.Mesh(houseGeo, houseMat);
+        house.position.set(x, bH / 2 + 0.35, 12);
+        house.castShadow = true;
+        house.receiveShadow = true;
+        buildingsGroup.add(house);
+
+        // Cửa cuốn mặt tiền tầng 1
+        const doorGeo = new THREE.PlaneGeometry(3.2, 2.1);
+        const doorMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.5, roughness: 0.5 });
+        const door = new THREE.Mesh(doorGeo, doorMat);
+        door.position.set(x, 1.4, 9.48);
+        buildingsGroup.add(door);
+
+        // Biển hiệu quảng cáo cửa hàng
+        const signGeo = new THREE.PlaneGeometry(3.6, 0.75);
+        const signMat = new THREE.MeshBasicMaterial({ color: (bIdx % 2 === 0) ? 0xdc2626 : 0x0284c7 });
+        const sign = new THREE.Mesh(signGeo, signMat);
+        sign.position.set(x, 2.8, 9.49);
+        buildingsGroup.add(sign);
+
+        // Ban công các tầng
+        for (let f = 1; f < floors; f++) {
+          const balcGeo = new THREE.BoxGeometry(3.2, 0.15, 0.8);
+          const balcMat = new THREE.MeshStandardMaterial({ color: 0x64748b });
+          const balc = new THREE.Mesh(balcGeo, balcMat);
+          balc.position.set(x, 0.35 + f * 2.8, 9.8);
+          buildingsGroup.add(balc);
+        }
+
+        bIdx++;
+      }
+
+      scene.add(buildingsGroup);
+    }
+
+    function buildFloodedVehicles() {
+      // 1. Ô tô con sedan (Xe hơi gia đình chết máy ngập nước trên phố)
+      floodedCar = new THREE.Group();
+
+      // Thân vỏ xe (Sơn màu đỏ bầm)
+      const bodyGeo = new THREE.BoxGeometry(4.2, 0.95, 2.0);
+      const bodyMat = new THREE.MeshStandardMaterial({ color: 0x991b1b, metalness: 0.7, roughness: 0.3 });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 0.7;
+      body.castShadow = true;
+      floodedCar.add(body);
+
+      // Cabin kính
+      const cabinGeo = new THREE.BoxGeometry(2.3, 0.8, 1.7);
+      const cabinMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2, metalness: 0.9 });
+      const cabin = new THREE.Mesh(cabinGeo, cabinMat);
+      cabin.position.set(-0.3, 1.5, 0);
+      floodedCar.add(cabin);
+
+      // 4 bánh xe cao su
+      const wheelGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.32, 16);
+      wheelGeo.rotateX(Math.PI / 2);
+      const wheelMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.9 });
+
+      const wheelPositions = [
+        [-1.4, 0.42, 1.0], [1.4, 0.42, 1.0],
+        [-1.4, 0.42, -1.0], [1.4, 0.42, -1.0]
+      ];
+      wheelPositions.forEach(p => {
+        const wMesh = new THREE.Mesh(wheelGeo, wheelMat);
+        wMesh.position.set(...p);
+        floodedCar.add(wMesh);
+      });
+
+      // 4 Đèn xi nhan cảnh báo sự cố (Hazard lights) nhấp nháy
+      const blinkerGeo = new THREE.SphereGeometry(0.12, 12, 12);
+      const blinkerMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b });
+      const blinkerPositions = [
+        [2.15, 0.8, 0.85], [2.15, 0.8, -0.85],   // Trước
+        [-2.15, 0.8, 0.85], [-2.15, 0.8, -0.85]  // Sau
+      ];
+      blinkerPositions.forEach(p => {
+        const bMesh = new THREE.Mesh(blinkerGeo, blinkerMat);
+        bMesh.position.set(...p);
+        floodedCar.add(bMesh);
+        carBlinkers.push(bMesh);
+      });
+
+      floodedCar.position.set(-3.5, 0, 1.2);
+      floodedCar.rotation.y = -0.15;
+      scene.add(floodedCar);
+
+      // 2. Hai xe máy đặc trưng Việt Nam
+      // Xe 1: Đang dựng bên lề đường, ngập nửa bánh xe
+      const moto1 = createMotorbikeMesh(0x0284c7);
+      moto1.position.set(6.2, 0, 3.2);
+      moto1.rotation.y = 0.3;
+      scene.add(moto1);
+      floodedMotorbikes.push({ group: moto1, fallen: false });
+
+      // Xe 2: Bị nước lũ cuốn đổ ngã sóng xoài giữa lòng đường
+      const moto2 = createMotorbikeMesh(0xd97706);
+      moto2.position.set(1.5, 0.25, -1.8);
+      moto2.rotation.set(Math.PI / 2.3, 0.2, 0.8); // Ngã lật nghiêng
+      scene.add(moto2);
+      floodedMotorbikes.push({ group: moto2, fallen: true });
+    }
+
+    function createMotorbikeMesh(colorHex) {
+      const moto = new THREE.Group();
+
+      // Khung xe máy
+      const frameGeo = new THREE.BoxGeometry(1.6, 0.45, 0.35);
+      const frameMat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.6, roughness: 0.4 });
+      const frame = new THREE.Mesh(frameGeo, frameMat);
+      frame.position.y = 0.55;
+      moto.add(frame);
+
+      // Yên xe màu đen
+      const seatGeo = new THREE.BoxGeometry(0.85, 0.15, 0.32);
+      const seatMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.9 });
+      const seat = new THREE.Mesh(seatGeo, seatMat);
+      seat.position.set(-0.2, 0.82, 0);
+      moto.add(seat);
+
+      // Tay lái & Gương
+      const barGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.7, 6);
+      barGeo.rotateX(Math.PI / 2);
+      const barMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d8 });
+      const bar = new THREE.Mesh(barGeo, barMat);
+      bar.position.set(0.55, 1.05, 0);
+      moto.add(bar);
+
+      // 2 Bánh xe máy
+      const wGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.12, 12);
+      wGeo.rotateX(Math.PI / 2);
+      const wMat = new THREE.MeshStandardMaterial({ color: 0x18181b });
+
+      const wFront = new THREE.Mesh(wGeo, wMat);
+      wFront.position.set(0.7, 0.32, 0);
+      moto.add(wFront);
+
+      const wRear = new THREE.Mesh(wGeo, wMat);
+      wRear.position.set(-0.7, 0.32, 0);
+      moto.add(wRear);
+
+      return moto;
+    }
+
+    function buildFloodStaffGauge() {
+      // Cột mốc đo ngập nước đô thị (Thước đo mực nước đường phố)
+      floodStaffGauge = new THREE.Group();
+
+      // Thân cột đo màu trắng
+      const poleGeo = new THREE.BoxGeometry(0.35, 4.5, 0.35);
+      const poleMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+      const pole = new THREE.Mesh(poleGeo, poleMat);
+      pole.position.y = 2.25;
+      floodStaffGauge.add(pole);
+
+      // Các khoanh sọc vạch đo báo động (30cm, 60cm, 100cm, 180cm, 250cm)
+      const marks = [
+        { y: 0.3, col: 0x10b981, label: '30cm: Ngập bánh xe' },
+        { y: 0.6, col: 0xf59e0b, label: '60cm: Ngập nắp capo' },
+        { y: 1.0, col: 0xf97316, label: '100cm: Ngập ngang hông' },
+        { y: 1.8, col: 0xef4444, label: '180cm: Ngập tầng một' },
+        { y: 2.5, col: 0x7f1d1d, label: '250cm: Lũ lịch sử' }
+      ];
+      marks.forEach(m => {
+        const bandGeo = new THREE.BoxGeometry(0.4, 0.15, 0.4);
+        const bandMat = new THREE.MeshBasicMaterial({ color: m.col });
+        const band = new THREE.Mesh(bandGeo, bandMat);
+        band.position.y = m.y;
+        floodStaffGauge.add(band);
+      });
+
+      // Vòng phao tiêu dạ quang nổi theo mặt nước
+      const floatGeo = new THREE.TorusGeometry(0.38, 0.14, 8, 16);
+      floatGeo.rotateX(Math.PI / 2);
+      const floatMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+      floodStaffFloat = new THREE.Mesh(floatGeo, floatMat);
+      floodStaffFloat.position.y = 0.5;
+      floodStaffGauge.add(floodStaffFloat);
+
+      // Cắm cột mốc ngay mép vỉa hè sát đường (x: 4.5, z: 5.2)
+      floodStaffGauge.position.set(4.5, 0, 5.2);
+      scene.add(floodStaffGauge);
+    }
+
+    function buildFlyingRoofSheet() {
+      // Tấm tôn lợp mái nhà bị cuồng phong giật tung ("Tôn bay trong bão")
+      flyingRoofSheet = new THREE.Group();
+
+      const sheetGeo = new THREE.PlaneGeometry(2.4, 1.6, 6, 4);
+      const sheetMat = new THREE.MeshStandardMaterial({
+        color: 0x94a3b8,
+        metalness: 0.8,
+        roughness: 0.3,
+        side: THREE.DoubleSide
+      });
+      const sheet = new THREE.Mesh(sheetGeo, sheetMat);
+      flyingRoofSheet.add(sheet);
+
+      flyingRoofSheet.position.set(-6, 9.5, 12);
+      scene.add(flyingRoofSheet);
+    }
+
+    function buildCoastalPalmTrees() {
+      // 6 cây dừa ven đường biển chịu gió bão
+      const treePositions = [-18, -10, -2, 6, 14, 20];
+      treePositions.forEach(x => {
+        const treeGroup = new THREE.Group();
+
+        // Thân cây dừa
+        const trunkGeo = new THREE.CylinderGeometry(0.12, 0.22, 3.8, 8);
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.9 });
+        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+        trunk.position.y = 1.9;
+        treeGroup.add(trunk);
+
+        // Tán lá dừa
+        const frondGeo = new THREE.ConeGeometry(2.0, 0.9, 7);
+        const frondMat = new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.7, flatShading: true });
+        const frond = new THREE.Mesh(frondGeo, frondMat);
+        frond.position.y = 3.8;
+        treeGroup.add(frond);
+
+        treeGroup.position.set(x, 0.2, -7.5);
+        scene.add(treeGroup);
+        palmTrees.push({ group: treeGroup, trunk: trunk, frond: frond, origX: x });
+      });
+    }
+
+    function buildTyphoonCloudSpiral() {
+      // Đĩa xoáy mây bão khổng lồ trên bầu trời (Eye of the storm)
+      const spiralGeo = new THREE.RingGeometry(3.0, 38, 48, 8);
+      spiralGeo.rotateX(Math.PI / 2);
+      const spiralMat = new THREE.MeshBasicMaterial({
+        color: 0x0f172a,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.85
+      });
+      cycloneMesh = new THREE.Mesh(spiralGeo, spiralMat);
+      cycloneMesh.position.set(0, 26, 0);
+      scene.add(cycloneMesh);
+    }
+
+    function buildFloatingDebris() {
+      debrisGroup = new THREE.Group();
+      // Thùng phuy nhựa xanh, thùng xốp, thanh gỗ trôi nổi
+      for (let i = 0; i < 18; i++) {
+        let dMesh;
+        if (i % 2 === 0) {
+          // Thùng phuy nhựa
+          const barrelGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.9, 12);
+          const barrelMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.4 });
+          dMesh = new THREE.Mesh(barrelGeo, barrelMat);
+        } else {
+          // Hộp xốp / thanh gỗ
+          const boxGeo = new THREE.BoxGeometry(0.7, 0.35, 0.7);
+          const boxMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.6 });
+          dMesh = new THREE.Mesh(boxGeo, boxMat);
+        }
+        dMesh.position.set((Math.random() - 0.5) * 44, 0.5, (Math.random() - 0.5) * 8);
+        dMesh.rotation.set(Math.random(), Math.random(), Math.random());
+        debrisGroup.add(dMesh);
+      }
+      scene.add(debrisGroup);
+    }
+
+    function buildFloodWater() {
+      // Mặt nước lũ đô thị đục ngầu phù sa & sóng triều cường
+      const geo = new THREE.PlaneGeometry(60, 60, 32, 32);
+      geo.rotateX(-Math.PI / 2);
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: 0x78350f, // Nước lũ màu nâu vàng đục phù sa
+        roughness: 0.15,
+        metalness: 0.45,
+        transparent: true,
+        opacity: 0.92
+      });
+
+      waterMesh = new THREE.Mesh(geo, mat);
+      waterMesh.position.y = 0.55;
+      scene.add(waterMesh);
+    }
+
+    function buildHeavyRainParticles() {
+      const count = 4200;
+      rainGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+
+      for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 60;
+        positions[i * 3 + 1] = Math.random() * 32;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 60;
+      }
+      rainGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const rainMat = new THREE.PointsMaterial({
+        color: 0x93c5fd,
+        size: 0.16,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      rainParticles = new THREE.Points(rainGeo, rainMat);
+      scene.add(rainParticles);
+    }
+
+    function updateStormPhysics() {
+      // 1. Cao độ mặt nước lũ theo lượng mưa và triều dâng
+      // Mức đường là Y = 0.05. Khi floodY = 0.55 -> ngập 50cm.
+      const floodY = 0.15 + (surgeHeight * 0.28) + (rainRate / 250) * 0.95;
+      if (waterMesh) {
+        waterMesh.position.y = floodY;
+      }
+
+      // Độ ngập thực tế trên mặt đường (cm)
+      const floodDepthCm = Math.max(0, Math.round((floodY - 0.05) * 100));
+      const runoffRate = Math.min(380, Math.max(25, rainRate * 1.4 + surgeHeight * 18)).toFixed(0);
+      const windSpeed = (windLevel * 11.5).toFixed(0);
+      const clausiusVal = ((rainRate / 100) * 8.5).toFixed(1);
+
+      document.getElementById('val-wind').textContent = `Cấp ${windLevel} (${windSpeed} km/h)`;
+      document.getElementById('val-rainrate').textContent = rainRate + ' mm/h';
+      document.getElementById('val-surge').textContent = '+' + surgeHeight.toFixed(1) + ' mét';
+
+      document.getElementById('tele-flood-depth').textContent = floodDepthCm + ' cm';
+      document.getElementById('tele-runoff').textContent = runoffRate + ' m³/s';
+      document.getElementById('tele-wind-speed').textContent = windSpeed + ' km/h';
+      document.getElementById('tele-clausius').textContent = '+' + clausiusVal + '% lượng mưa';
+
+      // 2. Phao cột mốc đo ngập di chuyển theo mực nước lũ
+      if (floodStaffFloat) {
+        floodStaffFloat.position.y = Math.max(0.1, floodY);
+      }
+
+      // 3. Tương tác vật lý với Ô tô & Xe máy
+      const vehicleBox = document.getElementById('vehicle-status-box');
+      const vehicleText = document.getElementById('tele-vehicle-status');
+
+      if (floodedCar) {
+        if (floodDepthCm >= 90) {
+          // Ngập trên 90cm: Xe nổi bồng bềnh và trôi dạt
+          floodedCar.position.y = floodY - 0.35;
+          floodedCar.rotation.z = 0.12; // Nghiêng lật
+          if (vehicleBox && vehicleText) {
+            vehicleBox.style.background = 'rgba(239, 68, 68, 0.2)';
+            vehicleBox.style.borderColor = 'var(--data-critical)';
+            vehicleText.innerHTML = '🚨 XE HƠI NỔI TRÔI DẠT (Ngập ' + floodDepthCm + 'cm - Tê liệt hoàn toàn)';
+            vehicleText.style.color = 'var(--data-critical)';
+          }
+        } else if (floodDepthCm >= 55) {
+          // Ngập lút nắp capo: Chết máy ngập nước
+          floodedCar.position.y = 0;
+          floodedCar.rotation.z = 0;
+          if (vehicleBox && vehicleText) {
+            vehicleBox.style.background = 'rgba(239, 68, 68, 0.14)';
+            vehicleBox.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+            vehicleText.innerHTML = '⚠️ XE CHẾT MÁY (Ngập lút nắp capo ' + floodDepthCm + 'cm)';
+            vehicleText.style.color = 'var(--data-critical)';
+          }
+        } else if (floodDepthCm >= 25) {
+          // Ngập lút bánh xe máy
+          floodedCar.position.y = 0;
+          floodedCar.rotation.z = 0;
+          if (vehicleBox && vehicleText) {
+            vehicleBox.style.background = 'rgba(234, 88, 12, 0.15)';
+            vehicleBox.style.borderColor = 'rgba(234, 88, 12, 0.4)';
+            vehicleText.innerHTML = '⚠️ NGẬP LÚT BÁNH XE MÁY (' + floodDepthCm + 'cm - Dễ chết bugi)';
+            vehicleText.style.color = 'var(--data-warning)';
+          }
+        } else {
+          // Bình thường
+          floodedCar.position.y = 0;
+          floodedCar.rotation.z = 0;
+          if (vehicleBox && vehicleText) {
+            vehicleBox.style.background = 'rgba(16, 185, 129, 0.12)';
+            vehicleBox.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            vehicleText.innerHTML = '✅ PHƯƠNG TIỆN LƯU THÔNG ĐƯỢC (Ngập nhẹ ' + floodDepthCm + 'cm)';
+            vehicleText.style.color = 'var(--data-vegetation)';
+          }
+        }
+      }
+
+      // Status text
+      const statusEl = document.getElementById('storm-status-text');
+      const banner = document.getElementById('storm-status-banner');
+      if (windLevel >= 15 || floodDepthCm > 80) {
+        statusEl.textContent = 'CẢNH BÁO CẤP 5 (RỦI RO THẢM HỌA): Siêu Bão Tàn Phá Ngập Sâu Đô Thị';
+        banner.style.background = 'rgba(239, 68, 68, 0.35)';
+        banner.style.borderColor = 'var(--data-critical)';
+      } else if (windLevel >= 10 || floodDepthCm > 35) {
+        statusEl.textContent = 'CẢNH BÁO CẤP 3: Bão Mạnh, Nước Biển Dâng Gây Ngập Tuyến Đô Thị';
+        banner.style.background = 'rgba(234, 88, 12, 0.3)';
+        banner.style.borderColor = 'var(--data-warning)';
+      } else {
+        statusEl.textContent = 'Cảnh Báo Cấp 1: Mưa Rào Nhiệt Đới & Triều Cường Cục Bộ';
+        banner.style.background = 'rgba(2, 132, 199, 0.25)';
+        banner.style.borderColor = 'var(--cyan-glacier)';
+      }
+    }
+
+    function applyStormPreset(wind, rain, surge, name) {
+      windLevel = wind; rainRate = rain; surgeHeight = surge;
+      document.getElementById('slider-wind').value = wind;
+      document.getElementById('slider-rainrate').value = rain;
+      document.getElementById('slider-surge').value = surge;
+      updateStormPhysics();
+    }
+
+    // Sliders
+    document.getElementById('slider-wind').addEventListener('input', e => { windLevel = +e.target.value; updateStormPhysics(); });
+    document.getElementById('slider-rainrate').addEventListener('input', e => { rainRate = +e.target.value; updateStormPhysics(); });
+    document.getElementById('slider-surge').addEventListener('input', e => { surgeHeight = +e.target.value; updateStormPhysics(); });
+
+    const clock = new THREE.Clock();
+    let blinkTimer = 0;
+
+    function animateStorm() {
+      requestAnimationFrame(animateStorm);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Mưa bão xối xả xiên theo vận tốc gió
+      if (rainParticles) {
+        const pos = rainGeo.attributes.position.array;
+        const windX = (windLevel / 17) * 36;
+        const rainSpeed = 45 + (rainRate / 250) * 35;
+
+        for (let i = 0; i < pos.length; i += 3) {
+          pos[i] += windX * delta;
+          pos[i + 1] -= rainSpeed * delta;
+          if (pos[i + 1] < 0) {
+            pos[i + 1] = 30;
+            pos[i] = (Math.random() - 0.5) * 60;
+          }
+        }
+        rainGeo.attributes.position.needsUpdate = true;
+      }
+
+      // Sóng nước lũ dập dờn
+      if (waterMesh) {
+        waterMesh.rotation.z = Math.sin(time * 2.5) * 0.012;
+      }
+
+      // Xoay đĩa mây xoáy bão (Typhoon Cloud Vortex)
+      if (cycloneMesh) {
+        cycloneMesh.rotation.z += delta * (0.15 + (windLevel / 17) * 0.55);
+      }
+
+      // Cây dừa và cột đèn quằn quại trong gió bão
+      const windForce = (windLevel / 17);
+      palmTrees.forEach((pt, idx) => {
+        const sway = Math.sin(time * 7 + idx) * (0.05 + windForce * 0.22);
+        pt.group.rotation.z = -windForce * 0.42 + sway;
+      });
+
+      streetPoles.forEach((pole, idx) => {
+        pole.rotation.z = Math.sin(time * 8 + idx) * (windForce * 0.06);
+      });
+
+      // Tấm tôn bay trong cuồng phong (Khi gió >= cấp 12)
+      if (flyingRoofSheet) {
+        if (windLevel >= 12) {
+          const orbitR = 8 + Math.sin(time * 3) * 3;
+          flyingRoofSheet.position.x = Math.cos(time * 4) * orbitR;
+          flyingRoofSheet.position.y = 8 + Math.sin(time * 5) * 3.5;
+          flyingRoofSheet.position.z = Math.sin(time * 4) * orbitR;
+          flyingRoofSheet.rotation.x += delta * 6;
+          flyingRoofSheet.rotation.y += delta * 8;
+        } else {
+          // Nằm yên trên nóc nhà
+          flyingRoofSheet.position.set(-6, 9.2, 12);
+          flyingRoofSheet.rotation.set(0, 0, 0);
+        }
+      }
+
+      // Đèn cảnh báo xe ô tô nhấp nháy (Hazard Blinkers)
+      blinkTimer += delta;
+      const blinkState = Math.sin(blinkTimer * 8) > 0;
+      carBlinkers.forEach(b => {
+        b.material.color.setHex(blinkState ? 0xf59e0b : 0x451a03);
+      });
+
+      // Rác thải & thùng phuy trôi nổi bập bềnh theo dòng nước
+      if (debrisGroup) {
+        debrisGroup.children.forEach((d, idx) => {
+          const currentWaterY = waterMesh ? waterMesh.position.y : 0.55;
+          d.position.y = currentWaterY + 0.08 + Math.sin(time * 3.5 + idx) * 0.06;
+          d.position.x += delta * (0.4 + (windLevel / 17) * 1.2);
+          if (d.position.x > 25) d.position.x = -25;
+          d.rotation.y += delta * 0.5;
+        });
+      }
+
+      // Mô phỏng chớp điện giật (Lightning procedural flash)
+      lightningTimer += delta;
+      if (lightningTimer > 3.8 && Math.random() < 0.05) {
+        const lLayer = document.getElementById('lightning-layer');
+        if (lLayer) {
+          lLayer.style.opacity = '0.75';
+          setTimeout(() => lLayer.style.opacity = '0', 100);
+        }
+        if (stormLight) {
+          stormLight.intensity = 5.0;
+          setTimeout(() => stormLight.intensity = 2.2, 100);
+        }
+        lightningTimer = 0;
+      }
+
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initStorm3D();
+      updateStormPhysics();
+    });
+  </script>
+</body>
+</html>

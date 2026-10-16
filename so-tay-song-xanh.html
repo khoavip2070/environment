@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sổ Tay 6 Việc Làm Xanh — Học Sinh Lớp 10.3</title>
+  <meta name="description" content="Sổ tay hành động sống xanh của học sinh Lớp 10.3. Bảng cam kết thi đua học đường và các điểm sáng hành động khí hậu tại Việt Nam.">
+  <link rel="stylesheet" href="css/climateverse.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       1. THANH ĐIỀU HƯỚNG TRANG CHÍNH
+       =================================================================== -->
+  <header class="hud-header" id="main-hud">
+    <div class="container hud-nav-wrap">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="Trang chủ Dự án Màu Xanh Tương Lai">
+        <div class="brand-symbol">🌱</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+          <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation -->
+      <nav aria-label="Điều hướng chính">
+        <ul class="hud-nav-links">
+          <li><a href="index.html" class="hud-link">🎬 Video 1 Phút Xanh</a></li>
+          <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
+          <li><a href="trung-tam-mo-phong.html" class="hud-link" style="color: var(--cyan-glacier); font-weight: 700;">★ 4 Mô Phỏng 3D</a></li>
+          <li><a href="so-tay-song-xanh.html" class="hud-link active">🌱 Sổ Tay Sống Xanh</a></li>
+        </ul>
+      </nav>
+
+      <!-- Theme Toggle -->
+      <div style="display: flex; align-items: center; gap: var(--sp-3);">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Đổi giao diện Sáng / Tối" title="Chuyển chế độ Sáng / Tối">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Giao diện Tối</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       2. SUBPAGE HERO BANNER
+       =================================================================== -->
+  <section class="page-banner">
+    <div class="container">
+      <div class="breadcrumb-nav">
+        <a href="index.html">Trang chủ</a>
+        <span>/</span>
+        <span>Sổ tay sống xanh học đường</span>
+      </div>
+
+      <div class="section-eyebrow">🌱 Lời Kêu Gọi Hành Động Học Đường • Tập Thể Lớp 10.3</div>
+      <h1 style="font-size: clamp(2rem, 3.8vw, 3.2rem); margin-bottom: 12px;">
+        Lời Kêu Gọi Chung Tay: 6 Thói Quen Xanh Cùng Làm Mỗi Ngày!
+      </h1>
+      <p class="section-desc">
+        Bảo vệ môi trường <strong>không phải là việc chọn làm điều này rồi bỏ qua điều kia</strong>. Mái trường và hành tinh của chúng ta cần sự đồng lòng của tất cả mọi người trong <strong>cả 6 thói quen xanh</strong> mỗi ngày!
+      </p>
+
+      <!-- Community Call to Action Card -->
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(2, 132, 199, 0.12)); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: var(--radius-lg); padding: var(--sp-8); margin-top: var(--sp-8); box-shadow: 0 16px 36px rgba(16, 185, 129, 0.12);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--sp-6);">
+          
+          <div style="max-width: 640px;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.2); color: var(--data-vegetation); padding: 4px 12px; border-radius: var(--radius-full); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; margin-bottom: 12px;">
+              📢 CHIẾN DỊCH HỌC ĐƯỜNG: 2.000 CHỮ KÝ XANH ĐỒNG HÀNH
+            </div>
+            <h2 style="font-size: clamp(1.4rem, 2.4vw, 1.9rem); color: var(--text-white); margin-bottom: 10px; line-height: 1.3;">
+              Lời Kêu Gọi Toàn Thể Học Sinh & Thầy Cô Cùng Chung Tay Hành Động!
+            </h2>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; margin-bottom: var(--sp-6);">
+              Mỗi hành động nhỏ khi được hàng nghìn học sinh cùng nhau thực hiện sẽ tạo nên sức mạnh thay đổi to lớn. Lớp 10.3 tha thiết kêu gọi tất cả các bạn học sinh, thầy cô và quý phụ huynh hãy cùng ký tên đồng hành và thực hiện trọn vẹn 6 thói quen xanh này mỗi ngày!
+            </p>
+            
+            <!-- Actions -->
+            <div style="display: flex; align-items: center; gap: var(--sp-4); flex-wrap: wrap;">
+              <button id="btn-sign-pledge" class="btn-climate btn-primary" onclick="signGreenPledge()" style="padding: 12px 24px; font-size: 0.95rem; font-weight: 700;">
+                <span>✍️ Ký Tên Hưởng Ứng Lời Kêu Gọi Ngay</span>
+                <span>🌱</span>
+              </button>
+              <button class="btn-climate btn-secondary" onclick="shareGreenPledge()" style="padding: 12px 20px; font-size: 0.9rem;">
+                <span>📤 Lan Tỏa Đến Bạn Bè & Nhóm Lớp</span>
+              </button>
+            </div>
+            
+            <div id="sign-feedback" style="display: none; margin-top: 14px; padding: 12px 16px; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--data-vegetation); border-radius: var(--radius-sm); font-size: 0.92rem; color: var(--text-white); line-height: 1.5;">
+              🎉 <strong>Cảm ơn bạn rất nhiều!</strong> Bạn vừa là người thứ <span id="user-pledge-rank" class="mono-num" style="font-weight: 800; color: #10b981;">1.483</span> ký tên đồng hành cùng chiến dịch Màu Xanh Tương Lai của Lớp 10.3! Hãy cùng nhau rủ bạn bè lớp mình cùng thực hiện nhé!
+            </div>
+          </div>
+
+          <!-- Live Community Counter Dock -->
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-md); padding: var(--sp-6); min-width: 260px; text-align: center; box-shadow: var(--card-shadow); flex-grow: 1; max-width: 320px;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase;">SỐ LƯỢT ĐỒNG HÀNH</div>
+            <div style="font-size: 2.8rem; font-weight: 900; color: var(--data-vegetation); margin: 6px 0;" class="mono-num" id="pledge-counter">1.482</div>
+            <div style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">Học sinh, thầy cô & phụ huynh đã ký tên</div>
+
+            <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--space-border); text-align: left;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px;">
+                <span>Tiến độ chiến dịch:</span>
+                <span class="mono-num" style="color: var(--cyan-glacier); font-weight: 700;">74.1%</span>
+              </div>
+              <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 74.1%; height: 100%; background: linear-gradient(90deg, #10b981, #0284c7);"></div>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 6px; text-align: center;">Mục tiêu: 2.000 chữ ký toàn trường</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       3. 6 CALL-TO-ACTION CARDS (KÊU GỌI CÙNG NHAU THỰC HIỆN)
+       =================================================================== -->
+  <section class="section" style="padding-top: var(--sp-12);">
+    <div class="container">
+      
+      <div style="text-align: center; max-width: 720px; margin: 0 auto var(--sp-8);">
+        <div class="section-eyebrow" style="color: var(--data-vegetation);">🤝 CÙNG NHAU THỰC HIỆN MỖI NGÀY</div>
+        <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 8px;">6 Thói Quen Xanh Kêu Gọi Tất Cả Chúng Ta</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Không phân biệt bạn là ai — chỉ cần mỗi người cùng góp một phần hành động nhỏ, sức mạnh tập thể của trường ta sẽ tạo nên kỳ tích!
+        </p>
+      </div>
+
+      <div class="solutions-matrix-grid">
+        
+        <!-- Action 1 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 1</span>
+            <span style="font-size: 1.8rem;">🚲</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Đi Xe Đạp & Đi Bộ Đến Trường</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình tha thiết kêu gọi các bạn hạn chế tối đa việc nhờ bố mẹ đưa đón bằng xe máy chạy xăng trên các quãng đường gần. Hãy cùng rủ bạn cùng bàn đi xe đạp hoặc đi bộ đến trường mỗi sáng để rèn luyện thể lực dẻo dai.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Nếu 1.000 học sinh trường mình cùng đi xe đạp hoặc đi bộ 2 ngày/tuần, chúng ta sẽ giảm hơn <strong>2.4 tấn CO₂</strong> mỗi tháng và giải tỏa hoàn toàn ùn tắc trước cổng trường!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 2 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 2</span>
+            <span style="font-size: 1.8rem;">💡</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Tắt Quạt, Tắt Đèn Khi Rời Lớp Học</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi ban cán sự lớp, tổ trực nhật và từng thành viên luôn chủ động kiểm tra tắt toàn bộ quạt trần, đèn neon và máy chiếu trước giờ ra chơi, giờ học thể dục ngoài sân và lúc tan học về nhà.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> 30 phòng học chỉ cần tắt quạt và đèn trong 30 phút giờ ra chơi mỗi ngày sẽ tiết kiệm hơn <strong>1.800 kWh điện</strong> mỗi tháng — tương đương lượng điện thắp sáng cho 15 hộ gia đình!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 3 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 3</span>
+            <span style="font-size: 1.8rem;">🧃</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Dùng Bình Nước Riêng, Bỏ Đồ Nhựa 1 Lần</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi các bạn kiên quyết từ chối ly trà sữa nhựa, ống hút nhựa và hộp xốp dùng một lần tại căng-tin. Hãy luôn chuẩn bị một bình nước cá nhân để lấy nước sạch tại cây lọc nước của trường và dùng hộp cơm tái sử dụng.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Mỗi ngày một bạn không dùng 1 ly nhựa đồng nghĩa trường ta giảm được hơn <strong>30.000 món rác thải nhựa</strong> khó phân hủy thải ra môi trường mỗi tháng học!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 4 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 4</span>
+            <span style="font-size: 1.8rem;">🗑️</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Phân Loại Rác & Làm "Kế Hoạch Nhỏ"</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi lớp học bố trí 2 ngăn rác riêng biệt: một ngăn chứa giấy vụn, sách vở cũ, chai nhựa và một ngăn rác hữu cơ. Tích cực thu gom giấy vụn tham gia phong trào "Kế hoạch nhỏ" để rác thải được tái sinh vòng đời mới.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Toàn trường có thể thu gom hơn <strong>800 kg giấy và vỏ lon</strong> tái chế mỗi học kỳ, vừa bảo vệ môi trường vừa gây quỹ học bổng giúp đỡ các bạn học sinh có hoàn cảnh khó khăn!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 5 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 5</span>
+            <span style="font-size: 1.8rem;">🌿</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Chăm Sóc Cây Xanh & Bồn Hoa Lớp</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi bạn dành ra 3 phút đầu giờ sáng để tưới nước, nhặt cỏ cho các chậu cây hành lang và bồn hoa trước cửa lớp. Cây xanh không chỉ tạo bóng mát mà còn hấp thụ bụi mịn, lọc sạch bầu không khí học đường.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Hành lang rợp bóng cây xanh giúp hạ nhiệt độ lớp học từ <strong>1 - 2°C</strong> tự nhiên trong những ngày hè oi bức, tạo môi trường học tập xanh mát và thư thái!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+        <!-- Action 6 -->
+        <article class="solution-card">
+          <div class="call-action-header">
+            <span class="call-action-tag">📢 LỜI KÊU GỌI SỐ 6</span>
+            <span style="font-size: 1.8rem;">📢</span>
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--text-white);">Cùng Nhau Lan Tỏa Lời Kêu Gọi & Video "1 Phút Xanh"</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+            Chúng mình kêu gọi mỗi bạn trở thành một "Đại sứ Môi trường". Hãy chia sẻ video clip ngắn của Nhóm 3, các bức tranh cổ động và trang web này đến bạn bè các lớp khác, thầy cô và gia đình để thông điệp sống xanh lan xa.
+          </p>
+          <div class="collective-power-box">
+            <strong style="color: var(--cyan-glacier);">💪 Sức mạnh khi cả trường cùng làm:</strong> Khi 1.000 học sinh cùng lan tỏa, thông điệp bảo vệ khí hậu sẽ chạm tới hơn <strong>10.000 người dân</strong> trong cộng đồng, tạo nên sự chuyển biến mạnh mẽ trong nhận thức và hành động thực tế!
+          </div>
+          <div class="call-badge-footer">
+            <span>✅</span>
+            <span>KÊU GỌI: CẢ LỚP & CẢ TRƯỜNG CÙNG THỰC HIỆN</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- 7-Day Green Challenge for Students -->
+      <div style="margin-top: var(--sp-12); background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(2, 132, 199, 0.08)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-lg); padding: var(--sp-8); box-shadow: var(--card-shadow);">
+        <div class="section-eyebrow" style="color: var(--data-vegetation); margin-bottom: 6px;">📅 Phong trào thi đua học sinh 10.3</div>
+        <h3 style="font-size: 1.35rem; color: var(--text-white); margin-bottom: 8px;">Thử Thách "7 Ngày Sống Xanh" Cùng Lớp 10.3</h3>
+        <p style="color: var(--text-muted); font-size: 0.92rem; max-width: 720px; margin-bottom: var(--sp-6);">
+          Mỗi ngày một việc làm nhỏ, duy trì trong suốt một tuần sẽ trở thành thói quen tích cực đồng hành cùng các bạn trong suốt quãng đời học sinh:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-3);">
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ HAI</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">💧</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Mang bình nước cá nhân đi học</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ BA</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">🚲</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Đi xe đạp hoặc đi bộ đến trường</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ TƯ</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">🧹</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Dọn sạch ngăn bàn và lớp học</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ NĂM</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">💡</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Tắt hết đèn quạt trước giờ thể dục</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ SÁU</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">📦</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Thu gom giấy nháp kế hoạch nhỏ</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--cyan-glacier); font-size: 0.9rem;">THỨ BẢY</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">🌿</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Tưới nước cho bồn hoa ban công</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <div style="font-weight: 800; color: var(--data-vegetation); font-size: 0.9rem;">CHỦ NHẬT</div>
+            <div style="font-size: 1.5rem; margin: 4px 0;">🎬</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Chia sẻ video "1 Phút Xanh"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-World Vietnam Climate Highlights (Connected with Geography lessons) -->
+      <div style="margin-top: var(--sp-12); background: var(--space-surface); border: 1px solid var(--space-border); border-radius: var(--radius-lg); padding: var(--sp-8); box-shadow: var(--card-shadow);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="font-size: 1.4rem;">🇻🇳</span>
+          <span class="section-eyebrow" style="margin: 0; color: var(--cyan-glacier);">Góc kiến thức Địa lý thực tế</span>
+        </div>
+        <h3 style="font-size: 1.4rem; color: var(--text-white); margin-bottom: 8px;">3 Điểm Sáng Hành Động Khí Hậu Tại Việt Nam</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 760px; margin-bottom: var(--sp-6); line-height: 1.6;">
+          Nước ta đang tích cực thực hiện cam kết giảm phát thải tại hội nghị COP26 với những dự án thực tế mà học sinh chúng mình có thể quan sát ngay quanh mình:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-4);">
+          
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">⚡</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Cánh Đồng Điện Gió & Mặt Trời Nam Trung Bộ</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Ninh Thuận và Bình Thuận đã trở thành "thủ phủ" năng lượng sạch của cả nước với hàng trăm trụ điện gió khổng lồ đón gió biển, thay thế dần các nhà máy nhiệt điện than gây khói bụi.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">🌲</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Lá Chắn Rừng Ngập Mặn Cần Giờ & Cà Mau</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Khu dự trữ sinh quyển rừng ngập mặn Cần Giờ được ví như "lá phổi xanh" của TP.HCM. Rừng đước, mắm bám rễ sâu giữ đất phù sa, chống sóng biển xâm thực và hấp thụ carbon cực tốt.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--space-border); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--card-shadow);">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">🚌</div>
+            <h4 style="font-size: 1.05rem; color: var(--text-white); margin-bottom: 4px;">Giao Thông Công Cộng Xanh: VinBus & Metro</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+              Tuyến Metro số 1 Bến Thành - Suối Tiên cùng hàng trăm xe buýt điện thông minh VinBus đang dần thay thế xe máy chạy xăng tại TP.HCM và Hà Nội, mang lại bầu không khí trong lành hơn.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================================================================
+       4. FOOTER
+       =================================================================== -->
+  <footer class="climate-footer">
+    <div class="container">
+      <div class="footer-columns">
+        
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: var(--sp-4);">
+            <div class="brand-symbol">🌱</div>
+            <div class="brand-text-wrap">
+              <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+              <span class="brand-tagline">Dự Án Môi Trường • Lớp 10.3</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; max-width: 360px;">
+            Sổ tay hành động sống xanh học đường và kiến thức bảo vệ môi trường của tập thể học sinh Lớp 10.3.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nội Dung Trang Dự Án</h4>
+          <ul>
+            <li><a href="index.html">🎬 Video Clip 1 Phút Xanh</a></li>
+            <li><a href="trien-lam-poster.html">🖼️ 8 Poster Cổ Động Lớp 10.3</a></li>
+            <li><a href="trung-tam-mo-phong.html">★ 4 Mô Hình 3D Thiên Tai</a></li>
+            <li><a href="so-tay-song-xanh.html">🌱 Sổ tay 6 việc làm xanh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Các Phòng Mô Phỏng 3D</h4>
+          <ul>
+            <li><a href="mo-phong-han-han.html">☀️ 3D Hạn mặn Miền Tây</a></li>
+            <li><a href="mo-phong-bao-lu.html">🌀 3D Bão lũ Miền Trung - Bắc</a></li>
+            <li><a href="mo-phong-bang-tan.html">🧊 3D Băng tan & Biển dâng</a></li>
+            <li><a href="mo-phong-chay-rung.html">🔥 3D Nắng nóng & Cháy rừng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Lời Tri Ân Thầy Cô</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.6;">
+            Tập thể Lớp 10.3 xin chân thành gửi lời cảm ơn đến Thầy Cô bộ môn Địa lý, Giáo dục Kinh tế & Pháp luật và Tin học đã hướng dẫn chúng em hoàn thành dự án học tập ý nghĩa này.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 Dự Án Học Tập Lớp 10.3 • Năm học 2025 - 2026</div>
+        <div>Chung tay vì một tương lai Việt Nam Xanh - Sạch - Bền Vững</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       5. JAVASCRIPT SCRIPTS
+       =================================================================== -->
+  <script>
+    // Lời kêu gọi hành động sống xanh của tập thể Lớp 10.3
+    let supporterCount = 1482;
+    let hasSigned = false;
+
+    try {
+      const storedCount = localStorage.getItem('climateverse_supporters');
+      if (storedCount) supporterCount = parseInt(storedCount, 10);
+      hasSigned = localStorage.getItem('climateverse_has_signed') === 'true';
+    } catch (e) {}
+
+    function updateSupporterDisplay() {
+      const counterEl = document.getElementById('pledge-counter');
+      const btnSign = document.getElementById('btn-sign-pledge');
+      const feedbackEl = document.getElementById('sign-feedback');
+      const rankEl = document.getElementById('user-pledge-rank');
+
+      if (counterEl) counterEl.textContent = supporterCount.toLocaleString('vi-VN');
+
+      if (hasSigned) {
+        if (btnSign) {
+          btnSign.innerHTML = '<span>✅ Bạn Đã Ký Tên Hưởng Ứng Lời Kêu Gọi</span>';
+          btnSign.style.background = 'var(--data-vegetation)';
+          btnSign.style.cursor = 'default';
+        }
+        if (feedbackEl) {
+          feedbackEl.style.display = 'block';
+          if (rankEl) rankEl.textContent = supporterCount.toLocaleString('vi-VN');
+        }
+      }
+    }
+
+    function signGreenPledge() {
+      if (hasSigned) {
+        alert('🎉 Cảm ơn bạn! Bạn đã ký tên hưởng ứng lời kêu gọi của Lớp 10.3 trước đó rồi. Hãy chia sẻ trang này đến các bạn khác cùng tham gia nhé!');
+        return;
+      }
+      hasSigned = true;
+      supporterCount++;
+      try {
+        localStorage.setItem('climateverse_supporters', supporterCount);
+        localStorage.setItem('climateverse_has_signed', 'true');
+      } catch (e) {}
+      updateSupporterDisplay();
+
+      // Show toast / congratulations
+      const feedbackEl = document.getElementById('sign-feedback');
+      if (feedbackEl) {
+        feedbackEl.style.display = 'block';
+        feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function shareGreenPledge() {
+      const url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          alert('🌿 Đã sao chép liên kết Lời Kêu Gọi Sống Xanh!\nHãy gửi vào nhóm lớp Zalo, Facebook để rủ các bạn cùng ký tên hưởng ứng nhé!');
+        }).catch(() => {
+          prompt('Sao chép liên kết Lời Kêu Gọi để gửi cho bạn bè:', url);
+        });
+      } else {
+        prompt('Sao chép liên kết Lời Kêu Gọi để gửi cho bạn bè:', url);
+      }
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    function applyAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('climateverse_theme', theme);
+      } catch (err) {}
+
+      if (theme === 'dark') {
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = 'Giao diện Sáng';
+      } else {
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = 'Giao diện Tối';
+      }
+    }
+
+    let initialTheme = 'light';
+    try {
+      initialTheme = localStorage.getItem('climateverse_theme') || 'light';
+    } catch (e) {}
+    applyAppTheme(initialTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        applyAppTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    // Khởi tạo trạng thái kêu gọi
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSupporterDisplay();
+    });
+  </script>
+</body>
+</html>
