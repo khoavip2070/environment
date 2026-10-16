@@ -4,7 +4,7 @@
    Thiết kế giao diện hiện đại, tươi sáng, thu hút học sinh & người dùng
    =================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* ===================================================================
@@ -35,10 +35,10 @@
   --data-vegetation: #059669;   /* Xanh lá cây sinh thái tươi mát */
   --data-critical: #dc2626;     /* Đỏ cảnh báo nguy cấp */
 
-  /* Font chữ phân cấp chuyên nghiệp */
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Font chữ chuẩn mực, hiển thị tiếng Việt hoàn hảo, cực kỳ chuyên nghiệp và dễ đọc */
+  --font-display: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
   /* Thước tỷ lệ khoảng cách */
   --sp-1: 4px;
@@ -167,8 +167,8 @@ body {
 /* Typography Hierarchy */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
   font-weight: 700;
   color: var(--text-white);
 }
@@ -176,23 +176,28 @@ h1, h2, h3, h4 {
 h1 {
   font-size: clamp(2.4rem, 5.5vw, 4.4rem);
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   font-size: clamp(1.8rem, 3.8vw, 2.8rem);
   margin-bottom: var(--sp-3);
   color: var(--text-white);
+  font-weight: 800;
 }
 
 h3 {
-  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
-  font-weight: 600;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 700;
   color: var(--text-white);
 }
 
 .mono-num {
-  font-family: var(--font-mono);
-  font-feature-settings: 'tnum' 1, 'zero' 1;
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'cv01' 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 /* Layout Utility */
@@ -219,11 +224,11 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.05em;
   color: var(--cyan-glacier);
   margin-bottom: var(--sp-3);
 }
@@ -289,9 +294,9 @@ h3 {
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.15rem;
 }
 
 .brand-text-wrap {
@@ -303,18 +308,18 @@ h3 {
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: var(--text-white);
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .brand-tagline {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--cyan-glacier);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .hud-nav-links {
@@ -360,8 +365,10 @@ h3 {
   box-shadow: var(--card-shadow);
   padding: 6px 14px;
   border-radius: var(--radius-full);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 0.78rem;
 }
 
 .telemetry-item {
@@ -466,8 +473,9 @@ h3 {
   align-items: center;
   justify-content: space-between;
   padding: 6px 8px 12px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
   border-bottom: 1px solid var(--space-border);
   margin-bottom: 12px;
 }
@@ -557,8 +565,8 @@ h3 {
   color: var(--text-muted);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -596,19 +604,24 @@ h3 {
 }
 
 .metric-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   text-transform: uppercase;
   color: var(--text-dim);
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   margin-bottom: 4px;
 }
 
 .metric-val {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
   font-size: 1.65rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--cyan-glacier);
-  line-height: 1;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 .metric-sub {
@@ -717,12 +730,12 @@ h3 {
 }
 
 .pillar-tag {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--cyan-glacier);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   margin-bottom: var(--sp-2);
 }
 
@@ -829,9 +842,12 @@ h3 {
 }
 
 .param-val-badge {
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  font-size: 0.92rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--cyan-glacier);
 }
 
@@ -867,10 +883,11 @@ h3 {
 .param-bounds {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 500;
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 /* Preset Pill Buttons */
@@ -882,12 +899,12 @@ h3 {
 }
 
 .preset-pill {
-  padding: 5px 12px;
+  padding: 6px 13px;
   background: var(--space-surface);
   border: 1px solid var(--space-border);
   border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-muted);
   cursor: pointer;
@@ -1128,9 +1145,10 @@ input:checked + .switch-slider:before {
   gap: 4px;
   background: rgba(16, 185, 129, 0.14);
   color: var(--data-vegetation);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   padding: 3px 8px;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(16, 185, 129, 0.3);
@@ -1467,8 +1485,8 @@ input:checked + .switch-slider:before {
   gap: 10px;
   padding: 8px 18px;
   border-radius: var(--radius-full);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
   font-weight: 700;
   pointer-events: auto;
   box-shadow: var(--card-shadow);
@@ -1564,11 +1582,11 @@ input:checked + .switch-slider:before {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   padding: 4px 10px;
   border-radius: var(--radius-full);
   background: var(--space-bg);
@@ -1602,14 +1620,16 @@ input:checked + .switch-slider:before {
 }
 
 .sim-hub-metric-item .sub {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   color: var(--text-dim);
 }
 
 .sim-hub-metric-item .val {
-  font-family: var(--font-mono);
-  font-size: 1rem;
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-white);
   margin-top: 2px;
@@ -1685,8 +1705,8 @@ input:checked + .switch-slider:before {
   align-items: center;
   padding-top: var(--sp-6);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
   color: #94a3b8;
   flex-wrap: wrap;
   gap: var(--sp-4);
@@ -1706,8 +1726,8 @@ input:checked + .switch-slider:before {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
   color: var(--text-dim);
   margin-bottom: var(--sp-3);
 }
