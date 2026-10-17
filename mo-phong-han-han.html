@@ -12,27 +12,30 @@
 <body style="overflow: hidden;">
 
   <!-- Scientific HUD Navigation Header -->
-  <header class="hud-header">
+  <header class="hud-header" id="main-hud">
     <div class="container hud-nav-wrap">
-      <a href="index.html" class="brand-logo">
-        <div class="brand-symbol">☀️</div>
+      <a href="index.html" class="brand-logo" aria-label="Trang chủ Màu Xanh Tương Lai">
+        <div class="brand-symbol">🌱</div>
         <div class="brand-text-wrap">
           <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
-          <span class="brand-tagline">Hạn Hán & Xâm Nhập Mặn Miền Tây</span>
+          <span class="brand-tagline">Cổng Giáo Dục Khí Hậu & Môi Trường</span>
         </div>
       </a>
 
-      <ul class="hud-nav-links">
-        <li><a href="index.html#phong-su-tu-lieu" class="hud-link" style="color: #ef4444; font-weight: 700;">📺 Phóng Sự TP.HCM</a></li>
-        <li><a href="index.html" class="hud-link">🎬 Trang Chủ</a></li>
-        <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
-        <li><a href="trung-tam-mo-phong.html" class="hud-link active">★ Trung Tâm 3D</a></li>
-        <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
-      </ul>
+      <nav aria-label="Điều hướng chính">
+        <ul class="hud-nav-links">
+          <li><a href="index.html#phong-su-tu-lieu" class="hud-link">Phóng Sự Truyền Hình</a></li>
+          <li><a href="index.html#bao-chi-tphcm" class="hud-link" style="color: #b91c1c; font-weight: 700;">Báo Chí Thời Sự TP.HCM</a></li>
+          <li><a href="index.html" class="hud-link">Video Thông Điệp Xanh</a></li>
+          <li><a href="trien-lam-poster.html" class="hud-link">Triển Lãm Poster</a></li>
+          <li><a href="trung-tam-mo-phong.html" class="hud-link active">Mô Phỏng 3D</a></li>
+          <li><a href="so-tay-song-xanh.html" class="hud-link">Sổ Tay Sống Xanh</a></li>
+        </ul>
+      </nav>
 
       <div style="display: flex; align-items: center; gap: 8px;">
-        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--cyan-glacier); color: var(--cyan-glacier);">
-          ★ Chọn phòng 3D khác ➔
+        <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.82rem; font-weight: 700;">
+          <span>Phòng 3D Khác ➔</span>
         </a>
       </div>
     </div>
