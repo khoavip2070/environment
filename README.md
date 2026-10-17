@@ -19,7 +19,7 @@ Hệ thống bao gồm các trang chuyên đề đồng bộ giao diện HUD:
 
 | Trang / Chuyên Mục | Chức Năng & Nội Dung Giáo Dục |
 | :--- | :--- |
-| [`index.html`](index.html) | **Trang chủ trung tâm**: Giới thiệu tổng quan, **Tiêu điểm đô thị: Biểu hiện của biến đổi khí hậu tại TP.HCM** (video tư liệu YouTube & 4 thẻ biểu hiện thực tế), không gian sáng tạo học sinh (*Video 1 Phút Xanh* & 8 Poster), lối vào 4 phòng 3D và cẩm nang sống xanh 3 trụ cột. |
+| [`index.html`](index.html) | **Trang chủ trung tâm**: Giới thiệu tổng quan, **Tiêu điểm đô thị: Biểu hiện của biến đổi khí hậu tại TP.HCM** (video tư liệu YouTube & 4 thẻ biểu hiện thực tế), không gian sáng tạo học sinh (*Video Thông Điệp Xanh - 02:25* & 8 Poster), lối vào 4 phòng 3D và cẩm nang sống xanh 3 trụ cột. |
 | [`trien-lam-poster.html`](trien-lam-poster.html) | **Triển lãm Poster & Sáng tạo thế hệ trẻ**: Trưng bày các sản phẩm tranh vẽ tay và đồ họa cổ động môi trường do học sinh sáng tác minh họa, hỗ trợ lọc chủ đề và xem chi tiết qua Lightbox. |
 | [`trung-tam-mo-phong.html`](trung-tam-mo-phong.html) | **Cổng trung tâm mô phỏng 3D**: Giới thiệu và dẫn lối vào 4 phòng thí nghiệm biến đổi khí hậu tương tác 360°. |
 | [`mo-phong-han-han.html`](mo-phong-han-han.html) | **☀️ 3D Hạn mặn Miền Tây**: Mô phỏng nứt đất Voronoi, muối kết tinh đôi bờ, cột thủy chí đo mực nước sông, xuồng ba lá mắc cạn và **cửa cống thủy lợi ngăn mặn** tự động đóng mở khi độ mặn vượt 4‰. |

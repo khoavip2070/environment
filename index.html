@@ -34,7 +34,7 @@
       <nav aria-label="Điều hướng chính">
         <ul class="hud-nav-links">
           <li><a href="#tieu-diem-tphcm" class="hud-link" style="color: var(--data-heat); font-weight: 700;">🏙️ Tiêu Điểm TP.HCM</a></li>
-          <li><a href="index.html" class="hud-link active">🎬 Video 1 Phút Xanh</a></li>
+          <li><a href="index.html" class="hud-link active">🎬 Video Thông Điệp Xanh</a></li>
           <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
           <li><a href="trung-tam-mo-phong.html" class="hud-link" style="color: var(--cyan-glacier); font-weight: 700;">★ 4 Mô Phỏng 3D</a></li>
           <li><a href="so-tay-song-xanh.html" class="hud-link">🌱 Sổ Tay Sống Xanh</a></li>
@@ -75,7 +75,7 @@
               <span>➔</span>
             </a>
             <a href="#hero-main-video" class="btn-climate btn-ghost" onclick="const v = document.getElementById('hero-main-video'); if(v) { v.play(); v.scrollIntoView({behavior: 'smooth', block: 'center'}); }">
-              <span>▶ Video "1 Phút Xanh"</span>
+              <span>▶ Xem Video Clip (02:25)</span>
             </a>
             <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost">
               <span>🌪️ 4 Mô Phỏng 3D</span>
@@ -105,7 +105,7 @@
               <span>GÓC TRUYỀN THÔNG • SÁNG KIẾN HỌC ĐƯỜNG</span>
             </div>
             <div style="color: var(--text-dim); display: flex; align-items: center; gap: 8px;">
-              <span>⏱️ Thời lượng: 1 Phút</span>
+              <span id="hero-video-duration" style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--text-white); background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: 4px;">⏱️ Thời lượng: 02:25</span>
               <span style="border-left: 1px solid var(--space-border); padding-left: 8px; color: var(--cyan-glacier); font-weight: 700;">Âm thanh sống động</span>
             </div>
           </div>
@@ -119,7 +119,7 @@
 
           <div class="hero-video-caption-bar">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <h3 style="font-size: 1.05rem; margin: 0; color: var(--text-white);">Video Lan Tỏa: "1 Phút Xanh"</h3>
+              <h3 style="font-size: 1.05rem; margin: 0; color: var(--text-white);">Video Lan Tỏa: "Thông Điệp Xanh" <span style="font-size: 0.85rem; color: var(--cyan-glacier); font-weight: 700; font-family: var(--font-mono);">(02:25)</span></h3>
               <span style="font-size: 0.78rem; color: var(--data-vegetation); font-weight: 700;">TIẾNG NÓI HỌC ĐƯỜNG</span>
             </div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
@@ -880,6 +880,41 @@
       }
     }
 
+    // ===================================================================
+    // ĐỒNG BỘ THỜI LƯỢNG VIDEO CHÍNH XÁC THEO THỜI GIAN THỰC CỦA VIDEO
+    // ===================================================================
+    const heroVideo = document.getElementById('hero-main-video');
+    const heroDurationBadge = document.getElementById('hero-video-duration');
+
+    function formatTime(seconds) {
+      if (isNaN(seconds) || seconds < 0) return '02:25';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function syncHeroVideoDuration() {
+      if (!heroVideo || !heroDurationBadge) return;
+      if (heroVideo.duration && !isNaN(heroVideo.duration)) {
+        const totalDuration = formatTime(heroVideo.duration);
+        if (heroVideo.currentTime > 0 && !heroVideo.paused) {
+          heroDurationBadge.innerHTML = `⏱️ <span style="color: var(--cyan-glacier);">${formatTime(heroVideo.currentTime)}</span> / ${totalDuration}`;
+        } else {
+          heroDurationBadge.innerHTML = `⏱️ Thời lượng: ${totalDuration}`;
+        }
+      }
+    }
+
+    if (heroVideo) {
+      heroVideo.addEventListener('loadedmetadata', syncHeroVideoDuration);
+      heroVideo.addEventListener('durationchange', syncHeroVideoDuration);
+      heroVideo.addEventListener('timeupdate', syncHeroVideoDuration);
+      heroVideo.addEventListener('play', syncHeroVideoDuration);
+      heroVideo.addEventListener('pause', syncHeroVideoDuration);
+      heroVideo.addEventListener('ended', syncHeroVideoDuration);
+      if (heroVideo.readyState >= 1) syncHeroVideoDuration();
+    }
+
     // Modal Display for Student Media (Posters & Videos)
     function openMediaModal(type, src, title, author, desc) {
       const modal = document.getElementById('climate-modal');
@@ -888,9 +923,14 @@
       let mediaHtml = '';
       if (type === 'video') {
         mediaHtml = `
-          <video controls autoplay style="width: 100%; border-radius: 8px; max-height: 480px; background: #000; margin-bottom: 16px;">
-            <source src="${src}" type="video/mp4">
-          </video>
+          <div style="position: relative; margin-bottom: 16px;">
+            <video id="modal-video-player" controls autoplay style="width: 100%; border-radius: 8px; max-height: 480px; background: #000;">
+              <source src="${src}" type="video/mp4">
+            </video>
+            <div id="modal-video-duration-badge" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-top: 8px; font-family: var(--font-mono);">
+              ⏱️ Thời lượng video: 02:25
+            </div>
+          </div>
         `;
       } else {
         mediaHtml = `
@@ -910,6 +950,31 @@
         </p>
         <button class="btn-climate btn-ghost" onclick="closeMediaModal()">Đóng cửa sổ</button>
       `;
+
+      if (type === 'video') {
+        setTimeout(() => {
+          const mv = document.getElementById('modal-video-player');
+          const mBadge = document.getElementById('modal-video-duration-badge');
+          if (mv && mBadge) {
+            const updateModalDuration = () => {
+              if (mv.duration && !isNaN(mv.duration)) {
+                const total = formatTime(mv.duration);
+                if (mv.currentTime > 0 && !mv.paused) {
+                  mBadge.innerHTML = `⏱️ Đang phát: <span style="color: var(--cyan-glacier);">${formatTime(mv.currentTime)}</span> / ${total}`;
+                } else {
+                  mBadge.innerHTML = `⏱️ Thời lượng video: <strong>${total}</strong>`;
+                }
+              }
+            };
+            mv.addEventListener('loadedmetadata', updateModalDuration);
+            mv.addEventListener('timeupdate', updateModalDuration);
+            mv.addEventListener('play', updateModalDuration);
+            mv.addEventListener('pause', updateModalDuration);
+            mv.addEventListener('ended', updateModalDuration);
+            if (mv.readyState >= 1) updateModalDuration();
+          }
+        }, 50);
+      }
 
       modal.classList.add('open');
     }
