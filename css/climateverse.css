@@ -2708,4 +2708,211 @@ input:checked + .switch-slider:before {
   box-shadow: var(--card-shadow);
 }
 
+/* ===================================================================
+   THANH CHUYỂN NHANH 4 PHÒNG 3D TRỰC TIẾP (3D ROOM QUICK TELEPORT BAR)
+   =================================================================== */
+.sim-room-switcher-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 4px 6px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sim-room-switcher-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.sim-room-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.sim-room-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.sim-room-pill.active {
+  background: var(--pill-accent, #0284c7);
+  color: #ffffff;
+  border-color: var(--pill-accent, #0284c7);
+  box-shadow: 0 0 14px var(--pill-glow, rgba(2, 132, 199, 0.6));
+}
+
+.sim-room-pill.sim-hub-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--cyan-glacier);
+}
+.sim-room-pill.sim-hub-pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Thanh Điều Hướng Nổi Dưới Đáy Phòng 3D (3D Bottom Quick Dock) */
+.sim-bottom-dock {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  z-index: 50;
+  max-width: 95vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sim-bottom-dock::-webkit-scrollbar {
+  display: none;
+}
+
+.sim-dock-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.sim-dock-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+.sim-dock-link.primary {
+  background: #0284c7;
+  border-color: #0284c7;
+  color: #ffffff;
+}
+.sim-dock-link.primary:hover {
+  background: #0369a1;
+  border-color: #0369a1;
+}
+
+/* ===================================================================
+   KHUNG LIÊN KẾT CHÉO CÁC CHUYÊN MỤC (CROSS-PORTAL PORTAL CARDS)
+   =================================================================== */
+.cross-portal-section {
+  padding: var(--sp-12) 0;
+  background: linear-gradient(180deg, var(--space-bg) 0%, var(--space-surface) 100%);
+  border-top: 1px solid var(--space-border);
+}
+
+.cross-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sp-6);
+  margin-top: var(--sp-6);
+}
+
+.cross-portal-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--card-bg);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6);
+  box-shadow: var(--card-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cross-portal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--cyan-glacier));
+  transition: height 0.25s ease;
+}
+
+.cross-portal-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-accent, var(--cyan-glacier));
+  box-shadow: var(--card-hover-shadow);
+}
+.cross-portal-card:hover::before {
+  height: 5px;
+}
+
+.cross-portal-card.active-current {
+  border-color: var(--card-accent, var(--cyan-glacier));
+  background: rgba(2, 132, 199, 0.05);
+}
+
+.cross-portal-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.cross-portal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-white);
+}
+
+.cross-portal-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--sp-4);
+  flex-grow: 1;
+}
+
+.cross-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--card-accent, var(--cyan-glacier));
+  padding-top: 10px;
+  border-top: 1px solid var(--space-border);
+}
+
+
 

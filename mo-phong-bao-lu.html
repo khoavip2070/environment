@@ -24,18 +24,17 @@
 
       <nav aria-label="Điều hướng chính">
         <ul class="hud-nav-links">
-          <li><a href="index.html#phong-su-tu-lieu" class="hud-link">Phóng Sự Truyền Hình</a></li>
-          <li><a href="index.html#bao-chi-tphcm" class="hud-link" style="color: #b91c1c; font-weight: 700;">Báo Chí Thời Sự TP.HCM</a></li>
-          <li><a href="index.html" class="hud-link">Video Thông Điệp Xanh</a></li>
+          <li><a href="index.html" class="hud-link">Trang Chủ</a></li>
+          <li><a href="index.html#bao-chi-tphcm" class="hud-link" style="color: #b91c1c; font-weight: 700;">Thời Sự TP.HCM</a></li>
+          <li><a href="trung-tam-mo-phong.html" class="hud-link active">4 Mô Phỏng 3D</a></li>
           <li><a href="trien-lam-poster.html" class="hud-link">Triển Lãm Poster</a></li>
-          <li><a href="trung-tam-mo-phong.html" class="hud-link active">Mô Phỏng 3D</a></li>
           <li><a href="so-tay-song-xanh.html" class="hud-link">Sổ Tay Sống Xanh</a></li>
         </ul>
       </nav>
 
       <div style="display: flex; align-items: center; gap: 8px;">
         <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.82rem; font-weight: 700;">
-          <span>Phòng 3D Khác ➔</span>
+          <span>🏛️ Sảnh 4 Phòng 3D</span>
         </a>
       </div>
     </div>
@@ -52,20 +51,36 @@
     <!-- HUD Overlay Panels -->
     <div class="sim-hud-overlay">
       
-      <!-- Top Status Banner -->
-      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <!-- Top Status Banner & 4-Room Teleport Switcher -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;">
         <div class="sim-floating-card sim-status-banner" id="storm-status-banner" style="background: rgba(239, 68, 68, 0.25); border-color: var(--data-critical); color: #fff;">
           <span style="color: var(--data-critical);">🌀</span>
           <span id="storm-status-text">CẢNH BÁO KHẨN CẤP: Siêu Bão Đổ Bộ Kèm Mưa Lớn & Triều Cường</span>
         </div>
 
+        <!-- Thanh Chuyển Nhanh Trực Tiếp 4 Phòng 3D -->
+        <div class="sim-room-switcher-bar" style="--pill-accent: #0284c7; --pill-glow: rgba(2, 132, 199, 0.6);">
+          <a href="trung-tam-mo-phong.html" class="sim-room-pill sim-hub-pill" title="Về sảnh danh sách 4 phòng 3D">
+            <span>🏛️ Sảnh 3D</span>
+          </a>
+          <a href="mo-phong-han-han.html" class="sim-room-pill" title="Chuyển sang: Phòng 1 - Hạn Hán & Xâm Nhập Mặn Miền Tây">
+            <span>☀️ 1. Hạn Mặn</span>
+          </a>
+          <a href="mo-phong-bao-lu.html" class="sim-room-pill active" title="Đang xem: Phòng 2 - Siêu Bão Yagi & Lũ Lụt">
+            <span>🌀 2. Siêu Bão</span>
+          </a>
+          <a href="mo-phong-bang-tan.html" class="sim-room-pill" title="Chuyển sang: Phòng 3 - Băng Tan Cực & Biển Dâng">
+            <span>🧊 3. Băng Tan</span>
+          </a>
+          <a href="mo-phong-chay-rung.html" class="sim-room-pill" title="Chuyển sang: Phòng 4 - Sóng Nhiệt & Cháy Rừng">
+            <span>🔥 4. Cháy Rừng</span>
+          </a>
+        </div>
+
         <div style="display: flex; align-items: center; gap: 10px;">
-          <div class="sim-floating-card" style="padding: 7px 18px; font-size: 0.8rem; font-weight: 600; color: var(--cyan-glacier);">
-            Dùng chuột: Xoay 3D • Cuộn chuột: Thu phóng • Giữ chuột phải: Dời góc nhìn
-          </div>
           <button id="btn-toggle-docks" class="btn-toggle-docks" onclick="toggleSimDocks()" title="Ẩn hoặc hiện đồng thời cả 2 bảng thông tin bên cạnh (Phím tắt: H)">
             <span id="dock-btn-icon">👁️</span>
-            <span id="dock-btn-text">Ẩn 2 Bảng Thông Tin</span>
+            <span id="dock-btn-text">Ẩn Bảng Thông Số</span>
             <span style="font-size: 0.74rem; opacity: 0.85; font-weight: 600;">(Phím H)</span>
           </button>
         </div>
@@ -164,6 +179,19 @@
         <span>Đang xem toàn cảnh 3D • Bấm để <strong>Hiện lại 2 bảng thông tin</strong></span>
         <span style="font-size: 0.74rem; opacity: 0.85; font-weight: 600;">(Phím H)</span>
       </button>
+
+      <!-- Bottom Navigation Quick Dock -->
+      <div class="sim-bottom-dock">
+        <span style="font-size: 0.76rem; color: #94a3b8; font-weight: 700; margin-right: 2px;">ĐIỀU HƯỚNG NHANH:</span>
+        <a href="mo-phong-han-han.html" class="sim-dock-link">⬅️ Trước: ☀️ Hạn Mặn</a>
+        <a href="trung-tam-mo-phong.html" class="sim-dock-link">🏛️ Sảnh 4 Phòng</a>
+        <a href="mo-phong-bang-tan.html" class="sim-dock-link primary">Tiếp: 🧊 Băng Tan ➔</a>
+        <span style="width: 1px; height: 16px; background: rgba(255,255,255,0.2); margin: 0 4px;"></span>
+        <a href="index.html" class="sim-dock-link">🏠 Trang Chủ</a>
+        <a href="index.html#bao-chi-tphcm" class="sim-dock-link">📰 Thời Sự TP.HCM</a>
+        <a href="trien-lam-poster.html" class="sim-dock-link">🖼️ Triển Lãm Poster</a>
+        <a href="so-tay-song-xanh.html" class="sim-dock-link">🌱 Sổ Tay Sống Xanh</a>
+      </div>
 
     </div>
   </div>
