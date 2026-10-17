@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Mô Phỏng 3D Hạn Hán & Xâm Nhập Mặn — Cổng Giáo Dục Khí Hậu Việt Nam</title>
-  <meta name="description" content="Mô phỏng 3D hiện tượng hạn hán, bốc thoát hơi nước đất và xâm nhập mặn vùng châu thổ theo nhiệt độ và lượng mưa.">
+  <title>Mô Phỏng 3D Xâm Nhập Mặn Sông Sài Gòn & Đồng Nai — Giáo Dục Địa Phương TP.HCM</title>
+  <meta name="description" content="Mô phỏng 3D ranh mặn 4‰ lấn sâu vào sông Sài Gòn & sông Đồng Nai, đe dọa các trạm bơm nước thô nhà máy nước Tân Hiệp, Thủ Đức cấp cho 13 triệu dân TP.HCM, Bình Dương và nông nghiệp Cần Giờ, Nhà Bè.">
   <link rel="stylesheet" href="css/climateverse.css">
   <script src="js/vendor/three.min.js"></script>
   <script src="js/vendor/OrbitControls.js"></script>
@@ -55,7 +55,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;">
         <div class="sim-floating-card sim-status-banner" id="status-banner" style="background: rgba(234, 88, 12, 0.2); border-color: var(--data-warning); color: #fff;">
           <span style="color: var(--data-warning);">⚠️</span>
-          <span id="status-text">Cảnh Báo: Hạn Hán & Xâm Nhập Mặn Cấp Độ 2</span>
+          <span id="status-text">Cảnh Báo: Ranh Mặn 4‰ Lấn Sâu Vào Sông Sài Gòn - Đồng Nai (Cấp Độ 2)</span>
         </div>
 
         <!-- Thanh Chuyển Nhanh Trực Tiếp 4 Phòng 3D -->
@@ -63,17 +63,17 @@
           <a href="trung-tam-mo-phong.html" class="sim-room-pill sim-hub-pill" title="Về sảnh danh sách 4 phòng 3D">
             <span>🏛️ Sảnh 3D</span>
           </a>
-          <a href="mo-phong-han-han.html" class="sim-room-pill active" title="Đang xem: Phòng 1 - Hạn Hán & Xâm Nhập Mặn Miền Tây">
-            <span>☀️ 1. Hạn Mặn</span>
+          <a href="mo-phong-han-han.html" class="sim-room-pill active" title="Đang xem: Phòng 1 - Xâm Nhập Mặn Sông Sài Gòn & Đồng Nai (TP.HCM - Bình Dương)">
+            <span>☀️ 1. Hạn Mặn TP.HCM</span>
           </a>
-          <a href="mo-phong-bao-lu.html" class="sim-room-pill" title="Chuyển sang: Phòng 2 - Siêu Bão Yagi & Lũ Lụt">
+          <a href="mo-phong-bao-lu.html" class="sim-room-pill" title="Chuyển sang: Phòng 2 - Bão Lũ & Triều Cường Đô Thị">
             <span>🌀 2. Siêu Bão</span>
           </a>
           <a href="mo-phong-bang-tan.html" class="sim-room-pill" title="Chuyển sang: Phòng 3 - Băng Tan Cực & Biển Dâng">
             <span>🧊 3. Băng Tan</span>
           </a>
-          <a href="mo-phong-chay-rung.html" class="sim-room-pill" title="Chuyển sang: Phòng 4 - Sóng Nhiệt & Cháy Rừng">
-            <span>🔥 4. Cháy Rừng</span>
+          <a href="mo-phong-chay-rung.html" class="sim-room-pill" title="Chuyển sang: Phòng 4 - Đảo Nhiệt Đô Thị & Nắng Nóng (TP.HCM - Bình Dương - Vũng Tàu)">
+            <span>🔥 4. Đảo Nhiệt Đô Thị</span>
           </a>
         </div>
 
@@ -91,82 +91,82 @@
         
         <!-- Left Dock: Parameter Controls -->
         <div class="sim-floating-card sim-control-dock">
-          <div class="section-eyebrow" style="margin: 0 0 6px;">Thực hành thí nghiệm</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tự Chỉnh Thời Tiết & Nước Sông</h3>
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Giáo dục địa phương TP.HCM • Môn Địa lý</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Thực Nghiệm Mặn Hóa Sông Sài Gòn & Đồng Nai</h3>
 
           <div class="sim-param-box">
             <div class="param-header">
-              <span class="param-name">Lượng mưa mùa khô</span>
+              <span class="param-name">Lượng mưa mùa khô lưu vực</span>
               <span class="param-val-badge mono-num" id="val-rain">35 mm</span>
             </div>
             <input type="range" class="scientific-slider" id="slider-rain" min="0" max="200" value="35" step="5">
-            <div class="param-bounds"><span>0 mm (Khô kiệt hoàn toàn)</span><span>200 mm (Mưa dồi dào)</span></div>
+            <div class="param-bounds"><span>0 mm (Khô kiệt hoàn toàn)</span><span>200 mm (Mùa mưa dồi dào)</span></div>
           </div>
 
           <div class="sim-param-box">
             <div class="param-header">
-              <span class="param-name">Nhiệt độ nắng nóng</span>
+              <span class="param-name">Nhiệt độ nắng nóng đô thị</span>
               <span class="param-val-badge mono-num" id="val-temp" style="color: var(--data-heat);">38.5 °C</span>
             </div>
             <input type="range" class="scientific-slider" id="slider-temp" min="25" max="45" value="38.5" step="0.5">
-            <div class="param-bounds"><span>25 °C (Mát mẻ dễ chịu)</span><span>45 °C (Nắng cháy gay gắt)</span></div>
+            <div class="param-bounds"><span>25 °C (Mát mẻ dễ chịu)</span><span>45 °C (Đảo nhiệt gay gắt)</span></div>
           </div>
 
           <div class="sim-param-box">
             <div class="param-header">
-              <span class="param-name">Độ mặn của nước sông</span>
+              <span class="param-name">Độ mặn triều dâng cửa biển Cần Giờ</span>
               <span class="param-val-badge mono-num" id="val-salinity" style="color: var(--data-warning);">12.5 g/lít</span>
             </div>
             <input type="range" class="scientific-slider" id="slider-salinity" min="0" max="35" value="12.5" step="0.5">
-            <div class="param-bounds"><span>0 g/l (Nước ngọt tưới cây)</span><span>35 g/l (Mặn như nước biển)</span></div>
+            <div class="param-bounds"><span>0 g/l (Nước ngọt an toàn)</span><span>35 g/l (Mặn như biển Đông)</span></div>
           </div>
 
           <div style="margin-top: 14px;">
-            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; letter-spacing: 0.04em;">CHỌN NHANH TÌNH HUỐNG THỰC TẾ:</div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; letter-spacing: 0.04em;">TÌNH HUỐNG THỰC TẾ TẠI TP.HCM & BÌNH DƯƠNG:</div>
             <div class="preset-group" style="margin: 0;">
-              <button class="preset-pill" onclick="applyPreset(150, 28, 0, 'Bình thường')">Mùa mưa đủ nước</button>
-              <button class="preset-pill" onclick="applyPreset(40, 35, 4, 'Hạn nhẹ')">Hạn nhẹ đầu mùa</button>
-              <button class="preset-pill active" onclick="applyPreset(10, 39, 14, 'Đại hạn ĐBSCL 2020')">Đại hạn 2020</button>
-              <button class="preset-pill" onclick="applyPreset(0, 44, 28, 'Khô kiệt kỷ lục')">Khô kiệt kỷ lục</button>
+              <button class="preset-pill" onclick="applyPreset(160, 29, 0, 'Mùa mưa đẩy mặn')">Mùa mưa xả đẩy mặn</button>
+              <button class="preset-pill" onclick="applyPreset(50, 34, 4, 'Đầu mùa khô')">Đầu mùa khô (áp sát Nhà Bè)</button>
+              <button class="preset-pill active" onclick="applyPreset(15, 38.5, 14, 'Cao điểm mùa khô TP.HCM')">Cao điểm mùa khô TP.HCM</button>
+              <button class="preset-pill" onclick="applyPreset(0, 42, 28, 'Hạn mặn kỷ lục')">Hạn mặn kỷ lục (Nguy cấp)</button>
             </div>
           </div>
         </div>
 
         <!-- Right Dock: Physical Telemetry Output -->
         <div class="sim-floating-card sim-telemetry-dock">
-          <div class="section-eyebrow" style="margin: 0 0 6px;">Hậu quả đối với Việt Nam</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tác Động Lên Ruộng Lúa & Vườn Cây</h3>
+          <div class="section-eyebrow" style="margin: 0 0 6px;">Số liệu quan trắc TP.HCM & Bình Dương</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 16px;">Tác Động Nước Sinh Hoạt 13 Triệu Dân</h3>
 
           <div style="margin-bottom: 12px;">
-            <div class="metric-label">Độ thiếu hụt nước của đất trồng</div>
+            <div class="metric-label">Độ thiếu hụt nguồn nước mặt đô thị</div>
             <div class="metric-val mono-num" id="tele-deficit" style="color: var(--data-heat);">-46.5%</div>
-            <div class="metric-sub">Đất ruộng nứt nẻ chân chim, cây cối héo úa</div>
+            <div class="metric-sub">Hồ Dầu Tiếng & Trị An sụt giảm lưu lượng xả</div>
           </div>
 
           <div style="margin-bottom: 12px;">
-            <div class="metric-label">Ranh mặn 4‰ ăn sâu vào sông ngòi</div>
+            <div class="metric-label">Ranh mặn 4‰ tiến sâu từ cửa biển Cần Giờ</div>
             <div style="font-size: 1.35rem; font-weight: 700; color: var(--data-warning);" class="mono-num" id="tele-distance">72.0 km</div>
-            <div class="metric-sub">Xâm nhập sâu vào Bến Tre, Tiền Giang, Sóc Trăng</div>
+            <div class="metric-sub">Áp sát trạm bơm nước thô Tân Hiệp (Hóc Môn) & Hóa An</div>
           </div>
 
           <div style="margin-bottom: 12px;">
-            <div class="metric-label">Tốc độ bốc hơi nước của cây & sông</div>
+            <div class="metric-label">Tốc độ bốc thoát hơi nước mặt sông & đô thị</div>
             <div style="font-size: 1.1rem; font-weight: 600; color: var(--cyan-glacier);" class="mono-num" id="tele-pet">8.2 mm/ngày</div>
           </div>
 
           <div style="padding-top: 10px; border-top: 1px solid var(--space-border); margin-bottom: 8px;">
-            <div class="metric-label">Ước tính thiệt hại lúa & Cây ăn trái</div>
-            <div style="font-size: 1.25rem; font-weight: 700; color: var(--data-critical);" class="mono-num" id="tele-damage">38.5% sản lượng</div>
+            <div class="metric-label">Nông nghiệp Cần Giờ, Nhà Bè & Củ Chi bị ảnh hưởng</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: var(--data-critical);" class="mono-num" id="tele-damage">38.5% diện tích</div>
           </div>
 
           <div style="margin-bottom: 12px; padding: 8px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3);" id="sluice-status-box">
-            <div class="metric-label" style="margin-bottom: 2px;">Cửa cống ngăn mặn thủy lợi:</div>
-            <div style="font-size: 0.92rem; font-weight: 700; color: var(--data-critical);" id="tele-sluice">⚠️ ĐÃ ĐÓNG CHẶT (Ngăn mặn >4‰)</div>
+            <div class="metric-label" style="margin-bottom: 2px;">Trạm bơm nước thô (Tân Hiệp & Thủ Đức):</div>
+            <div style="font-size: 0.92rem; font-weight: 700; color: var(--data-critical);" id="tele-sluice">⚠️ TẠM DỪNG BƠM (Độ mặn sông vượt 0.25 g/l)</div>
           </div>
 
           <!-- Student Learning Note -->
           <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--cyan-glacier); padding: 8px 12px; border-radius: 4px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
-            💡 <strong style="color: #fff;">Góc học sinh:</strong> Khi hạn hán kéo dài, lưu lượng sông Mekong sụt giảm, triều cường biển Đông đẩy nước mặn vào sâu hơn 70km. Độ mặn trên 4‰ làm teo rễ cây ăn trái và mất trắng các trà lúa!
+            💡 <strong style="color: #fff;">Góc học sinh TP.HCM:</strong> Hơn 90% nước sinh hoạt của hơn 10 triệu dân TP.HCM và 3 triệu dân Bình Dương phụ thuộc vào sông Sài Gòn và sông Đồng Nai. Vào mùa khô, triều cường biển Đông từ vịnh Gành Rái và cửa Soài Rạp (Cần Giờ) đẩy nước mặn 4‰ lấn sâu hơn 70 km, buộc hồ Dầu Tiếng (Tây Ninh/Bình Dương) và Trị An (Đồng Nai) phải xả hàng chục triệu m³ nước ngọt để đẩy mặn bảo vệ các trạm bơm!
           </div>
         </div>
 
@@ -611,7 +611,7 @@
     }
 
     function buildSluiceGate() {
-      // Cống thủy lợi ngăn mặn (Mô phỏng hệ thống cống Cái Lớn - Cái Bé, Bến Tre)
+      // Cống thủy lợi ngăn triều & đẩy mặn (Mô phỏng hệ thống cống Mương Chuối, Cây Khô, Phú Xuân - TP.HCM)
       sluiceGroup = new THREE.Group();
 
       // Hai trụ bê tông hai bên bờ kênh
@@ -866,15 +866,15 @@
       const statusEl = document.getElementById('status-text');
       const banner = document.getElementById('status-banner');
       if (soilDeficit > 60 || salVal > 20) {
-        statusEl.textContent = 'BÁO ĐỘNG ĐỎ: Đại Hạn Mặn Lịch Sử — Lúa Chết Cháy, Dân Mua Nước Ngọt';
+        statusEl.textContent = 'BÁO ĐỘNG ĐỎ: Ranh Mặn 4‰ Vượt Trạm Bơm Tân Hiệp & Hóa An — Đe Dọa Nước Sạch 13 Triệu Dân TP.HCM & Bình Dương';
         banner.style.background = 'rgba(239, 68, 68, 0.3)';
         banner.style.borderColor = 'var(--data-critical)';
       } else if (soilDeficit > 30 || salVal > 6) {
-        statusEl.textContent = 'Cảnh Báo: Hạn Hán & Xâm Nhập Mặn Cấp Độ 2 (Ranh mặn > 50km)';
+        statusEl.textContent = 'Cảnh Báo: Ranh Mặn Lấn Sâu Vào Sông Sài Gòn & Đồng Nai (Ranh mặn > 50km từ Cần Giờ)';
         banner.style.background = 'rgba(234, 88, 12, 0.3)';
         banner.style.borderColor = 'var(--data-warning)';
       } else {
-        statusEl.textContent = 'Trạng Thái: Nước Ngọt Dồi Dào, Sinh Thái Vườn Cây Xanh Tốt';
+        statusEl.textContent = 'Trạng Thái An Toàn: Hồ Dầu Tiếng & Trị An Đẩy Mặn Hiệu Quả — Trạm Bơm Cấp Nước Bình Thường';
         banner.style.background = 'rgba(16, 185, 129, 0.25)';
         banner.style.borderColor = 'var(--data-vegetation)';
       }
