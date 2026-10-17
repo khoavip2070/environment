@@ -8,34 +8,34 @@
 
 :root {
   /* ===================================================================
-     CHẾ ĐỘ SÁNG MẶC ĐỊNH (DEFAULT): TƯƠI SÁNG, RỰC RỠ, NĂNG ĐỘNG
+     CHẾ ĐỘ SÁNG MẶC ĐỊNH: BÁO CHÍ & GIÁO DỤC CHÍNH THỐNG, TRANG NHÃ
      =================================================================== */
   --space-deep: #f8fafc;
   --space-bg: #f1f5f9;
   --space-surface: #ffffff;
   --space-panel: #f8fafc;
-  --space-border: rgba(14, 165, 233, 0.18);
-  --space-border-strong: rgba(14, 165, 233, 0.38);
+  --space-border: #e2e8f0;
+  --space-border-strong: #cbd5e1;
 
-  /* Bảng màu sinh thái & khí hậu rực rỡ */
-  --cyan-glacier: #0284c7;       /* Xanh dương tươi sáng */
-  --cyan-glow: rgba(2, 132, 199, 0.22);
-  --blue-ice: #0369a1;
-  --blue-ocean: #0284c7;
-  --text-white: #0f172a;        /* Màu tiêu đề đen xám đậm nét, rõ ràng */
-  --text-muted: #334155;        /* Màu văn bản xám than dễ đọc */
-  --text-dim: #64748b;          /* Màu ghi phụ trợ */
+  /* Bảng màu sinh thái & báo chí chính luận */
+  --cyan-glacier: #0369a1;       /* Xanh biển sâu chuẩn mực */
+  --cyan-glow: none;
+  --blue-ice: #0284c7;
+  --blue-ocean: #0369a1;
+  --text-white: #0f172a;        /* Đen than báo chí, rõ nét và trang trọng */
+  --text-muted: #334155;        /* Xám than đậm dễ đọc */
+  --text-dim: #64748b;          /* Ghi trung tính */
 
-  /* Màu sắc cảnh báo khoa học quy ước nhất quán */
-  --data-heat: #ea580c;         /* Cam lửa nắng nóng */
-  --data-heat-glow: rgba(234, 88, 12, 0.25);
-  --data-warning: #d97706;      /* Hổ phách cảnh báo */
-  --data-water: #0284c7;        /* Xanh nước sông biển */
+  /* Màu sắc chủ đề */
+  --data-heat: #c2410c;         /* Cam đất cảnh báo */
+  --data-heat-glow: none;
+  --data-warning: #b45309;      /* Hổ phách */
+  --data-water: #0369a1;        /* Xanh nước */
   --data-ice: #0284c7;
-  --data-vegetation: #059669;   /* Xanh lá cây sinh thái tươi mát */
-  --data-critical: #dc2626;     /* Đỏ cảnh báo nguy cấp */
+  --data-vegetation: #15803d;   /* Xanh lá tự nhiên sinh thái */
+  --data-critical: #b91c1c;     /* Đỏ cờ thời sự chính luận */
 
-  /* Font chữ chuẩn mực, hiển thị tiếng Việt hoàn hảo, cực kỳ chuyên nghiệp và dễ đọc */
+  /* Font chữ chuẩn mực, hiển thị tiếng Việt hoàn hảo, chuẩn mực báo chí */
   --font-display: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
@@ -52,21 +52,21 @@
   --sp-24: 96px;
 
   /* Bo góc mượt mà */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
-  /* Glassmorphism mờ sương cao cấp trên nền sáng */
-  --glass-bg: rgba(255, 255, 255, 0.92);
-  --glass-blur: blur(16px);
-  --glass-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  /* Đổ bóng tự nhiên theo chuẩn thiết kế tin tức / tạp chí uy tín */
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 
   --card-bg: #ffffff;
-  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  --card-hover-shadow: 0 16px 36px -4px rgba(2, 132, 199, 0.16), 0 6px 14px -2px rgba(15, 23, 42, 0.06);
+  --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --card-hover-shadow: 0 8px 20px -2px rgba(15, 23, 42, 0.08), 0 3px 6px -1px rgba(15, 23, 42, 0.04);
 
-  --hero-bg: radial-gradient(circle at 65% 45%, #dbeafe 0%, #e0f2fe 35%, #ecfdf5 70%, #f8fafc 100%);
+  --hero-bg: linear-gradient(180deg, #f0fdf4 0%, #f8fafc 40%, #f1f5f9 100%);
   --footer-bg: #0f172a;
   --footer-text: #f8fafc;
 
@@ -79,15 +79,15 @@
    CHẾ ĐỘ TỐI KHI NGƯỜI DÙNG BẬT (DARK THEME OVERRIDE)
    =================================================================== */
 [data-theme="dark"] {
-  --space-deep: #070d18;
-  --space-bg: #0c1726;
-  --space-surface: #102033;
-  --space-panel: #142840;
-  --space-border: rgba(56, 189, 248, 0.18);
-  --space-border-strong: rgba(56, 189, 248, 0.35);
+  --space-deep: #090e17;
+  --space-bg: #0d1522;
+  --space-surface: #131f30;
+  --space-panel: #17263b;
+  --space-border: rgba(148, 163, 184, 0.16);
+  --space-border-strong: rgba(148, 163, 184, 0.28);
 
   --cyan-glacier: #38bdf8;
-  --cyan-glow: rgba(56, 189, 248, 0.25);
+  --cyan-glow: none;
   --blue-ice: #7dd3fc;
   --blue-ocean: #0284c7;
   --text-white: #f8fafc;
@@ -95,20 +95,20 @@
   --text-dim: #64748b;
 
   --data-heat: #f97316;
-  --data-heat-glow: rgba(249, 115, 22, 0.3);
+  --data-heat-glow: none;
   --data-warning: #fbbf24;
   --data-water: #38bdf8;
   --data-ice: #a5f3fc;
-  --data-vegetation: #10b981;
+  --data-vegetation: #22c55e;
   --data-critical: #ef4444;
 
-  --glass-bg: rgba(16, 32, 51, 0.85);
-  --glass-blur: blur(16px);
-  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-  --card-bg: #102033;
-  --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --card-hover-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
-  --hero-bg: radial-gradient(circle at 65% 50%, #0d283e 0%, #0c1726 60%, #070d18 100%);
+  --glass-bg: rgba(19, 31, 48, 0.92);
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --card-bg: #131f30;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --card-hover-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  --hero-bg: linear-gradient(180deg, #0d1b2a 0%, #090e17 100%);
   --footer-bg: #050b14;
   --footer-text: #f8fafc;
 }
@@ -235,11 +235,11 @@ h3 {
 
 .section-eyebrow::before {
   content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--cyan-glacier);
-  box-shadow: 0 0 10px var(--cyan-glacier);
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+  box-shadow: none;
 }
 
 .section-desc {
@@ -287,9 +287,9 @@ h3 {
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #0284c7 0%, #059669 100%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 14px var(--cyan-glow);
+  background: #15803d;
+  border: 1px solid #166534;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,14 +458,14 @@ h3 {
   border: 1px solid var(--space-border-strong);
   border-radius: var(--radius-lg);
   padding: var(--sp-4);
-  box-shadow: 0 20px 50px -10px rgba(2, 132, 199, 0.22), 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero-video-showcase-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 25px 60px -8px rgba(2, 132, 199, 0.3), 0 12px 28px -4px rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
 }
 
 .hero-video-header-bar {
@@ -516,15 +516,14 @@ h3 {
 
 .hero-title {
   margin-bottom: var(--sp-4);
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 45%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-white);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 
 [data-theme="dark"] .hero-title {
-  background: linear-gradient(135deg, #ffffff 40%, var(--blue-ice) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #f8fafc;
 }
 
 .hero-desc {
@@ -650,16 +649,17 @@ h3 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  background: #15803d;
   color: #ffffff !important;
-  border: 1px solid #0284c7;
-  box-shadow: 0 4px 16px var(--cyan-glow);
+  border: 1px solid #166534;
+  box-shadow: 0 2px 4px rgba(21, 128, 61, 0.2);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(2, 132, 199, 0.4);
+  background: #166534;
+  border-color: #14532d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(21, 128, 61, 0.28);
 }
 
 .btn-ghost {
@@ -667,14 +667,13 @@ h3 {
   color: var(--text-white) !important;
   border: 1px solid var(--space-border-strong);
   box-shadow: var(--card-shadow);
-  backdrop-filter: blur(8px);
 }
 
 .btn-ghost:hover {
-  background: rgba(2, 132, 199, 0.08);
-  border-color: var(--cyan-glacier);
-  color: var(--cyan-glacier) !important;
-  transform: translateY(-2px);
+  background: var(--space-bg);
+  border-color: var(--text-muted);
+  color: var(--text-white) !important;
+  transform: translateY(-1px);
 }
 
 /* ===================================================================
@@ -2031,5 +2030,290 @@ input:checked + .switch-slider:before {
   .pillar-feature-large, .pillar-feature-medium, .pillar-feature-third { grid-column: span 12; }
   .scenario-slider-box { height: 420px; }
   .footer-columns { grid-template-columns: 1fr; }
+}
+
+/* ===================================================================
+   BÁO CHÍ & ĐIỀU TRA THỜI SỰ VỀ BIẾN ĐỔI KHÍ HẬU TP.HCM
+   Editorial Press Hub: Tuổi Trẻ, VnExpress, Thanh Niên, SGGP, VietnamPlus
+   =================================================================== */
+.hcm-press-section {
+  position: relative;
+  background: var(--space-bg);
+}
+
+.press-featured-card {
+  background: var(--card-bg);
+  border: 1px solid var(--space-border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8);
+  box-shadow: var(--card-shadow);
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-8);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.press-featured-card:hover {
+  box-shadow: var(--card-hover-shadow);
+  border-color: #b91c1c;
+}
+
+.press-featured-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: var(--sp-8);
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .press-featured-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+  }
+}
+
+.press-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.press-source-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.tag-tuoitre {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+[data-theme="dark"] .tag-tuoitre {
+  background: rgba(220, 38, 38, 0.15);
+  color: #fca5a5;
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+.tag-vnexpress {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #fecdd3;
+}
+[data-theme="dark"] .tag-vnexpress {
+  background: rgba(159, 18, 57, 0.15);
+  color: #fda4af;
+  border-color: rgba(159, 18, 57, 0.35);
+}
+
+.tag-thanhnien {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+[data-theme="dark"] .tag-thanhnien {
+  background: rgba(29, 78, 216, 0.15);
+  color: #93c5fd;
+  border-color: rgba(29, 78, 216, 0.35);
+}
+
+.tag-sggp {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+[data-theme="dark"] .tag-sggp {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+.tag-vietnamplus {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+[data-theme="dark"] .tag-vietnamplus {
+  background: rgba(21, 128, 61, 0.15);
+  color: #86efac;
+  border-color: rgba(21, 128, 61, 0.35);
+}
+
+.tag-dantri {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+[data-theme="dark"] .tag-dantri {
+  background: rgba(4, 120, 87, 0.15);
+  color: #6ee7b7;
+  border-color: rgba(4, 120, 87, 0.35);
+}
+
+.press-date {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.press-featured-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.press-featured-lead {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: var(--sp-4);
+}
+
+.press-quote-box {
+  background: var(--space-surface);
+  border-left: 3px solid #b91c1c;
+  padding: 10px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: var(--sp-6);
+  line-height: 1.55;
+}
+
+.press-metrics-sidebar {
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.press-metric-row {
+  border-bottom: 1px solid var(--space-border);
+  padding-bottom: 12px;
+}
+.press-metric-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.press-metric-number {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #b91c1c;
+  line-height: 1.1;
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.press-metric-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.press-metric-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+/* 5 Sub-articles Grid */
+.press-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--sp-6);
+  margin-top: var(--sp-6);
+}
+
+.press-card {
+  background: var(--card-bg);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.22s ease;
+}
+
+.press-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-hover-shadow);
+  border-color: var(--space-border-strong);
+}
+
+.press-card-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.45;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.press-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+.press-card-fact {
+  background: var(--space-bg);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.press-read-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--space-surface);
+  border: 1px solid var(--space-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-white);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  margin-top: auto;
+}
+
+.press-read-btn:hover {
+  background: #0f172a;
+  color: #ffffff !important;
+  border-color: #0f172a;
+}
+[data-theme="dark"] .press-read-btn:hover {
+  background: #38bdf8;
+  color: #0f172a !important;
+  border-color: #38bdf8;
 }
 
