@@ -1792,6 +1792,186 @@ input:checked + .switch-slider:before {
   }
 }
 
+/* ===================================================================
+   CHUYÊN ĐỀ TIÊU ĐIỂM: BIẾN ĐỔI KHÍ HẬU TẠI TP. HỒ CHÍ MINH
+   =================================================================== */
+.hcm-climate-section {
+  background: linear-gradient(180deg, var(--space-deep) 0%, rgba(2, 132, 199, 0.04) 50%, var(--space-deep) 100%);
+  position: relative;
+}
+
+.hcm-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--sp-8);
+  align-items: stretch;
+  margin-top: var(--sp-8);
+}
+
+.hcm-video-card {
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.hcm-video-embed-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25);
+}
+
+.hcm-video-embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.hcm-video-meta {
+  margin-top: var(--sp-4);
+  flex-grow: 1;
+}
+
+.hcm-video-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 6px;
+}
+
+.hcm-video-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hcm-video-links-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--space-border);
+}
+
+.hcm-link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(2, 132, 199, 0.08);
+  color: var(--cyan-glacier);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  transition: all 0.2s ease;
+}
+
+.hcm-link-chip:hover {
+  background: var(--cyan-glacier);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.hcm-manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+}
+
+.hcm-manifest-card {
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px 16px 22px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hcm-manifest-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+}
+
+.hcm-manifest-card.card-tide::before { background: var(--cyan-glacier); }
+.hcm-manifest-card.card-heat::before { background: var(--data-heat); }
+.hcm-manifest-card.card-subsidence::before { background: var(--data-warning); }
+.hcm-manifest-card.card-salinity::before { background: #8b5cf6; }
+
+.hcm-manifest-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan-glacier);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.hcm-manifest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.hcm-manifest-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hcm-manifest-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(2, 132, 199, 0.1);
+  color: var(--cyan-glacier);
+}
+
+.hcm-manifest-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.hcm-manifest-hotspots {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  background: var(--space-bg);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 1024px) {
+  .hcm-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .hud-nav-links { display: none; }
   .hero-metrics-bar { grid-template-columns: 1fr; }
