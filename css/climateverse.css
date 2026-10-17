@@ -2317,3 +2317,324 @@ input:checked + .switch-slider:before {
   border-color: #38bdf8;
 }
 
+/* ===================================================================
+   TỔ CHỨC 4 PHÂN KHU CHỦ ĐỀ & MỤC LỤC ĐIỀU HƯỚNG NHANH (ROADMAP & TOC)
+   =================================================================== */
+
+/* Thanh Mục Lục Điều Hướng Nhanh (Sticky Jump Subnav) */
+.sticky-toc-bar {
+  position: sticky;
+  top: 64px;
+  z-index: 80;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--space-border);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  padding: 10px 0;
+  transition: all 0.2s ease;
+}
+
+.sticky-toc-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-toc-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.sticky-toc-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sticky-toc-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sticky-toc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.sticky-toc-link:hover,
+.sticky-toc-link.active {
+  background: var(--text-white);
+  color: #ffffff !important;
+  border-color: var(--text-white);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .sticky-toc-link:hover,
+[data-theme="dark"] .sticky-toc-link.active {
+  background: #38bdf8;
+  color: #0f172a !important;
+  border-color: #38bdf8;
+}
+
+.sticky-toc-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--space-border);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+.sticky-toc-top-btn:hover {
+  background: var(--space-bg);
+  color: var(--text-white);
+}
+
+/* 4 Thẻ Mục Lục Cổng Chuyên Đề (Roadmap Portal Grid) */
+.roadmap-portal-section {
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-4);
+}
+
+.roadmap-portal-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.roadmap-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+}
+
+@media (max-width: 1024px) {
+  .roadmap-portal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .roadmap-portal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.roadmap-card {
+  background: var(--card-bg);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--cyan-glacier));
+  opacity: 0.9;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-shadow);
+  border-color: var(--space-border-strong);
+}
+
+.roadmap-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.roadmap-part-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--part-bg, rgba(3, 105, 161, 0.1));
+  color: var(--part-color, var(--cyan-glacier));
+}
+
+.roadmap-card-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.roadmap-card-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.roadmap-card-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.roadmap-card-cta {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--part-color, var(--cyan-glacier));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s ease;
+}
+
+.roadmap-card:hover .roadmap-card-cta {
+  gap: 10px;
+}
+
+/* Khung Tiêu Đề Phân Khu Lớn (Chapter Header Banner) */
+.chapter-header-box {
+  margin-bottom: var(--sp-8);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--space-border);
+}
+
+.chapter-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  background: var(--badge-bg, rgba(3, 105, 161, 0.12));
+  color: var(--badge-color, var(--cyan-glacier));
+  border: 1px solid var(--badge-border, rgba(3, 105, 161, 0.25));
+}
+
+.chapter-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.chapter-lead {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 860px;
+  margin-bottom: 0;
+}
+
+/* Thanh Thẻ Lọc Đề Tài Thời Sự (Press Topic Filter Bar) */
+.press-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-6);
+  padding: 12px 16px;
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+}
+
+.press-filter-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin-right: 6px;
+}
+
+.press-filter-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--space-bg);
+  border: 1px solid var(--space-border);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.press-filter-pill:hover,
+.press-filter-pill.active {
+  background: #b91c1c;
+  color: #ffffff;
+  border-color: #b91c1c;
+  box-shadow: 0 2px 8px rgba(185, 28, 28, 0.25);
+}
+
+/* Thước Đo Thao Tác Chuột Nhanh 3D */
+.sim-quick-guide-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--space-surface);
+  border: 1px solid var(--space-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp-6);
+  box-shadow: var(--card-shadow);
+}
+
+
