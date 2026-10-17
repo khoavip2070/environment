@@ -1818,6 +1818,43 @@ input:checked + .switch-slider:before {
   flex-direction: column;
 }
 
+.hcm-playlist-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.hcm-playlist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--space-border);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.hcm-playlist-btn:hover {
+  background: rgba(2, 132, 199, 0.15);
+  color: var(--text-white);
+  border-color: var(--cyan-glacier);
+}
+
+.hcm-playlist-btn.active {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+}
+
 .hcm-video-embed-container {
   position: relative;
   width: 100%;

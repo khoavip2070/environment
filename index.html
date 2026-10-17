@@ -33,7 +33,7 @@
       <!-- Primary Navigation -->
       <nav aria-label="Điều hướng chính">
         <ul class="hud-nav-links">
-          <li><a href="#tieu-diem-tphcm" class="hud-link" style="color: var(--data-heat); font-weight: 700;">🏙️ Tiêu Điểm TP.HCM</a></li>
+          <li><a href="#phong-su-tu-lieu" class="hud-link" style="color: #ef4444; font-weight: 800; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: var(--radius-full); padding: 5px 14px;">📺 Phóng Sự Tư Liệu TP.HCM</a></li>
           <li><a href="index.html" class="hud-link active">🎬 Video Thông Điệp Xanh</a></li>
           <li><a href="trien-lam-poster.html" class="hud-link">🖼️ Triển Lãm Poster</a></li>
           <li><a href="trung-tam-mo-phong.html" class="hud-link" style="color: var(--cyan-glacier); font-weight: 700;">★ 4 Mô Phỏng 3D</a></li>
@@ -70,8 +70,8 @@
           </p>
 
           <div class="hero-cta-group" style="margin-bottom: var(--sp-6);">
-            <a href="#tieu-diem-tphcm" class="btn-climate btn-primary" style="background: linear-gradient(135deg, #ea580c, #f97316); border-color: #ea580c;">
-              <span>🏙️ Xem Tiêu Điểm TP.HCM</span>
+            <a href="#phong-su-tu-lieu" class="btn-climate btn-primary" style="background: linear-gradient(135deg, #dc2626, #ef4444); border-color: #dc2626; box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);">
+              <span>📺 Xem Phóng Sự Tư Liệu TP.HCM</span>
               <span>➔</span>
             </a>
             <a href="#hero-main-video" class="btn-climate btn-ghost" onclick="const v = document.getElementById('hero-main-video'); if(v) { v.play(); v.scrollIntoView({behavior: 'smooth', block: 'center'}); }">
@@ -162,46 +162,78 @@
   <!-- ===================================================================
        3. TIÊU ĐIỂM ĐÔ THỊ: BIỂU HIỆN CỦA BIẾN ĐỔI KHÍ HẬU TẠI TP. HỒ CHÍ MINH
        =================================================================== -->
-  <section class="section hcm-climate-section" id="tieu-diem-tphcm">
+  <!-- ===================================================================
+       3. TIÊU ĐIỂM ĐÔ THỊ: PHÓNG SỰ TRUYỀN HÌNH TƯ LIỆU BIẾN ĐỔI KHÍ HẬU TP.HCM
+       =================================================================== -->
+  <section class="section hcm-climate-section" id="phong-su-tu-lieu" style="position: relative;">
+    <a id="tieu-diem-tphcm" style="position: absolute; top: -80px;"></a>
     <div class="container">
-      <div class="section-eyebrow">🏙️ Tiêu Điểm Đô Thị Lớn Nhất Nước Ta</div>
-      <h2>Biến Đổi Khí Hậu Tại TP. Hồ Chí Minh: Khi Nguy Cơ Đã Gõ Cửa</h2>
+      <div class="section-eyebrow" style="color: #ef4444; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 10px #ef4444;"></span>
+        <span>📺 PHÓNG SỰ TRUYỀN HÌNH TƯ LIỆU THỰC TẾ • VTV & HTV</span>
+      </div>
+      <h2 style="margin-bottom: 10px;">Biến Đổi Khí Hậu Tại TP. Hồ Chí Minh: Khi Nguy Cơ Đã Gõ Cửa</h2>
       <p class="section-desc">
-        TP.HCM — đô thị hơn 10 triệu dân — đang là một trong những thành phố chịu rủi ro lớn nhất thế giới trước biến đổi khí hậu. Sự kết hợp giữa <strong>triều cường kỷ lục</strong>, <strong>sụt lún nền đất nhanh</strong>, <strong>hiệu ứng đảo nhiệt</strong> và <strong>nguy cơ xâm nhập mặn nguồn nước sinh hoạt</strong> đang ảnh hưởng trực tiếp đến đời sống mỗi người dân hàng ngày.
+        TP.HCM — đô thị hơn 10 triệu dân — đang là một trong những thành phố chịu rủi ro lớn nhất thế giới trước biến đổi khí hậu. Sự kết hợp giữa <strong>triều cường kỷ lục</strong>, <strong>sụt lún nền đất nhanh</strong>, <strong>hiệu ứng đảo nhiệt</strong> và <strong>nguy cơ xâm nhập mặn nguồn nước sinh hoạt</strong> đang ảnh hưởng trực tiếp đến đời sống mỗi người dân hàng ngày. Dưới đây là các thước phim phóng sự truyền hình tư liệu chính thống được tổng hợp từ VTV, HTV và Đài Truyền hình Nhân Dân:
       </p>
 
       <div class="hcm-showcase-grid">
         
         <!-- Left Column: Video Phóng Sự & Tư Liệu YouTube -->
         <div class="hcm-video-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
-              <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-white); text-transform: uppercase; letter-spacing: 0.04em;">PHÓNG SỰ TRUYỀN HÌNH TƯ LIỆU</span>
+              <span style="font-size: 0.85rem; font-weight: 800; color: #ef4444; text-transform: uppercase; letter-spacing: 0.04em;">PHÁT SÓNG TRUYỀN HÌNH TƯ LIỆU</span>
             </div>
-            <span style="font-size: 0.76rem; background: rgba(2, 132, 199, 0.12); color: var(--cyan-glacier); padding: 3px 10px; border-radius: var(--radius-full); font-weight: 600;">YouTube • HD 1080p</span>
+            <span style="font-size: 0.76rem; background: rgba(220, 38, 38, 0.15); color: #f87171; padding: 4px 12px; border-radius: var(--radius-full); font-weight: 700; border: 1px solid rgba(220, 38, 38, 0.3);">3 Phóng Sự Chọn Lọc • Full HD</span>
+          </div>
+
+          <!-- Playlist Tabs -->
+          <div class="hcm-playlist-bar">
+            <button class="hcm-playlist-btn active" id="btn-video-0" onclick="selectHcmVideo(0)">
+              <span>🔴 Phóng Sự 1: Cấp Bách Ứng Phó BĐKH (VTV)</span>
+            </button>
+            <button class="hcm-playlist-btn" id="btn-video-1" onclick="selectHcmVideo(1)">
+              <span>🌊 Phóng Sự 2: Giải Pháp Chống Ngập Lụt (HTV)</span>
+            </button>
+            <button class="hcm-playlist-btn" id="btn-video-2" onclick="selectHcmVideo(2)">
+              <span>💧 Phóng Sự 3: Xâm Nhập Mặn Nước Sạch</span>
+            </button>
           </div>
 
           <!-- YouTube Embed Video Player -->
           <div class="hcm-video-embed-container">
             <iframe 
-              src="https://www.youtube-nocookie.com/embed/Pj1c8kE5w5M?rel=0&modestbranding=1" 
-              title="Phóng sự: Biến đổi khí hậu và nguy cơ ngập lụt tại TP.HCM" 
+              id="hcm-main-iframe"
+              src="https://www.youtube.com/embed/_oDFXuqcikQ?rel=0&modestbranding=1" 
+              title="Phóng sự: Biến đổi khí hậu tại TP.HCM" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowfullscreen>
             </iframe>
           </div>
 
           <div class="hcm-video-meta">
-            <div class="hcm-video-title">Phóng Sự: Biến Đổi Khí Hậu & Bài Toán Chống Ngập Tại TP.HCM</div>
-            <div class="hcm-video-desc">
-              Phim tư liệu ghi lại hình ảnh chân thực về các đợt triều cường lịch sử trên sông Sài Gòn tràn qua đê bao, cảnh người dân bì bõm dắt xe chết máy trong nước ngập tới yên xe tại Quận 7, Quận 8, Bình Thạnh, và những phân tích khoa học từ các chuyên gia khí tượng thủy văn.
+            <div class="hcm-video-title" id="hcm-video-title">Phóng Sự: Thành Phố Hồ Chí Minh Cấp Bách Ứng Phó Với Biến Đổi Khí Hậu</div>
+            <div class="hcm-video-desc" id="hcm-video-desc">
+              Phóng sự thời sự tài liệu phản ánh toàn cảnh các tác động của nước biển dâng, mưa cực đoan vượt thiết kế, ngập lụt triều cường tại TP.HCM và kế hoạch chiến lược phát triển đô thị chống chịu đến năm 2030, tầm nhìn 2050.
+            </div>
+
+            <!-- Direct YouTube Watch Button (guarantees viewing even if iframe blocked) -->
+            <div style="margin-top: 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <a id="hcm-direct-yt-btn" href="https://www.youtube.com/watch?v=_oDFXuqcikQ" target="_blank" rel="noopener" class="btn-climate btn-primary" style="background: #dc2626; border-color: #dc2626; padding: 10px 18px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);">
+                <span>▶ Xem Trực Tiếp Trên YouTube (Tab Mới)</span>
+                <span>↗</span>
+              </a>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">
+                💡 Bạn có thể bấm nút đỏ trên để mở xem trực tiếp chất lượng cao trên YouTube nếu máy tính/trường học chặn khung phát nhúng.
+              </span>
             </div>
           </div>
 
           <!-- Link YouTube tư liệu chính thống -->
           <div class="hcm-video-links-bar">
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-dim); width: 100%; margin-bottom: 4px;">TƯ LIỆU PHÓNG SỰ MỞ RỘNG (XEM TRÊN YOUTUBE):</span>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-dim); width: 100%; margin-bottom: 4px;">KÊNH TƯ LIỆU PHÓNG SỰ MỞ RỘNG (VTV, HTV, TUỔI TRẺ):</span>
             <a href="https://www.youtube.com/results?search_query=tri%E1%BB%81u+c%C6%B0%E1%BB%9Dng+k%E1%BB%B7+l%E1%BB%A5c+tphcm+vtv" target="_blank" rel="noopener" class="hcm-link-chip">
               <span>▶ VTV: Triều Cường Kỷ Lục TP.HCM</span>
             </a>
@@ -985,6 +1017,50 @@
       if (modal) modal.classList.remove('open');
       const video = modal ? modal.querySelector('video') : null;
       if (video) video.pause();
+    }
+
+    // ===================================================================
+    // QUẢN LÝ PHÁT PHÓNG SỰ TRUYỀN HÌNH TƯ LIỆU TP.HCM (VTV, HTV)
+    // ===================================================================
+    const hcmVideos = [
+      {
+        id: '_oDFXuqcikQ',
+        title: 'Phóng Sự: Thành Phố Hồ Chí Minh Cấp Bách Ứng Phó Với Biến Đổi Khí Hậu',
+        desc: 'Phóng sự thời sự tài liệu phản ánh toàn cảnh các tác động của nước biển dâng, mưa cực đoan vượt thiết kế, ngập lụt triều cường tại TP.HCM và kế hoạch chiến lược phát triển đô thị chống chịu đến năm 2030, tầm nhìn 2050.'
+      },
+      {
+        id: 'U0lu4k3Grjc',
+        title: 'Phóng Sự: Đồng Loạt Triển Khai Nhiều Giải Pháp Phòng Chống Ngập Đô Thị',
+        desc: 'Tư liệu thực tế từ Đài Truyền hình TP.HCM (HTV) ghi nhận công tác nạo vét kênh rạch, vận hành các cống ngăn triều và nâng cấp hạ tầng thoát nước tại các điểm nóng ngập lụt đô thị.'
+      },
+      {
+        id: 'Zxa8lKBbEYQ',
+        title: 'Phóng Sự: Ngành Cấp Nước TP.HCM Chủ Động Trước Nguy Cơ Xâm Nhập Mặn',
+        desc: 'Phim tài liệu chuyên đề phản ánh tác động của hạn hán và ranh mặn 4‰ lấn sâu vào sông Sài Gòn, sông Đồng Nai, cùng giải pháp công nghệ bảo đảm nguồn nước sạch sinh hoạt cho 10 triệu cư dân.'
+      }
+    ];
+
+    function selectHcmVideo(index) {
+      const v = hcmVideos[index];
+      if (!v) return;
+      
+      const iframe = document.getElementById('hcm-main-iframe');
+      const titleEl = document.getElementById('hcm-video-title');
+      const descEl = document.getElementById('hcm-video-desc');
+      const btnEl = document.getElementById('hcm-direct-yt-btn');
+      
+      if (iframe) iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0`;
+      if (titleEl) titleEl.textContent = v.title;
+      if (descEl) descEl.textContent = v.desc;
+      if (btnEl) btnEl.href = `https://www.youtube.com/watch?v=${v.id}`;
+      
+      for (let i = 0; i < hcmVideos.length; i++) {
+        const b = document.getElementById(`btn-video-${i}`);
+        if (b) {
+          if (i === index) b.classList.add('active');
+          else b.classList.remove('active');
+        }
+      }
     }
 
     // ===================================================================
