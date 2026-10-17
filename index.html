@@ -177,32 +177,31 @@
         TP.HCM — đô thị hơn 10 triệu dân — đang là một trong những thành phố chịu rủi ro lớn nhất thế giới trước biến đổi khí hậu. Sự kết hợp giữa <strong>triều cường kỷ lục</strong>, <strong>sụt lún nền đất nhanh</strong>, <strong>hiệu ứng đảo nhiệt</strong> và <strong>nguy cơ xâm nhập mặn nguồn nước sinh hoạt</strong> đang ảnh hưởng trực tiếp đến đời sống mỗi người dân hàng ngày. Dưới đây là các thước phim phóng sự truyền hình tư liệu chính thống được tổng hợp từ VTV, HTV và Đài Truyền hình Nhân Dân:
       </p>
 
-      <div class="hcm-showcase-grid">
-        
-        <!-- Left Column: Video Phóng Sự & Tư Liệu YouTube -->
-        <div class="hcm-video-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
-              <span style="font-size: 0.85rem; font-weight: 800; color: #ef4444; text-transform: uppercase; letter-spacing: 0.04em;">PHÁT SÓNG TRUYỀN HÌNH TƯ LIỆU</span>
-            </div>
-            <span style="font-size: 0.76rem; background: rgba(220, 38, 38, 0.15); color: #f87171; padding: 4px 12px; border-radius: var(--radius-full); font-weight: 700; border: 1px solid rgba(220, 38, 38, 0.3);">3 Phóng Sự Chọn Lọc • Full HD</span>
+      <!-- 1. KHUNG PHÓNG SỰ ĐIỆN ẢNH (CINEMA DOCUMENTARY STAGE) -->
+      <div class="hcm-cinema-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
+            <span style="font-size: 0.85rem; font-weight: 800; color: #ef4444; text-transform: uppercase; letter-spacing: 0.04em;">PHÁT SÓNG TRUYỀN HÌNH TƯ LIỆU THỰC TẾ</span>
           </div>
+          <span style="font-size: 0.76rem; background: rgba(220, 38, 38, 0.15); color: #f87171; padding: 4px 12px; border-radius: var(--radius-full); font-weight: 700; border: 1px solid rgba(220, 38, 38, 0.3);">3 Phóng Sự Chọn Lọc • Full HD</span>
+        </div>
 
-          <!-- Playlist Tabs -->
-          <div class="hcm-playlist-bar">
-            <button class="hcm-playlist-btn active" id="btn-video-0" onclick="selectHcmVideo(0)">
-              <span>🔴 Phóng Sự 1: Cấp Bách Ứng Phó BĐKH (VTV)</span>
-            </button>
-            <button class="hcm-playlist-btn" id="btn-video-1" onclick="selectHcmVideo(1)">
-              <span>🌊 Phóng Sự 2: Giải Pháp Chống Ngập Lụt (HTV)</span>
-            </button>
-            <button class="hcm-playlist-btn" id="btn-video-2" onclick="selectHcmVideo(2)">
-              <span>💧 Phóng Sự 3: Xâm Nhập Mặn Nước Sạch</span>
-            </button>
-          </div>
+        <!-- Playlist Tabs -->
+        <div class="hcm-playlist-bar">
+          <button class="hcm-playlist-btn active" id="btn-video-0" onclick="selectHcmVideo(0)">
+            <span>🔴 Phóng Sự 1: Cấp Bách Ứng Phó BĐKH (VTV)</span>
+          </button>
+          <button class="hcm-playlist-btn" id="btn-video-1" onclick="selectHcmVideo(1)">
+            <span>🌊 Phóng Sự 2: Giải Pháp Chống Ngập Lụt (HTV)</span>
+          </button>
+          <button class="hcm-playlist-btn" id="btn-video-2" onclick="selectHcmVideo(2)">
+            <span>💧 Phóng Sự 3: Xâm Nhập Mặn Nước Sạch</span>
+          </button>
+        </div>
 
-          <!-- YouTube Embed Video Player -->
+        <div class="hcm-cinema-split">
+          <!-- Left: YouTube Embed Video Player -->
           <div class="hcm-video-embed-container">
             <iframe 
               id="hcm-main-iframe"
@@ -213,43 +212,56 @@
             </iframe>
           </div>
 
+          <!-- Right: Video Meta & Actions -->
           <div class="hcm-video-meta">
             <div class="hcm-video-title" id="hcm-video-title">Phóng Sự: Thành Phố Hồ Chí Minh Cấp Bách Ứng Phó Với Biến Đổi Khí Hậu</div>
             <div class="hcm-video-desc" id="hcm-video-desc">
               Phóng sự thời sự tài liệu phản ánh toàn cảnh các tác động của nước biển dâng, mưa cực đoan vượt thiết kế, ngập lụt triều cường tại TP.HCM và kế hoạch chiến lược phát triển đô thị chống chịu đến năm 2030, tầm nhìn 2050.
             </div>
 
-            <!-- Direct YouTube Watch Button (guarantees viewing even if iframe blocked) -->
-            <div style="margin-top: 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-              <a id="hcm-direct-yt-btn" href="https://www.youtube.com/watch?v=_oDFXuqcikQ" target="_blank" rel="noopener" class="btn-climate btn-primary" style="background: #dc2626; border-color: #dc2626; padding: 10px 18px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);">
+            <!-- Direct YouTube Watch Button -->
+            <div style="margin-top: 4px; margin-bottom: 12px;">
+              <a id="hcm-direct-yt-btn" href="https://www.youtube.com/watch?v=_oDFXuqcikQ" target="_blank" rel="noopener" class="btn-climate btn-primary" style="background: #dc2626; border-color: #dc2626; padding: 10px 18px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35); display: inline-flex; align-items: center; gap: 8px;">
                 <span>▶ Xem Trực Tiếp Trên YouTube (Tab Mới)</span>
                 <span>↗</span>
               </a>
-              <span style="font-size: 0.8rem; color: var(--text-muted);">
-                💡 Bạn có thể bấm nút đỏ trên để mở xem trực tiếp chất lượng cao trên YouTube nếu máy tính/trường học chặn khung phát nhúng.
-              </span>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">
+                💡 Bấm xem trực tiếp nếu trình duyệt hoặc trường học chặn khung phát nhúng.
+              </div>
+            </div>
+
+            <!-- Link YouTube tư liệu chính thống -->
+            <div class="hcm-video-links-bar">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-dim); width: 100%; margin-bottom: 4px;">KÊNH TƯ LIỆU PHÓNG SỰ MỞ RỘNG (VTV, HTV, TUỔI TRẺ):</span>
+              <a href="https://www.youtube.com/results?search_query=tri%E1%BB%81u+c%C6%B0%E1%BB%9Dng+k%E1%BB%B7+l%E1%BB%A5c+tphcm+vtv" target="_blank" rel="noopener" class="hcm-link-chip">
+                <span>▶ VTV: Triều Cường Kỷ Lục TP.HCM</span>
+              </a>
+              <a href="https://www.youtube.com/results?search_query=s%E1%BB%A5t+l%C3%BAn+n%E1%BB%81n+%C4%91%E1%BA%A5t+tphcm+bi%E1%BA%BFn+%C4%91%E1%BB%95i+kh%C3%AD+h%E1%BA%ADu" target="_blank" rel="noopener" class="hcm-link-chip">
+                <span>▶ HTV: Báo Động Sụt Lún Đất Đô Thị</span>
+              </a>
+              <a href="https://www.youtube.com/results?search_query=%C4%91%E1%BA%A3o+nhi%E1%BB%87t+%C4%91%C3%B4+th%E1%BB%8B+tphcm+n%E1%BA%AFng+n%C3%B3ng" target="_blank" rel="noopener" class="hcm-link-chip">
+                <span>▶ Truyền Hình Tuổi Trẻ: Đảo Nhiệt & Nắng Nóng</span>
+              </a>
+              <a href="https://www.youtube.com/results?search_query=x%C3%A2m+nh%E1%BA%ADp+m%E1%BA%B7n+s%C3%B4ng+s%C3%A0i+g%C3%B2n+%C4%91%E1%BB%93ng+nai" target="_blank" rel="noopener" class="hcm-link-chip">
+                <span>▶ VNews: Xâm Nhập Mặn Nước Sinh Hoạt</span>
+              </a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Link YouTube tư liệu chính thống -->
-          <div class="hcm-video-links-bar">
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-dim); width: 100%; margin-bottom: 4px;">KÊNH TƯ LIỆU PHÓNG SỰ MỞ RỘNG (VTV, HTV, TUỔI TRẺ):</span>
-            <a href="https://www.youtube.com/results?search_query=tri%E1%BB%81u+c%C6%B0%E1%BB%9Dng+k%E1%BB%B7+l%E1%BB%A5c+tphcm+vtv" target="_blank" rel="noopener" class="hcm-link-chip">
-              <span>▶ VTV: Triều Cường Kỷ Lục TP.HCM</span>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=s%E1%BB%A5t+l%C3%BAn+n%E1%BB%81n+%C4%91%E1%BA%A5t+tphcm+bi%E1%BA%BFn+%C4%91%E1%BB%95i+kh%C3%AD+h%E1%BA%ADu" target="_blank" rel="noopener" class="hcm-link-chip">
-              <span>▶ HTV: Báo Động Sụt Lún Đất Đô Thị</span>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=%C4%91%E1%BA%A3o+nhi%E1%BB%87t+%C4%91%C3%B4+th%E1%BB%8B+tphcm+n%E1%BA%AFng+n%C3%B3ng" target="_blank" rel="noopener" class="hcm-link-chip">
-              <span>▶ Truyền Hình Tuổi Trẻ: Đảo Nhiệt & Nắng Nóng</span>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=x%C3%A2m+nh%E1%BA%ADp+m%E1%BA%B7n+s%C3%B4ng+s%C3%A0i+g%C3%B2n+%C4%91%E1%BB%93ng+nai" target="_blank" rel="noopener" class="hcm-link-chip">
-              <span>▶ VNews: Xâm Nhập Mặn Nước Sinh Hoạt</span>
-            </a>
+      <!-- 2. LƯỚI 4 BIỂU HIỆN CỤ THỂ CỦA BIẾN ĐỔI KHÍ HẬU TẠI TP.HCM (CÂN XỨNG 2x2) -->
+      <div style="margin-top: var(--sp-8);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-6); flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div class="section-eyebrow" style="color: var(--cyan-glacier); margin-bottom: 4px;">📊 DỮ LIỆU ĐÔ THỊ THỰC TẾ</div>
+            <h3 style="font-size: 1.35rem; color: var(--text-white); margin: 0;">4 Biểu Hiện Điển Hình Của Biến Đổi Khí Hậu Tại TP. Hồ Chí Minh</h3>
           </div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); background: var(--card-bg); padding: 4px 12px; border-radius: var(--radius-full); border: 1px solid var(--space-border);">
+            Nguồn: Viện Môi trường & Tài nguyên ĐHQG-HCM, Đài KTTV Nam Bộ
+          </span>
         </div>
 
-        <!-- Right Column: 4 Biểu hiện cụ thể & Thực tế nhức nhối -->
         <div class="hcm-manifest-grid">
           
           <!-- Manifest 1: Triều Cường -->
@@ -325,7 +337,6 @@
           </article>
 
         </div>
-
       </div>
     </div>
   </section>

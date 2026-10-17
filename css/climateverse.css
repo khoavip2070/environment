@@ -1800,42 +1800,49 @@ input:checked + .switch-slider:before {
   position: relative;
 }
 
-.hcm-showcase-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: var(--sp-8);
-  align-items: stretch;
-  margin-top: var(--sp-8);
-}
-
-.hcm-video-card {
+/* Khung Trình Chiếu Phóng Sự Điện Ảnh (Cinema Documentary Stage) */
+.hcm-cinema-card {
   background: var(--space-surface);
   border: 1px solid var(--space-border);
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
   box-shadow: var(--card-shadow);
-  display: flex;
-  flex-direction: column;
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-10);
+}
+
+.hcm-cinema-split {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: var(--sp-6);
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .hcm-cinema-split {
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+  }
 }
 
 .hcm-playlist-bar {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 6px;
-  margin-bottom: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .hcm-playlist-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--space-border);
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -1863,7 +1870,7 @@ input:checked + .switch-slider:before {
   border-radius: var(--radius-md);
   overflow: hidden;
   background: #0f172a;
-  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.35);
 }
 
 .hcm-video-embed-container iframe {
@@ -1876,21 +1883,23 @@ input:checked + .switch-slider:before {
 }
 
 .hcm-video-meta {
-  margin-top: var(--sp-4);
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .hcm-video-title {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-white);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 .hcm-video-desc {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.6;
+  margin-bottom: 14px;
 }
 
 .hcm-video-links-bar {
@@ -1923,21 +1932,30 @@ input:checked + .switch-slider:before {
   transform: translateY(-1px);
 }
 
+/* Lưới 4 Thẻ Biểu Hiện Khí Hậu Cân Xứng 2x2 (Balanced 2x2 Grid) */
 .hcm-manifest-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--sp-4);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-6);
+}
+
+@media (max-width: 768px) {
+  .hcm-manifest-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hcm-manifest-card {
   background: var(--space-surface);
   border: 1px solid var(--space-border);
   border-radius: var(--radius-md);
-  padding: 16px 18px 16px 22px;
+  padding: 20px 22px 20px 24px;
   box-shadow: var(--card-shadow);
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .hcm-manifest-card::before {
@@ -1964,11 +1982,11 @@ input:checked + .switch-slider:before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .hcm-manifest-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-white);
   display: flex;
@@ -1977,36 +1995,33 @@ input:checked + .switch-slider:before {
 }
 
 .hcm-manifest-badge {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
   background: rgba(2, 132, 199, 0.1);
   color: var(--cyan-glacier);
+  white-space: nowrap;
 }
 
 .hcm-manifest-desc {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  line-height: 1.55;
-  margin-bottom: 8px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  flex-grow: 1;
 }
 
 .hcm-manifest-hotspots {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
   background: var(--space-bg);
-  padding: 5px 10px;
+  padding: 8px 12px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-@media (max-width: 1024px) {
-  .hcm-showcase-grid {
-    grid-template-columns: 1fr;
-  }
+  line-height: 1.45;
 }
 
 @media (max-width: 768px) {
