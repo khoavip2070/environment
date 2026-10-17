@@ -2051,9 +2051,6 @@ input:checked + .switch-slider:before {
     font-size: 0.68rem !important;
   }
 
-  .sim-bottom-dock {
-    display: none !important;
-  }
 }
 
 /* Ẩn các nút tab di động khi hiển thị trên màn hình máy tính lớn */
@@ -3284,61 +3281,6 @@ input:checked + .switch-slider:before {
   color: #ffffff;
 }
 
-/* Thanh Điều Hướng Nổi Dưới Đáy Phòng 3D (3D Bottom Quick Dock) */
-.sim-bottom-dock {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  z-index: 50;
-  max-width: 95vw;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.sim-bottom-dock::-webkit-scrollbar {
-  display: none;
-}
-
-.sim-dock-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #e2e8f0;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-.sim-dock-link:hover {
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
-.sim-dock-link.primary {
-  background: #0284c7;
-  border-color: #0284c7;
-  color: #ffffff;
-}
-.sim-dock-link.primary:hover {
-  background: #0369a1;
-  border-color: #0369a1;
-}
 
 /* ===================================================================
    KHUNG LIÊN KẾT CHÉO CÁC CHUYÊN MỤC (CROSS-PORTAL PORTAL CARDS)
