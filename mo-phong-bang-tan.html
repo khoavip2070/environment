@@ -49,7 +49,8 @@
     <div class="sim-hud-overlay">
       
       <!-- Top Status Banner & 4-Room Teleport Switcher -->
-      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;">
+      <!-- Top Status Banner & 4-Room Teleport Switcher -->
+      <div class="sim-top-nav-bar">
         <div class="sim-floating-card sim-status-banner" id="ice-status-banner" style="background: rgba(2, 132, 199, 0.25); border-color: var(--cyan-glacier); color: #fff;">
           <span style="color: var(--cyan-glacier);">🧊</span>
           <span id="ice-status-text">Cảnh Báo: Băng Tuyết Suy Giảm Đang Đẩy Nhanh Tốc Độ Dâng Đại Dương</span>
@@ -84,7 +85,20 @@
       </div>
 
       <!-- Bottom Split Control & Telemetry Docks -->
-      <div class="sim-docks-row" id="sim-docks-row" style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: var(--sp-6);">
+      <div class="sim-docks-row" id="sim-docks-row" data-mobile-tab="control">
+
+        <!-- Mobile Tabs for Switching Between Controls, Telemetry & Full 3D -->
+        <div class="sim-mobile-dock-tabs" id="sim-mobile-tabs">
+          <button class="sim-mobile-tab-btn active" id="tab-btn-control" onclick="switchMobileDockTab('control')">
+            🎛️ Bảng Điều Khiển
+          </button>
+          <button class="sim-mobile-tab-btn" id="tab-btn-telemetry" onclick="switchMobileDockTab('telemetry')">
+            📊 Viễn Thám & Số Liệu
+          </button>
+          <button class="sim-mobile-tab-btn" id="tab-btn-zen" onclick="switchMobileDockTab('zen')">
+            👁️ Xem 3D Toàn Cảnh
+          </button>
+        </div>
         
         <!-- Left Dock: Parameter Controls -->
         <div class="sim-floating-card sim-control-dock">
@@ -195,6 +209,29 @@
 
   <!-- Three.js Ice Calving & Coastal Rise Simulation Script -->
   <script>
+    // Tab chuyển đổi trên thiết bị di động (Điều khiển / Viễn thám / Xem 3D)
+    function switchMobileDockTab(tab) {
+      const docksRow = document.getElementById('sim-docks-row');
+      if (docksRow) {
+        docksRow.classList.remove('sim-docks-hidden');
+        docksRow.setAttribute('data-mobile-tab', tab);
+      }
+
+      const bCtrl = document.getElementById('tab-btn-control');
+      const bTele = document.getElementById('tab-btn-telemetry');
+      const bZen = document.getElementById('tab-btn-zen');
+
+      if (bCtrl) bCtrl.classList.toggle('active', tab === 'control');
+      if (bTele) bTele.classList.toggle('active', tab === 'telemetry');
+      if (bZen) bZen.classList.toggle('active', tab === 'zen');
+
+      const zenBtn = document.getElementById('floating-zen-btn');
+      if (zenBtn) {
+        if (tab === 'zen') zenBtn.classList.add('visible');
+        else zenBtn.classList.remove('visible');
+      }
+    }
+
     // Toggle 2 Side Docks (Ẩn / Hiện đồng thời cả 2 bảng điều khiển & thông số)
     let areDocksHidden = false;
     function toggleSimDocks() {
@@ -204,6 +241,10 @@
       const btnIcon = document.getElementById('dock-btn-icon');
       const btnText = document.getElementById('dock-btn-text');
       const zenBtn = document.getElementById('floating-zen-btn');
+
+      if (window.innerWidth <= 820 && !areDocksHidden) {
+        switchMobileDockTab('control');
+      }
 
       if (areDocksHidden) {
         if (docksRow) docksRow.classList.add('sim-docks-hidden');
@@ -301,8 +342,9 @@
       scene.background = new THREE.Color(0x0f172a);
       scene.fog = new THREE.FogExp2(0x1e293b, 0.012);
 
-      camera = new THREE.PerspectiveCamera(45, w / h, 0.5, 500);
-      camera.position.set(22, 16, 28);
+      const isMobile = w < h;
+      camera = new THREE.PerspectiveCamera(isMobile ? 55 : 45, w / h, 0.5, 500);
+      camera.position.set(isMobile ? 28 : 22, isMobile ? 20 : 16, isMobile ? 36 : 28);
 
       // 2. Renderer
       renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
@@ -343,6 +385,7 @@
       window.addEventListener('resize', () => {
         const nw = container.clientWidth || window.innerWidth;
         const nh = container.clientHeight || window.innerHeight;
+        camera.fov = nw < nh ? 55 : 45;
         camera.aspect = nw / nh;
         camera.updateProjectionMatrix();
         renderer.setSize(nw, nh);

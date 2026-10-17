@@ -1423,6 +1423,23 @@ input:checked + .switch-slider:before {
   background: rgba(255, 255, 255, 0.15);
 }
 
+.sim-top-nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sim-docks-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  gap: var(--sp-6);
+}
+
 .sim-control-dock {
   width: 360px;
   max-height: calc(100vh - 120px);
@@ -1847,15 +1864,202 @@ input:checked + .switch-slider:before {
   .footer-columns { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 900px) {
+/* ===================================================================
+   TỐI ƯU HÓA GIAO DIỆN PHÒNG THÍ NGHIỆM 3D TRÊN ĐIỆN THOẠI (MOBILE 3D)
+   =================================================================== */
+@media (max-width: 820px) {
+  /* Khung HUD bao phủ toàn màn hình, trong suốt và không chặn sự kiện chạm 3D */
   .sim-hud-overlay {
-    overflow-y: auto;
-    pointer-events: auto;
-    gap: var(--sp-4);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    padding: 58px 10px 10px !important;
+    pointer-events: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+    z-index: 10 !important;
   }
-  .sim-control-dock, .sim-telemetry-dock {
-    width: 100%;
-    max-height: none;
+
+  /* Khung WebGL Canvas bắt trọn thao tác vuốt xoay 360 và chụm 2 ngón thu phóng */
+  .sim-3d-canvas-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    touch-action: none !important;
+  }
+
+  /* Hàng điều hướng trên đỉnh điện thoại */
+  .sim-top-nav-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+    width: 100% !important;
+    pointer-events: none !important;
+  }
+
+  .sim-status-banner {
+    font-size: 0.74rem !important;
+    padding: 5px 12px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    pointer-events: auto !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .sim-room-switcher-bar {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 3px 6px !important;
+    pointer-events: auto !important;
+    gap: 5px !important;
+  }
+  .sim-room-switcher-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .sim-room-pill {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Ẩn nút gập bảng máy tính để nhường không gian cho thanh tab cảm ứng điện thoại */
+  .btn-toggle-docks {
+    display: none !important;
+  }
+
+  /* Hàng bảng điều khiển đáy màn hình: Dạng thẻ trượt Bottom Sheet cân đối */
+  .sim-docks-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 6px !important;
+    margin-top: auto !important;
+    pointer-events: none !important;
+  }
+
+  /* Thanh Tab Chuyển Đổi Trên Điện Thoại: Điều Khiển / Viễn Thám / Toàn Cảnh */
+  .sim-mobile-dock-tabs {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+  }
+
+  .sim-mobile-tab-btn {
+    flex: 1 !important;
+    padding: 7px 6px !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-full) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(15, 23, 42, 0.92) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    color: #94a3b8 !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    transition: all 0.2s ease !important;
+    font-family: var(--font-body) !important;
+  }
+
+  .sim-mobile-tab-btn.active {
+    background: var(--cyan-glacier, #0284c7) !important;
+    color: #ffffff !important;
+    border-color: var(--cyan-glacier, #0284c7) !important;
+    box-shadow: 0 2px 10px rgba(2, 132, 199, 0.5) !important;
+  }
+
+  /* Khung Card thông số đáy màn hình: Chiếm 40% chiều cao, chừa 60% cho không gian 3D tương tác trực quan */
+  .sim-control-dock,
+  .sim-telemetry-dock {
+    width: 100% !important;
+    max-height: 40vh !important;
+    max-height: 40dvh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 12px 14px !important;
+    border-radius: 16px 16px 8px 8px !important;
+    pointer-events: auto !important;
+    box-shadow: 0 -6px 28px rgba(0, 0, 0, 0.45) !important;
+    border-bottom: none !important;
+  }
+
+  /* Điều phối hiển thị theo Tab đang kích hoạt trên Mobile */
+  .sim-docks-row[data-mobile-tab="control"] .sim-telemetry-dock {
+    display: none !important;
+  }
+  .sim-docks-row[data-mobile-tab="control"] .sim-control-dock {
+    display: block !important;
+  }
+
+  .sim-docks-row[data-mobile-tab="telemetry"] .sim-control-dock {
+    display: none !important;
+  }
+  .sim-docks-row[data-mobile-tab="telemetry"] .sim-telemetry-dock {
+    display: block !important;
+  }
+
+  .sim-docks-row[data-mobile-tab="zen"] .sim-control-dock,
+  .sim-docks-row[data-mobile-tab="zen"] .sim-telemetry-dock {
+    display: none !important;
+  }
+
+  /* Căn chỉnh lưới nút tình huống mẫu trên điện thoại */
+  .preset-group {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 4px !important;
+  }
+  .preset-pill {
+    padding: 6px 6px !important;
+    font-size: 0.72rem !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .sim-param-box {
+    margin-bottom: 8px !important;
+  }
+  .param-header {
+    font-size: 0.78rem !important;
+  }
+  .param-bounds {
+    font-size: 0.68rem !important;
+  }
+
+  .sim-bottom-dock {
+    display: none !important;
+  }
+}
+
+/* Ẩn các nút tab di động khi hiển thị trên màn hình máy tính lớn */
+@media (min-width: 821px) {
+  .sim-mobile-dock-tabs {
+    display: none !important;
   }
 }
 
@@ -1896,8 +2100,13 @@ input:checked + .switch-slider:before {
   display: flex;
   gap: 8px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   padding-bottom: 8px;
   margin-bottom: 16px;
+}
+.hcm-playlist-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .hcm-playlist-btn {
@@ -2091,16 +2300,322 @@ input:checked + .switch-slider:before {
   line-height: 1.45;
 }
 
+/* ===================================================================
+   TỐI ƯU HÓA TOÀN DIỆN CHO THIẾT BỊ DI ĐỘNG & MÀN HÌNH NHỎ (<= 768px)
+   =================================================================== */
 @media (max-width: 768px) {
-  .hud-nav-links { display: none; }
-  .brand-name { font-size: 1.02rem; }
-  .brand-tagline { font-size: 0.64rem; }
-  .brand-symbol { width: 34px; height: 34px; min-width: 34px; min-height: 34px; font-size: 1rem; }
-  .hero-metrics-bar { grid-template-columns: 1fr; }
-  .sim-hub-grid { grid-template-columns: 1fr; }
-  .pillar-feature-large, .pillar-feature-medium, .pillar-feature-third { grid-column: span 12; }
-  .scenario-slider-box { height: 420px; }
-  .footer-columns { grid-template-columns: 1fr; }
+  /* Khung chứa và lề màn hình di động */
+  .container {
+    padding: 0 14px !important;
+  }
+  
+  .section {
+    padding: 38px 0 !important;
+  }
+
+  /* Header thanh điều hướng di động: Gọn gàng, thanh lịch, có thanh cuộn mục lục ngang */
+  .hud-header {
+    height: auto !important;
+    min-height: 52px !important;
+    padding: 6px 0 !important;
+  }
+
+  .hud-nav-wrap {
+    flex-wrap: wrap !important;
+    gap: 6px 10px !important;
+    justify-content: space-between !important;
+  }
+
+  .brand-logo {
+    gap: 8px !important;
+  }
+
+  .brand-name {
+    font-size: 0.98rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .brand-tagline {
+    display: none !important; /* Ẩn bớt phụ đề logo trên điện thoại để tiết kiệm diện tích */
+  }
+
+  .brand-symbol {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    font-size: 0.95rem !important;
+  }
+
+  #theme-toggle-btn {
+    padding: 5px 9px !important;
+    font-size: 0.8rem !important;
+  }
+
+  #theme-text {
+    display: none !important; /* Chỉ hiện biểu tượng mặt trăng / mặt trời trên điện thoại */
+  }
+
+  /* Thanh menu điều hướng chính chuyển thành dải nút trượt ngang mượt mà */
+  .hud-nav-links {
+    display: flex !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 4px 0 2px !important;
+    gap: 6px !important;
+    order: 3 !important;
+    max-width: 100% !important;
+  }
+  .hud-nav-links::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .hud-link {
+    padding: 5px 12px !important;
+    font-size: 0.78rem !important;
+    border-radius: var(--radius-full) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
+    flex-shrink: 0 !important;
+  }
+  [data-theme="dark"] .hud-link {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+  .hud-link.active {
+    background: var(--cyan-glacier, #0284c7) !important;
+    color: #ffffff !important;
+  }
+
+  /* Thanh mục lục bám dính (Sticky TOC Bar) trên điện thoại */
+  .sticky-toc-bar {
+    top: 88px !important;
+    padding: 5px 0 !important;
+  }
+
+  .sticky-toc-label {
+    display: none !important;
+  }
+
+  .sticky-toc-nav {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+  .sticky-toc-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .sticky-toc-link {
+    padding: 4px 10px !important;
+    font-size: 0.74rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .sticky-toc-top-btn {
+    display: none !important;
+  }
+
+  /* Hero Section trên điện thoại */
+  .hero-title {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-desc {
+    font-size: 0.94rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-cta-group {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .hero-cta-group .btn-climate {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 11px 18px !important;
+  }
+
+  .hero-video-showcase-box {
+    padding: 10px !important;
+  }
+
+  /* 4 Chỉ số nhanh Hero trên điện thoại */
+  .hero-metrics-bar {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 14px 12px !important;
+    margin-top: 20px !important;
+  }
+
+  .metric-col {
+    border-right: none !important;
+    border-bottom: 1px solid var(--space-border) !important;
+    padding-bottom: 8px !important;
+    padding-right: 0 !important;
+  }
+  .metric-col:nth-child(3),
+  .metric-col:nth-child(4) {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  .metric-val {
+    font-size: 1.35rem !important;
+  }
+  .metric-sub {
+    font-size: 0.75rem !important;
+  }
+
+  /* Bản đồ lộ trình 4 phân khu */
+  .roadmap-portal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Lưới 4 Mô phỏng 3D */
+  .sim-hub-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .sim-hub-card {
+    padding: 16px !important;
+  }
+
+  /* Tiêu đề chương / phân khu */
+  .chapter-header-box {
+    padding: 18px 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .chapter-title {
+    font-size: 1.4rem !important;
+  }
+  .chapter-lead {
+    font-size: 0.9rem !important;
+  }
+
+  /* Báo chí & Phóng sự điện ảnh TP.HCM */
+  .hcm-cinema-card {
+    padding: 12px !important;
+    margin-top: 16px !important;
+    margin-bottom: 22px !important;
+  }
+  .hcm-cinema-split {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .press-featured-card {
+    padding: 16px 14px !important;
+    margin-top: 14px !important;
+    margin-bottom: 18px !important;
+  }
+  .press-featured-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .press-articles-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .press-filter-bar {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 6px !important;
+  }
+  .press-filter-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .press-filter-pill {
+    flex-shrink: 0 !important;
+  }
+
+  /* Triển lãm Poster & Sổ tay sống xanh */
+  .filter-tab-bar {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 6px !important;
+  }
+  .filter-tab-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+  .filter-tab-btn {
+    flex-shrink: 0 !important;
+  }
+
+  .student-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .cross-portal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Chân trang Footer di động */
+  .footer-columns {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .footer-bottom-bar {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Cửa sổ xem ảnh / video học sinh (Modal) */
+  .modal-inner {
+    padding: 16px 12px !important;
+    max-width: 96vw !important;
+    border-radius: var(--radius-md) !important;
+  }
+  .modal-close {
+    top: 10px !important;
+    right: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* Banner trang con */
+  .page-banner {
+    padding: 76px 0 24px !important;
+  }
+
+  .pillar-feature-large,
+  .pillar-feature-medium,
+  .pillar-feature-third {
+    grid-column: span 12 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-metrics-bar {
+    grid-template-columns: 1fr !important;
+  }
+  .metric-col {
+    border-bottom: 1px solid var(--space-border) !important;
+  }
+  .metric-col:last-child {
+    border-bottom: none !important;
+  }
 }
 
 /* ===================================================================
