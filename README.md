@@ -20,13 +20,13 @@ Hệ thống bao gồm các trang chuyên đề đồng bộ giao diện HUD:
 | Trang / Chuyên Mục | Chức Năng & Nội Dung Giáo Dục |
 | :--- | :--- |
 | [`index.html`](index.html) | **Trang chủ trung tâm**: Giới thiệu tổng quan, **Tiêu điểm đô thị: Biểu hiện của biến đổi khí hậu tại TP.HCM** (video tư liệu YouTube & 4 thẻ biểu hiện thực tế), không gian sáng tạo học sinh (*Video Thông Điệp Xanh - 02:25* & 8 Poster), lối vào 4 phòng 3D và cẩm nang sống xanh 3 trụ cột. |
-| [`trien-lam-poster.html`](trien-lam-poster.html) | **Triển lãm Poster & Sáng tạo thế hệ trẻ**: Trưng bày các sản phẩm tranh vẽ tay và đồ họa cổ động môi trường do học sinh sáng tác minh họa, hỗ trợ lọc chủ đề và xem chi tiết qua Lightbox. |
-| [`trung-tam-mo-phong.html`](trung-tam-mo-phong.html) | **Cổng trung tâm mô phỏng 3D**: Giới thiệu và dẫn lối vào 4 phòng thí nghiệm biến đổi khí hậu tương tác 360°. |
-| [`mo-phong-han-han.html`](mo-phong-han-han.html) | **☀️ 3D Hạn mặn Miền Tây**: Mô phỏng nứt đất Voronoi, muối kết tinh đôi bờ, cột thủy chí đo mực nước sông, xuồng ba lá mắc cạn và **cửa cống thủy lợi ngăn mặn** tự động đóng mở khi độ mặn vượt 4‰. |
-| [`mo-phong-bao-lu.html`](mo-phong-bao-lu.html) | **🌀 3D Bão lũ Miền Trung - Bắc**: Khung cảnh đường phố đô thị ngập lụt, xe hơi chết máy trôi dạt có đèn nhấp nháy, xe máy ngã sóng xoài, cột mốc cảnh báo ngập và hiện tượng **gió bão cấp 12+**. |
-| [`mo-phong-bang-tan.html`](mo-phong-bang-tan.html) | **🧊 3D Băng tan & Biển dâng**: Mô hình kép trực quan — Vách băng lục địa nứt lở (*Ice Calving*) rơi xuống biển kết hợp với **tuyến đê biển kiên cố** bảo vệ dải ven bờ Việt Nam. |
-| [`mo-phong-chay-rung.html`](mo-phong-chay-rung.html) | **🔥 3D Nắng nóng & Cháy rừng**: Mô phỏng nhiệt độ gay gắt, độ ẩm giảm kiệt, chỉ số FWI nguy cấp và nguy cơ cháy rừng phòng hộ. |
-| [`so-tay-song-xanh.html`](so-tay-song-xanh.html) | **🌱 Sổ tay sống xanh cộng đồng**: Cẩm nang 6 hành động xanh thực tiễn (áp dụng trong trường học, gia đình và xã hội), thử thách *"7 Ngày Sống Xanh"* và 3 điểm sáng năng lượng - môi trường tại Việt Nam. |
+| [`pages/trien-lam-poster.html`](pages/trien-lam-poster.html) | **Triển lãm Poster & Sáng tạo thế hệ trẻ**: Trưng bày các sản phẩm tranh vẽ tay và đồ họa cổ động môi trường do học sinh sáng tác minh họa, hỗ trợ lọc chủ đề và xem chi tiết qua Lightbox. |
+| [`pages/trung-tam-mo-phong.html`](pages/trung-tam-mo-phong.html) | **Cổng trung tâm mô phỏng 3D**: Giới thiệu và dẫn lối vào 4 phòng thí nghiệm biến đổi khí hậu tương tác 360°. |
+| [`pages/mo-phong-han-han.html`](pages/mo-phong-han-han.html) | **☀️ 3D Hạn mặn TP.HCM - Bình Dương**: Mô phỏng nứt đất Voronoi, ranh mặn 4‰ lấn sâu vào sông Sài Gòn & sông Đồng Nai, đe dọa các trạm bơm nước thô nhà máy nước Tân Hiệp, Thủ Đức và cống ngăn mặn. |
+| [`pages/mo-phong-bao-lu.html`](pages/mo-phong-bao-lu.html) | **🌀 3D Bão lũ & Triều cường đô thị**: Khung cảnh đường phố ngập lụt, xe hơi trôi dạt có đèn nhấp nháy, cột mốc cảnh báo ngập và hiện tượng **gió bão cấp 12+**. |
+| [`pages/mo-phong-bang-tan.html`](pages/mo-phong-bang-tan.html) | **🧊 3D Băng tan & Biển dâng**: Mô hình kép trực quan — Vách băng lục địa nứt lở (*Ice Calving*) rơi xuống biển kết hợp với **tuyến đê biển kiên cố** bảo vệ dải ven bờ Việt Nam. |
+| [`pages/mo-phong-chay-rung.html`](pages/mo-phong-chay-rung.html) | **🔥 3D Đảo nhiệt đô thị & Nắng nóng**: Mô phỏng hiệu ứng đảo nhiệt đô thị UHI tại TP.HCM - Bình Dương - Vũng Tàu, độ ẩm giảm kiệt, chỉ số FWI nguy cấp. |
+| [`pages/so-tay-song-xanh.html`](pages/so-tay-song-xanh.html) | **🌱 Sổ tay sống xanh cộng đồng**: Cẩm nang 6 hành động xanh thực tiễn (áp dụng trong trường học, gia đình và xã hội), thử thách *"7 Ngày Sống Xanh"* và 3 điểm sáng năng lượng - môi trường tại Việt Nam. |
 
 ---
 
