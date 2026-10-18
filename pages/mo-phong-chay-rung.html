@@ -14,23 +14,103 @@
   <!-- Scientific HUD Navigation Header -->
   <header class="hud-header" id="main-hud">
     <div class="container hud-nav-wrap">
-      <a href="../index.html" class="brand-logo" aria-label="Trang chủ Màu Xanh Tương Lai">
-        <div class="brand-symbol">🌱</div>
-        <div class="brand-text-wrap">
-          <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
-          <span class="brand-tagline">Cổng Giáo Dục Khí Hậu & Môi Trường</span>
-        </div>
-      </a>
+      <!-- Left Cluster: Brand Logo + Quick Jump Dropdown Menu -->
+      <div class="header-left-cluster">
+        <a href="../index.html" class="brand-logo" aria-label="Trang chủ Màu Xanh Tương Lai">
+          <div class="brand-symbol">🌱</div>
+          <div class="brand-text-wrap">
+            <span class="brand-name">MÀU XANH TƯƠNG LAI</span>
+            <span class="brand-tagline">Cổng Giáo Dục Khí Hậu & Môi Trường</span>
+          </div>
+        </a>
 
-      <nav aria-label="Điều hướng chính">
-        <ul class="hud-nav-links">
-          <li><a href="../index.html" class="hud-link">Trang Chủ</a></li>
-          <li><a href="../index.html#bao-chi-tphcm" class="hud-link" style="color: #b91c1c; font-weight: 700;">Thời Sự TP.HCM</a></li>
-          <li><a href="trung-tam-mo-phong.html" class="hud-link active">4 Mô Phỏng 3D</a></li>
-          <li><a href="trien-lam-poster.html" class="hud-link">Triển Lãm Poster</a></li>
-          <li><a href="so-tay-song-xanh.html" class="hud-link">Sổ Tay Sống Xanh</a></li>
-        </ul>
-      </nav>
+        <!-- Nút Dropdown Điều Hướng Phân Khu Ở Góc Trái -->
+        <div class="nav-dropdown-wrapper" id="nav-dropdown-wrap">
+          <button class="nav-dropdown-trigger" id="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleNavDropdown(event)" title="Bấm để chọn và chuyển nhanh tới phân khu">
+            <span class="dropdown-trigger-icon">🧭</span>
+            <span class="dropdown-trigger-text">Chọn phân khu</span>
+            <span class="dropdown-arrow-icon">▾</span>
+          </button>
+          
+          <div class="nav-dropdown-menu" id="nav-dropdown-menu" role="menu">
+            <div class="dropdown-menu-header">
+              <span>ĐIỀU HƯỚNG CỔNG THÔNG TIN</span>
+            </div>
+            
+            <a href="../index.html#hero" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon">🏠</span>
+              <div class="item-info">
+                <span class="item-title">Trang Chủ & Video Lan Tỏa</span>
+                <span class="item-sub">Thông điệp 02:25 & Giới thiệu tổng quan</span>
+              </div>
+            </a>
+
+            <a href="../index.html#phan-khu-thoi-su" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon" style="background: rgba(185, 28, 28, 0.12); color: #b91c1c;">📰</span>
+              <div class="item-info">
+                <span class="item-title" style="color: #b91c1c;">Phân Khu I: Thời Sự & Tư Liệu TP.HCM</span>
+                <span class="item-sub">Phóng sự VTV/HTV, 4 biểu hiện đô thị & báo chí</span>
+              </div>
+            </a>
+
+            <a href="../index.html#phan-khu-mo-phong" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">🔬</span>
+              <div class="item-info">
+                <span class="item-title" style="color: #0284c7;">Phân Khu II: Thí Nghiệm & Mô Phỏng 3D</span>
+                <span class="item-sub">4 Phòng 3D WebGL tương tác trực tiếp</span>
+              </div>
+            </a>
+
+            <a href="../index.html#phan-khu-hoc-sinh" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon" style="background: rgba(139, 92, 246, 0.12); color: #8b5cf6;">🎨</span>
+              <div class="item-info">
+                <span class="item-title" style="color: #8b5cf6;">Phân Khu III: Poster & Sáng Tạo Trẻ</span>
+                <span class="item-sub">8 Tác phẩm tranh cổ động & Infographic</span>
+              </div>
+            </a>
+
+            <a href="../index.html#phan-khu-giai-phap" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">🌱</span>
+              <div class="item-info">
+                <span class="item-title" style="color: #10b981;">Phân Khu IV: Cẩm Nang Sống Xanh</span>
+                <span class="item-sub">6 Thói quen thực tiễn & Thử thách 7 ngày</span>
+              </div>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-menu-header">
+              <span>CÁC TRANG CHUYÊN ĐỀ RIÊNG BIỆT</span>
+            </div>
+
+            <a href="trung-tam-mo-phong.html" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon">🏛️</span>
+              <div class="item-info">
+                <span class="item-title">Sảnh 4 Phòng Mô Phỏng 3D</span>
+                <span class="item-sub">Hạn mặn • Siêu bão • Băng tan • Đảo nhiệt</span>
+              </div>
+              <span class="item-arrow">➔</span>
+            </a>
+
+            <a href="trien-lam-poster.html" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon">🖼️</span>
+              <div class="item-info">
+                <span class="item-title">Triển Lãm Poster Học Đường</span>
+                <span class="item-sub">Xem tranh khổ lớn & bộ lọc chủ đề</span>
+              </div>
+              <span class="item-arrow">➔</span>
+            </a>
+
+            <a href="so-tay-song-xanh.html" class="dropdown-menu-item" role="menuitem">
+              <span class="item-icon">📖</span>
+              <div class="item-info">
+                <span class="item-title">Sổ Tay 6 Thói Quen Sống Xanh</span>
+                <span class="item-sub">Cẩm nang hành động vì môi trường</span>
+              </div>
+              <span class="item-arrow">➔</span>
+            </a>
+          </div>
+        </div>
+      </div>
 
       <div style="display: flex; align-items: center; gap: 8px;">
         <a href="trung-tam-mo-phong.html" class="btn-climate btn-ghost" style="padding: 6px 14px; font-size: 0.82rem; font-weight: 700;">
@@ -192,6 +272,32 @@
 
   <!-- Three.js Wildfire Simulation Script -->
   <script>
+    // Dropdown góc trái
+    function toggleNavDropdown(event) {
+      if (event) event.stopPropagation();
+      const wrap = document.getElementById('nav-dropdown-wrap');
+      const btn = document.getElementById('nav-dropdown-btn');
+      if (!wrap) return;
+      const isOpen = wrap.classList.toggle('active');
+      if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function closeNavDropdown() {
+      const wrap = document.getElementById('nav-dropdown-wrap');
+      const btn = document.getElementById('nav-dropdown-btn');
+      if (wrap) wrap.classList.remove('active');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+
+    document.addEventListener('click', function(e) {
+      const wrap = document.getElementById('nav-dropdown-wrap');
+      if (wrap && !wrap.contains(e.target)) closeNavDropdown();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeNavDropdown();
+    });
+
     // Tab chuyển đổi trên thiết bị di động (Điều khiển / Viễn thám / Xem 3D)
     function switchMobileDockTab(tab) {
       const docksRow = document.getElementById('sim-docks-row');
